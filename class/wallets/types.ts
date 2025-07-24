@@ -1,7 +1,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import { CoinSelectOutput, CoinSelectReturnInput, CoinSelectUtxo } from 'coinselect';
 
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import { HDAezeedWallet } from './hd-aezeed-wallet';
 import { HDLegacyBreadwalletWallet } from './hd-legacy-breadwallet-wallet';
 import { HDLegacyElectrumSeedP2PKHWallet } from './hd-legacy-electrum-seed-p2pkh-wallet';
@@ -140,7 +140,7 @@ export type Transaction = {
  */
 export type ExtendedTransaction = Transaction & {
   walletID: string;
-  walletPreferredBalanceUnit: BitcoinUnit;
+  walletPreferredBalanceUnit: InterchainedUnit;
 };
 
 export type TWallet =

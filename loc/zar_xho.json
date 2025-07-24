@@ -24,7 +24,7 @@
   },
   "azteco": {
     "codeIs": "Ikhowudi yakho yevawutsha ithi",
-    "errorBeforeRefeem": "Ngaphambi kokuba uhlawule, kufuneka uqale wongeze i-wallet ye-Bitcoin.",
+    "errorBeforeRefeem": "Ngaphambi kokuba uhlawule, kufuneka uqale wongeze i-wallet ye-Interchained.",
     "success": "Iphumelele"
   },
   "entropy": {
@@ -95,7 +95,7 @@
     "transaction": "Ngeniswa"
   },
   "wallets": {
-    "add_bitcoin_explain": "Simple and powerful Bitcoin wallet",
+    "add_bitcoin_explain": "Simple and powerful Interchained wallet",
     "add_create": "Yakha",
     "add_import_wallet": "Ukungenisa ingxowa",
     "add_lightning": "Umbane",

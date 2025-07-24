@@ -62,7 +62,7 @@ struct PriceView: View {
     let priceChangePercentage = formattedPriceChangePercentage(currentRate: entry.currentMarketData?.rate, previousRate: entry.previousMarketData?.rate)
     
     return VStack(alignment: .center, spacing: 4) {
-      Text("BTC")
+      Text("ITC")
         .font(.caption)
         .minimumScaleFactor(0.1)
       Text(priceString)
@@ -97,7 +97,7 @@ struct PriceView: View {
     let currentPrice = formattedCurrencyString(from: entry.currentMarketData?.rate)
     
     return VStack(alignment: .leading, spacing: 4) {
-      Text("Bitcoin (\(Currency.getUserPreferredCurrency()))")
+      Text("Interchained (\(Currency.getUserPreferredCurrency()))")
         .font(.caption)
         .foregroundColor(.secondary)
       HStack {

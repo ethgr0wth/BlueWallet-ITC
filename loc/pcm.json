@@ -10,7 +10,7 @@
     "success": "You correct"
   },
   "lnd": {
-    "refill_create": "To proceed like this so, abeg create Bitcoin wallet wey you go refill am with"
+    "refill_create": "To proceed like this so, abeg create Interchained wallet wey you go refill am with"
   },
   "lndViewInvoice": {
     "please_pay_between_and": "Abeg pay between {min} and {max}",
@@ -32,10 +32,10 @@
     "create_copy": "Copy make you broadcast am later",
     "details_total_exceeds_balance": "The amount you dey try send pass wetin you get for balance",
     "details_unrecognized_file_format": "We no sabi this file format",
-    "details_wallet_before_tx": "Before you create transaction, you go first add Bitcoin wallet.",
+    "details_wallet_before_tx": "Before you create transaction, you go first add Interchained wallet.",
     "dynamic_init": "E dey load",
     "input_clear": "wipe am",
-    "psbt_this_is_psbt": "Na Partially Signed Bitcoin Transaction be this. Abeg run am finish with your hardware wallet wey dey offline.  ",
+    "psbt_this_is_psbt": "Na Partially Signed Interchained Transaction be this. Abeg run am finish with your hardware wallet wey dey offline.  ",
     "reset_amount_confirm": "You go like reset the bar?"
   },
   "settings": {

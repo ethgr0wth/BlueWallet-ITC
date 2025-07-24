@@ -16,7 +16,7 @@ type TContext = {
   setSharedCosigner: (cosigner: string) => void;
 };
 
-type TBothBitcoinAndLightning = { bitcoin: string; lndInvoice: string } | undefined;
+type TBothInterchainedAndLightning = { bitcoin: string; lndInvoice: string } | undefined;
 
 class DeeplinkSchemaMatch {
   static hasSchema(schemaString: string): boolean {
@@ -128,23 +128,23 @@ class DeeplinkSchemaMatch {
         })
         .catch(e => console.warn(e));
     }
-    let isBothBitcoinAndLightning: TBothBitcoinAndLightning;
+    let isBothInterchainedAndLightning: TBothInterchainedAndLightning;
     try {
-      isBothBitcoinAndLightning = DeeplinkSchemaMatch.isBothBitcoinAndLightning(event.url);
+      isBothInterchainedAndLightning = DeeplinkSchemaMatch.isBothInterchainedAndLightning(event.url);
     } catch (e) {
       console.log(e);
     }
-    if (isBothBitcoinAndLightning) {
+    if (isBothInterchainedAndLightning) {
       completionHandler([
         'SelectWallet',
         {
           onWalletSelect: (wallet: TWallet, { navigation }: any) => {
             navigation.pop(); // close select wallet screen
-            navigation.navigate(...DeeplinkSchemaMatch.isBothBitcoinAndLightningOnWalletSelect(wallet, isBothBitcoinAndLightning));
+            navigation.navigate(...DeeplinkSchemaMatch.isBothInterchainedAndLightningOnWalletSelect(wallet, isBothInterchainedAndLightning));
           },
         },
       ]);
-    } else if (DeeplinkSchemaMatch.isBitcoinAddress(event.url)) {
+    } else if (DeeplinkSchemaMatch.isInterchainedAddress(event.url)) {
       completionHandler([
         'SendDetailsRoot',
         {
@@ -291,7 +291,7 @@ class DeeplinkSchemaMatch {
     );
   }
 
-  static isBothBitcoinAndLightningOnWalletSelect(wallet: TWallet, uri: any): TCompletionHandlerParams {
+  static isBothInterchainedAndLightningOnWalletSelect(wallet: TWallet, uri: any): TCompletionHandlerParams {
     if (wallet.chain === Chain.ONCHAIN) {
       return [
         'SendDetailsRoot',
@@ -317,16 +317,16 @@ class DeeplinkSchemaMatch {
     }
   }
 
-  static isBitcoinAddress(address: string): boolean {
-    address = address.replace('://', ':').replace('bitcoin:', '').replace('BITCOIN:', '').replace('bitcoin=', '').split('?')[0];
-    let isValidBitcoinAddress = false;
+  static isInterchainedAddress(address: string): boolean {
+    address = address.replace('://', ':').replace('bitcoin:', '').replace('INTERCHAINED:', '').replace('bitcoin=', '').split('?')[0];
+    let isValidInterchainedAddress = false;
     try {
       bitcoin.address.toOutputScript(address);
-      isValidBitcoinAddress = true;
+      isValidInterchainedAddress = true;
     } catch (err) {
-      isValidBitcoinAddress = false;
+      isValidInterchainedAddress = false;
     }
-    return isValidBitcoinAddress;
+    return isValidInterchainedAddress;
   }
 
   static isLightningInvoice(invoice: string): boolean {
@@ -363,17 +363,17 @@ class DeeplinkSchemaMatch {
     return typeof obj.xfp === 'string' && typeof obj.xpub === 'string' && typeof obj.path === 'string';
   }
 
-  static isBothBitcoinAndLightning(url: string): TBothBitcoinAndLightning {
-    if (url.includes('lightning') && (url.includes('bitcoin') || url.includes('BITCOIN'))) {
-      const txInfo = url.split(/(bitcoin:\/\/|BITCOIN:\/\/|bitcoin:|BITCOIN:|lightning:|lightning=|bitcoin=)+/);
+  static isBothInterchainedAndLightning(url: string): TBothInterchainedAndLightning {
+    if (url.includes('lightning') && (url.includes('bitcoin') || url.includes('INTERCHAINED'))) {
+      const txInfo = url.split(/(bitcoin:\/\/|INTERCHAINED:\/\/|bitcoin:|INTERCHAINED:|lightning:|lightning=|bitcoin=)+/);
       let btc: string | false = false;
       let lndInvoice: string | false = false;
       for (const [index, value] of txInfo.entries()) {
         try {
           // Inside try-catch. We dont wan't to  crash in case of an out-of-bounds error.
-          if (value.startsWith('bitcoin') || value.startsWith('BITCOIN')) {
+          if (value.startsWith('bitcoin') || value.startsWith('INTERCHAINED')) {
             btc = `bitcoin:${txInfo[index + 1]}`;
-            if (!DeeplinkSchemaMatch.isBitcoinAddress(btc)) {
+            if (!DeeplinkSchemaMatch.isInterchainedAddress(btc)) {
               btc = false;
               break;
             }
@@ -404,7 +404,7 @@ class DeeplinkSchemaMatch {
       throw new Error('No URI provided');
     }
     let replacedUri = uri;
-    for (const replaceMe of ['BITCOIN://', 'bitcoin://', 'BITCOIN:']) {
+    for (const replaceMe of ['INTERCHAINED://', 'bitcoin://', 'INTERCHAINED:']) {
       replacedUri = replacedUri.replace(replaceMe, 'bitcoin:');
     }
 
@@ -429,23 +429,23 @@ class DeeplinkSchemaMatch {
     return bip21.encode(address, options);
   }
 
-  static decodeBitcoinUri(uri: string) {
+  static decodeInterchainedUri(uri: string) {
     let amount;
     let address = uri || '';
     let memo = '';
     let payjoinUrl = '';
     try {
-      const parsedBitcoinUri = DeeplinkSchemaMatch.bip21decode(uri);
-      address = parsedBitcoinUri.address ? parsedBitcoinUri.address.toString() : address;
-      if ('options' in parsedBitcoinUri) {
-        if (parsedBitcoinUri.options.amount) {
-          amount = Number(parsedBitcoinUri.options.amount);
+      const parsedInterchainedUri = DeeplinkSchemaMatch.bip21decode(uri);
+      address = parsedInterchainedUri.address ? parsedInterchainedUri.address.toString() : address;
+      if ('options' in parsedInterchainedUri) {
+        if (parsedInterchainedUri.options.amount) {
+          amount = Number(parsedInterchainedUri.options.amount);
         }
-        if (parsedBitcoinUri.options.label) {
-          memo = parsedBitcoinUri.options.label;
+        if (parsedInterchainedUri.options.label) {
+          memo = parsedInterchainedUri.options.label;
         }
-        if (parsedBitcoinUri.options.pj) {
-          payjoinUrl = parsedBitcoinUri.options.pj;
+        if (parsedInterchainedUri.options.pj) {
+          payjoinUrl = parsedInterchainedUri.options.pj;
         }
       }
     } catch (_) {}

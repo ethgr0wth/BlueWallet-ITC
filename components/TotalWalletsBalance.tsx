@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { TouchableOpacity, Text, StyleSheet, LayoutAnimation, View } from 'react-native';
 import { useStorage } from '../hooks/context/useStorage';
 import loc, { formatBalanceWithoutSuffix } from '../loc';
-import { BitcoinUnit } from '../models/bitcoinUnits';
+import { InterchainedUnit } from '../models/bitcoinUnits';
 import ToolTipMenu from './TooltipMenu';
 import { CommonToolTipActions } from '../typings/CommonToolTipActions';
 import { useSettings } from '../hooks/context/useSettings';
@@ -41,10 +41,10 @@ const TotalWalletsBalance: React.FC = React.memo(() => {
           {
             ...CommonToolTipActions.ViewInFiat,
             text: loc.formatString(loc.total_balance_view.display_in_fiat, { currency: preferredFiatCurrency.endPointKey }),
-            hidden: totalBalancePreferredUnit === BitcoinUnit.LOCAL_CURRENCY,
+            hidden: totalBalancePreferredUnit === InterchainedUnit.LOCAL_CURRENCY,
           },
-          { ...CommonToolTipActions.ViewInSats, hidden: totalBalancePreferredUnit === BitcoinUnit.SATS },
-          { ...CommonToolTipActions.ViewInBitcoin, hidden: totalBalancePreferredUnit === BitcoinUnit.BTC },
+          { ...CommonToolTipActions.ViewInSats, hidden: totalBalancePreferredUnit === InterchainedUnit.SATS },
+          { ...CommonToolTipActions.ViewInInterchained, hidden: totalBalancePreferredUnit === InterchainedUnit.ITC },
         ],
       },
       CommonToolTipActions.CopyAmount,
@@ -58,13 +58,13 @@ const TotalWalletsBalance: React.FC = React.memo(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       switch (id) {
         case CommonToolTipActions.ViewInFiat.id:
-          await setTotalBalancePreferredUnitStorage(BitcoinUnit.LOCAL_CURRENCY);
+          await setTotalBalancePreferredUnitStorage(InterchainedUnit.LOCAL_CURRENCY);
           break;
         case CommonToolTipActions.ViewInSats.id:
-          await setTotalBalancePreferredUnitStorage(BitcoinUnit.SATS);
+          await setTotalBalancePreferredUnitStorage(InterchainedUnit.SATS);
           break;
-        case CommonToolTipActions.ViewInBitcoin.id:
-          await setTotalBalancePreferredUnitStorage(BitcoinUnit.BTC);
+        case CommonToolTipActions.ViewInInterchained.id:
+          await setTotalBalancePreferredUnitStorage(InterchainedUnit.ITC);
           break;
         case CommonToolTipActions.Hide.id:
           await setIsTotalBalanceEnabledStorage(false);
@@ -82,11 +82,11 @@ const TotalWalletsBalance: React.FC = React.memo(() => {
   const handleBalanceOnPress = useCallback(async () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     const nextUnit =
-      totalBalancePreferredUnit === BitcoinUnit.BTC
-        ? BitcoinUnit.SATS
-        : totalBalancePreferredUnit === BitcoinUnit.SATS
-          ? BitcoinUnit.LOCAL_CURRENCY
-          : BitcoinUnit.BTC;
+      totalBalancePreferredUnit === InterchainedUnit.ITC
+        ? InterchainedUnit.SATS
+        : totalBalancePreferredUnit === InterchainedUnit.SATS
+          ? InterchainedUnit.LOCAL_CURRENCY
+          : InterchainedUnit.ITC;
     await setTotalBalancePreferredUnitStorage(nextUnit);
   }, [totalBalancePreferredUnit, setTotalBalancePreferredUnitStorage]);
 
@@ -99,7 +99,7 @@ const TotalWalletsBalance: React.FC = React.memo(() => {
         <TouchableOpacity onPress={handleBalanceOnPress}>
           <Text style={[styles.balance, { color: colors.foregroundColor }]}>
             {totalBalanceFormatted}{' '}
-            {totalBalancePreferredUnit !== BitcoinUnit.LOCAL_CURRENCY && (
+            {totalBalancePreferredUnit !== InterchainedUnit.LOCAL_CURRENCY && (
               <Text style={[styles.currency, { color: colors.foregroundColor }]}>{totalBalancePreferredUnit}</Text>
             )}
           </Text>

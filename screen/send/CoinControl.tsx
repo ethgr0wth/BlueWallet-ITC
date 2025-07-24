@@ -29,7 +29,7 @@ import { Action } from '../../components/types';
 import { useStorage } from '../../hooks/context/useStorage';
 import { useExtendedNavigation } from '../../hooks/useExtendedNavigation';
 import loc, { formatBalance } from '../../loc';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import { SendDetailsStackParamList } from '../../navigation/SendDetailsStackParamList';
 import { CommonToolTipActions } from '../../typings/CommonToolTipActions';
 import { useKeyboard } from '../../hooks/useKeyboard';
@@ -73,7 +73,7 @@ type TOutputListProps = {
 
 const OutputList: React.FC<TOutputListProps> = ({
   item: { address, txid, value },
-  balanceUnit = BitcoinUnit.BTC,
+  balanceUnit = InterchainedUnit.ITC,
   oMemo,
   frozen,
   change,
@@ -136,7 +136,7 @@ type TOutputModalProps = {
 
 const OutputModal: React.FC<TOutputModalProps> = ({
   item: { address, txid, value, vout, confirmations = 0 },
-  balanceUnit = BitcoinUnit.BTC,
+  balanceUnit = InterchainedUnit.ITC,
   oMemo,
 }) => {
   const { colors } = useTheme();

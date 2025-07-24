@@ -17,7 +17,7 @@
   },
   "azteco": {
     "codeIs": "Sinu vautšeri kood on",
-    "errorBeforeRefeem": "Enne lunastamist on vajalik lisada uus Bitcoini rahakott.",
+    "errorBeforeRefeem": "Enne lunastamist on vajalik lisada uus Interchainedi rahakott.",
     "errorSomething": "Midagi läks valesti. Kas see vautšer on endiselt kehtiv?",
     "redeem": "Lunasta rahakotti.",
     "redeemButton": "Lunasta",

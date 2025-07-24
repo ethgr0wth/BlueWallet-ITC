@@ -24,7 +24,7 @@ interface WalletButtonProps {
 }
 
 const buttonDetails: Record<string, ButtonDetails> = {
-  Bitcoin: {
+  Interchained: {
     image: require('../img/addWallet/bitcoin.png'),
     title: loc.wallets.add_bitcoin,
     explain: loc.wallets.add_bitcoin_explain,

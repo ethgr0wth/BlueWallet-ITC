@@ -17,7 +17,7 @@ v6.2.5
 * FIX: storage issues
 * FIX: Cosign for multisig was not a visible option
 * FIX: Localize LN Invoice Expire time
-* FIX: Unit wasnt defaulting to BTC
+* FIX: Unit wasnt defaulting to ITC
 * FIX: localizations ar, es, he, ko, de, fa_IR
 * REF: Update details UI to match design
 * REF: Update payjoin-client

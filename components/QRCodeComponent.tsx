@@ -108,7 +108,7 @@ const QRCodeComponent: React.FC<QRCodeComponentProps> = ({
   return (
     <View
       style={[styles.container, stylesHook.container]}
-      testID="BitcoinAddressQRCodeContainer"
+      testID="InterchainedAddressQRCodeContainer"
       accessibilityIgnoresInvertColors
       importantForAccessibility="no-hide-descendants"
       accessibilityRole="image"

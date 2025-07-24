@@ -2,7 +2,7 @@ import b58 from 'bs58check';
 import { sha256 } from '@noble/hashes/sha256';
 import wif from 'wif';
 
-import { BitcoinUnit, Chain } from '../../models/bitcoinUnits';
+import { InterchainedUnit, Chain } from '../../models/bitcoinUnits';
 import { CreateTransactionResult, CreateTransactionUtxo, Transaction, Utxo } from './types';
 
 type WalletWithPassphrase = AbstractWallet & { getPassphrase: () => string };
@@ -40,7 +40,7 @@ export class AbstractWallet {
   _utxo: Utxo[];
   _lastTxFetch: number;
   _lastBalanceFetch: number;
-  preferredBalanceUnit: BitcoinUnit;
+  preferredBalanceUnit: InterchainedUnit;
   chain: Chain;
   hideBalance: boolean;
   userHasSavedExport: boolean;
@@ -58,7 +58,7 @@ export class AbstractWallet {
     this._utxo = [];
     this._lastTxFetch = 0;
     this._lastBalanceFetch = 0;
-    this.preferredBalanceUnit = BitcoinUnit.BTC;
+    this.preferredBalanceUnit = InterchainedUnit.ITC;
     this.chain = Chain.ONCHAIN;
     this.hideBalance = false;
     this.userHasSavedExport = false;
@@ -126,13 +126,13 @@ export class AbstractWallet {
     return this.balance + (this.getUnconfirmedBalance() < 0 ? this.getUnconfirmedBalance() : 0);
   }
 
-  getPreferredBalanceUnit(): BitcoinUnit {
-    for (const value of Object.values(BitcoinUnit)) {
+  getPreferredBalanceUnit(): InterchainedUnit {
+    for (const value of Object.values(InterchainedUnit)) {
       if (value === this.preferredBalanceUnit) {
         return this.preferredBalanceUnit;
       }
     }
-    return BitcoinUnit.BTC;
+    return InterchainedUnit.ITC;
   }
 
   async allowOnchainAddress(): Promise<boolean> {
@@ -227,7 +227,7 @@ export class AbstractWallet {
       }
     }
 
-    this.secret = newSecret.trim().replace('bitcoin:', '').replace('BITCOIN:', '');
+    this.secret = newSecret.trim().replace('bitcoin:', '').replace('INTERCHAINED:', '');
 
     if (this.secret.startsWith('BC1')) this.secret = this.secret.toLowerCase();
 
@@ -346,7 +346,7 @@ export class AbstractWallet {
     // is it sparrow-export ?
     try {
       const json = JSON.parse(origSecret);
-      if (json.chain && json.chain === 'BTC' && json.xfp && json.bip84) {
+      if (json.chain && json.chain === 'ITC' && json.xfp && json.bip84) {
         // technically we should allow choosing which format user wants, BIP44 / BIP49 / BIP84, but meh...
         this.secret = json.bip84._pub;
         const mfp = Buffer.from(json.xfp, 'hex').reverse().toString('hex');

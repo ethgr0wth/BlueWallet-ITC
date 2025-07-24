@@ -20,7 +20,7 @@
   },
   "azteco": {
     "codeIs": "Jou koepon kode is",
-    "errorBeforeRefeem": "Voordat jy eis moet jy eers 'n Bitcoin beursie aanwys.",
+    "errorBeforeRefeem": "Voordat jy eis moet jy eers 'n Interchained beursie aanwys.",
     "errorSomething": "Iets het vout gegaan. Is die koepon steeds geldig?",
     "redeem": "Eis na beursie",
     "redeemButton": "Eis",
@@ -46,7 +46,7 @@
     "payment": "Betaling",
     "placeholder": "Faktuur of adres",
     "refill": "Herlaai",
-    "refill_create": "Om voort te gaan, skep asb 'n Bitcoin beursie om vondse mee aan te vul.",
+    "refill_create": "Om voort te gaan, skep asb 'n Interchained beursie om vondse mee aan te vul.",
     "refill_external": "Vul aan met Eksterne Beursie",
     "refill_lnd_balance": "Herlaai Lightning beursie",
     "sameWalletAsInvoiceError": "U kan nie ‘n faktuur betaal met die selfde beursie waarmee die faktuur geksep is nie.",
@@ -154,7 +154,7 @@
     "transaction": "Transaksie"
   },
   "wallets": {
-    "add_bitcoin": "Bitcoin",
+    "add_bitcoin": "Interchained",
     "add_create": "Skep",
     "add_entropy": "Entropie",
     "add_import_wallet": "Beursie Invoer",

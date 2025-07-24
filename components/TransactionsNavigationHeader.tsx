@@ -6,7 +6,7 @@ import { LightningCustodianWallet, MultisigHDWallet } from '../class';
 import WalletGradient from '../class/wallet-gradient';
 import { TWallet } from '../class/wallets/types';
 import loc, { formatBalance, formatBalanceWithoutSuffix } from '../loc';
-import { BitcoinUnit } from '../models/bitcoinUnits';
+import { InterchainedUnit } from '../models/bitcoinUnits';
 import { FiatUnit } from '../models/fiatUnit';
 import { BlurredBalanceView } from './BlurredBalanceView';
 import { useSettings } from '../hooks/context/useSettings';
@@ -16,8 +16,8 @@ import { useLocale } from '@react-navigation/native';
 
 interface TransactionsNavigationHeaderProps {
   wallet: TWallet;
-  unit: BitcoinUnit;
-  onWalletUnitChange: (unit: BitcoinUnit) => void;
+  unit: InterchainedUnit;
+  onWalletUnitChange: (unit: InterchainedUnit) => void;
   onManageFundsPressed?: (id?: string) => void;
   onWalletBalanceVisibilityChange?: (isShouldBeVisible: boolean) => void;
 }
@@ -27,7 +27,7 @@ const TransactionsNavigationHeader: React.FC<TransactionsNavigationHeaderProps> 
   onWalletUnitChange,
   onManageFundsPressed,
   onWalletBalanceVisibilityChange,
-  unit = BitcoinUnit.BTC,
+  unit = InterchainedUnit.ITC,
 }) => {
   const { hideBalance } = wallet;
   const [allowOnchainAddress, setAllowOnchainAddress] = useState(false);
@@ -64,12 +64,12 @@ const TransactionsNavigationHeader: React.FC<TransactionsNavigationHeaderProps> 
   const changeWalletBalanceUnit = () => {
     let newWalletPreferredUnit = wallet.getPreferredBalanceUnit();
 
-    if (newWalletPreferredUnit === BitcoinUnit.BTC) {
-      newWalletPreferredUnit = BitcoinUnit.SATS;
-    } else if (newWalletPreferredUnit === BitcoinUnit.SATS) {
-      newWalletPreferredUnit = BitcoinUnit.LOCAL_CURRENCY;
+    if (newWalletPreferredUnit === InterchainedUnit.ITC) {
+      newWalletPreferredUnit = InterchainedUnit.SATS;
+    } else if (newWalletPreferredUnit === InterchainedUnit.SATS) {
+      newWalletPreferredUnit = InterchainedUnit.LOCAL_CURRENCY;
     } else {
-      newWalletPreferredUnit = BitcoinUnit.BTC;
+      newWalletPreferredUnit = InterchainedUnit.ITC;
     }
 
     onWalletUnitChange(newWalletPreferredUnit);
@@ -112,7 +112,7 @@ const TransactionsNavigationHeader: React.FC<TransactionsNavigationHeaderProps> 
 
   const currentBalance = wallet ? wallet.getBalance() : 0;
   const formattedBalance = useMemo(() => {
-    return unit === BitcoinUnit.LOCAL_CURRENCY
+    return unit === InterchainedUnit.LOCAL_CURRENCY
       ? formatBalance(currentBalance, unit, true)
       : formatBalanceWithoutSuffix(currentBalance, unit, true);
   }, [unit, currentBalance]);
@@ -205,7 +205,7 @@ const TransactionsNavigationHeader: React.FC<TransactionsNavigationHeaderProps> 
         </ToolTipMenu>
         <TouchableOpacity style={styles.walletPreferredUnitView} onPress={changeWalletBalanceUnit}>
           <Text style={styles.walletPreferredUnitText}>
-            {unit === BitcoinUnit.LOCAL_CURRENCY ? (preferredFiatCurrency?.endPointKey ?? FiatUnit.USD) : unit}
+            {unit === InterchainedUnit.LOCAL_CURRENCY ? (preferredFiatCurrency?.endPointKey ?? FiatUnit.USD) : unit}
           </Text>
         </TouchableOpacity>
       </View>

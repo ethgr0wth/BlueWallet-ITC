@@ -3,7 +3,7 @@ import { RouteProp, useLocale, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@rneui/themed';
-import { btcToSatoshi, fiatToBTC, satoshiToBTC, satoshiToLocalCurrency } from '../../blue_modules/currency';
+import { btcToSatoshi, fiatToITC, satoshiToITC, satoshiToLocalCurrency } from '../../blue_modules/currency';
 import triggerHapticFeedback, { HapticFeedbackTypes } from '../../blue_modules/hapticFeedback';
 import { BlueCard, BlueText } from '../../BlueComponents';
 import Lnurl from '../../class/lnurl';
@@ -15,7 +15,7 @@ import { useTheme } from '../../components/themes';
 import prompt from '../../helpers/prompt';
 import { unlockWithBiometrics, useBiometrics } from '../../hooks/useBiometrics';
 import loc, { formatBalance, formatBalanceWithoutSuffix } from '../../loc';
-import { BitcoinUnit, Chain } from '../../models/bitcoinUnits';
+import { InterchainedUnit, Chain } from '../../models/bitcoinUnits';
 import { useStorage } from '../../hooks/context/useStorage';
 import { useExtendedNavigation } from '../../hooks/useExtendedNavigation';
 import { DismissKeyboardInputAccessory, DismissKeyboardInputAccessoryViewID } from '../../components/DismissKeyboardInputAccessory';
@@ -38,7 +38,7 @@ const LnurlPay: React.FC = () => {
   const route = useRoute<RouteProp<Record<string, RouteParams>, string>>();
   const { walletID, lnurl } = route.params;
   const wallet = wallets.find(w => w.getID() === walletID) as LightningCustodianWallet;
-  const [unit, setUnit] = useState<BitcoinUnit>(wallet?.getPreferredBalanceUnit() ?? BitcoinUnit.BTC);
+  const [unit, setUnit] = useState<InterchainedUnit>(wallet?.getPreferredBalanceUnit() ?? InterchainedUnit.ITC);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [_LN, setLN] = useState<Lnurl | undefined>();
   const [payButtonDisabled, setPayButtonDisabled] = useState<boolean>(true);
@@ -89,10 +89,10 @@ const LnurlPay: React.FC = () => {
         return;
       }
       switch (unit) {
-        case BitcoinUnit.BTC:
-          newAmount = satoshiToBTC(newAmount);
+        case InterchainedUnit.ITC:
+          newAmount = satoshiToITC(newAmount);
           break;
-        case BitcoinUnit.LOCAL_CURRENCY:
+        case InterchainedUnit.LOCAL_CURRENCY:
           newAmount = satoshiToLocalCurrency(newAmount, false);
           _cacheFiatToSat[newAmount] = String(originalSatAmount);
           break;
@@ -119,17 +119,17 @@ const LnurlPay: React.FC = () => {
 
     let amountSats: number | false;
     switch (unit) {
-      case BitcoinUnit.SATS:
+      case InterchainedUnit.SATS:
         amountSats = parseInt(amount, 10);
         break;
-      case BitcoinUnit.BTC:
+      case InterchainedUnit.ITC:
         amountSats = btcToSatoshi(amount);
         break;
-      case BitcoinUnit.LOCAL_CURRENCY:
+      case InterchainedUnit.LOCAL_CURRENCY:
         if (_cacheFiatToSat[String(amount)]) {
           amountSats = parseInt(_cacheFiatToSat[amount], 10);
         } else {
-          amountSats = btcToSatoshi(fiatToBTC(parseFloat(amount)));
+          amountSats = btcToSatoshi(fiatToITC(parseFloat(amount)));
         }
         break;
       default:
@@ -190,9 +190,9 @@ const LnurlPay: React.FC = () => {
         >
           <Text style={[styles.walletWrapLabel, stylesHook.walletWrapLabel]}>{wallet.getLabel()}</Text>
           <Text style={[styles.walletWrapBalance, stylesHook.walletWrapBalance]}>
-            {formatBalanceWithoutSuffix(wallet.getBalance(), BitcoinUnit.SATS, false)}
+            {formatBalanceWithoutSuffix(wallet.getBalance(), InterchainedUnit.SATS, false)}
           </Text>
-          <Text style={[styles.walletWrapSats, stylesHook.walletWrapSats]}>{BitcoinUnit.SATS}</Text>
+          <Text style={[styles.walletWrapSats, stylesHook.walletWrapSats]}>{InterchainedUnit.SATS}</Text>
         </TouchableOpacity>
       </View>
     </View>

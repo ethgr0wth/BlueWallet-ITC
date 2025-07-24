@@ -16,7 +16,7 @@ import TransactionPendingIcon from '../../components/icons/TransactionPendingIco
 import SafeArea from '../../components/SafeArea';
 import { useTheme } from '../../components/themes';
 import loc, { formatBalanceWithoutSuffix } from '../../loc';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import { useStorage } from '../../hooks/context/useStorage';
 import { HandOffActivityType } from '../../components/types';
 import HeaderRightButton from '../../components/HeaderRightButton';
@@ -571,7 +571,7 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ transaction, txid
                 <Text style={[styles.value, stylesHook.value]} selectable>
                   {wallet && formatBalanceWithoutSuffix(tx.value, wallet.preferredBalanceUnit, true)}
                   {` `}
-                  {wallet?.preferredBalanceUnit !== BitcoinUnit.LOCAL_CURRENCY && wallet && (
+                  {wallet?.preferredBalanceUnit !== InterchainedUnit.LOCAL_CURRENCY && wallet && (
                     <Text style={[styles.valueUnit, stylesHook.valueUnit]}>{wallet.preferredBalanceUnit}</Text>
                   )}
                 </Text>
@@ -613,8 +613,8 @@ const TransactionStatus: React.FC<TransactionStatusProps> = ({ transaction, txid
                 <View style={styles.fee}>
                   <BlueText style={styles.feeText}>
                     {`${loc.send.create_fee.toLowerCase()} `}
-                    {formatBalanceWithoutSuffix(tx.fee, wallet?.preferredBalanceUnit ?? BitcoinUnit.BTC, true)}
-                    {wallet?.preferredBalanceUnit !== BitcoinUnit.LOCAL_CURRENCY && wallet?.preferredBalanceUnit}
+                    {formatBalanceWithoutSuffix(tx.fee, wallet?.preferredBalanceUnit ?? InterchainedUnit.ITC, true)}
+                    {wallet?.preferredBalanceUnit !== InterchainedUnit.LOCAL_CURRENCY && wallet?.preferredBalanceUnit}
                   </BlueText>
                 </View>
               )}

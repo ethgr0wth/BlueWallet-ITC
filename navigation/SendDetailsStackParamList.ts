@@ -1,6 +1,6 @@
 import { Psbt } from 'bitcoinjs-lib';
 import { CreateTransactionTarget, CreateTransactionUtxo, TWallet } from '../class/wallets/types';
-import { BitcoinUnit, Chain } from '../models/bitcoinUnits';
+import { InterchainedUnit, Chain } from '../models/bitcoinUnits';
 import { ScanQRCodeParamList } from './DetailViewStackParamList';
 import { IFee } from '../screen/send/SendDetails';
 import { NetworkTransactionFeeType } from '../models/networkTransactionFees';
@@ -9,14 +9,14 @@ export type SendDetailsParams = {
   transactionMemo?: string;
   isTransactionReplaceable?: boolean;
   payjoinUrl?: string;
-  feeUnit?: BitcoinUnit;
+  feeUnit?: InterchainedUnit;
   frozenBalance?: number;
-  amountUnit?: BitcoinUnit;
+  amountUnit?: InterchainedUnit;
   address?: string;
   amount?: number;
   amountSats?: number;
   onBarScanned?: string;
-  unit?: BitcoinUnit;
+  unit?: InterchainedUnit;
   noRbf?: boolean;
   walletID: string;
   launchedBy?: string;
@@ -52,7 +52,7 @@ export type SendDetailsStackParamList = {
     };
     feePrecalc: IFee;
     feeRate: string;
-    feeUnit?: BitcoinUnit;
+    feeUnit?: InterchainedUnit;
     walletID: string;
     customFee?: string | null;
   };
@@ -102,7 +102,7 @@ export type SendDetailsStackParamList = {
   Success: {
     fee?: number;
     amount: number;
-    amountUnit?: BitcoinUnit;
+    amountUnit?: InterchainedUnit;
     txid?: string;
     invoiceDescription?: string;
   };

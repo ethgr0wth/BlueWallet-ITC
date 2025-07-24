@@ -9,14 +9,14 @@ import { Icon } from '@rneui/themed';
 import RNFS from 'react-native-fs';
 import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import Share from 'react-native-share';
-import { satoshiToBTC } from '../../blue_modules/currency';
+import { satoshiToITC } from '../../blue_modules/currency';
 import { isDesktop } from '../../blue_modules/environment';
 import { BlueText } from '../../BlueComponents';
 import presentAlert from '../../components/Alert';
 import { DynamicQRCode } from '../../components/DynamicQRCode';
 import { useTheme } from '../../components/themes';
 import loc from '../../loc';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import { useSettings } from '../../hooks/context/useSettings';
 import { useScreenProtect } from '../../hooks/useScreenProtect';
 import { BlueSpacing20 } from '../../components/BlueSpacing';
@@ -121,7 +121,7 @@ const SendCreate = () => {
           <Text style={[styles.transactionDetailsSubtitle, styleHooks.transactionDetailsSubtitle]}>{item.address}</Text>
           <Text style={[styles.transactionDetailsTitle, styleHooks.transactionDetailsTitle]}>{loc.send.create_amount}</Text>
           <Text style={[styles.transactionDetailsSubtitle, styleHooks.transactionDetailsSubtitle]}>
-            {satoshiToBTC(item.value)} {BitcoinUnit.BTC}
+            {satoshiToITC(item.value)} {InterchainedUnit.ITC}
           </Text>
           {recipients.length > 1 && (
             <BlueText style={styles.itemOf}>{loc.formatString(loc._.of, { number: index + 1, total: recipients.length })}</BlueText>
@@ -171,7 +171,7 @@ const SendCreate = () => {
     <View>
       <Text style={[styles.transactionDetailsTitle, styleHooks.transactionDetailsTitle]}>{loc.send.create_fee}</Text>
       <Text style={[styles.transactionDetailsSubtitle, styleHooks.transactionDetailsSubtitle]}>
-        {new BigNumber(fee).toFixed()} {BitcoinUnit.BTC}
+        {new BigNumber(fee).toFixed()} {InterchainedUnit.ITC}
       </Text>
       <Text style={[styles.transactionDetailsTitle, styleHooks.transactionDetailsTitle]}>{loc.send.create_tx_size}</Text>
       <Text style={[styles.transactionDetailsSubtitle, styleHooks.transactionDetailsSubtitle]}>{size} vbytes</Text>

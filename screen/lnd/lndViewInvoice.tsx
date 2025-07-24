@@ -10,7 +10,7 @@ import CopyTextToClipboard from '../../components/CopyTextToClipboard';
 import QRCodeComponent from '../../components/QRCodeComponent';
 import { useTheme } from '../../components/themes';
 import loc from '../../loc';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import { SuccessView } from '../send/success';
 import LNDCreateInvoice from './lndCreateInvoice';
 import { useStorage } from '../../hooks/context/useStorage';
@@ -215,7 +215,7 @@ const LNDViewInvoice = () => {
           <View style={styles.root}>
             <SuccessView
               amount={amount}
-              amountUnit={BitcoinUnit.SATS}
+              amountUnit={InterchainedUnit.SATS}
               invoiceDescription={description}
               fee={invoice.fee ? new BigNumber(invoice.fee).multipliedBy(-1).dividedBy(1e8).toNumber() : undefined}
               shouldAnimate={false}

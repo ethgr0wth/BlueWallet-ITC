@@ -82,7 +82,7 @@ interface CoinpaprikaResponse {
 const RateExtractors = {
   Coinbase: async (ticker: string): Promise<number> => {
     try {
-      const json = (await fetchRate(`https://api.coinbase.com/v2/prices/BTC-${ticker.toUpperCase()}/buy`)) as CoinbaseResponse;
+      const json = (await fetchRate(`https://api.coinbase.com/v2/prices/ITC-${ticker.toUpperCase()}/buy`)) as CoinbaseResponse;
       const rate = Number(json?.data?.amount);
       if (!(rate >= 0)) throw new Error('Invalid data received');
       return rate;
@@ -95,7 +95,7 @@ const RateExtractors = {
   CoinDesk: async (ticker: string): Promise<number> => {
     try {
       const json = (await fetchRate(
-        `https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=${ticker.toUpperCase()}`,
+        `https://min-api.cryptocompare.com/data/price?fsym=ITC&tsyms=${ticker.toUpperCase()}`,
       )) as CoinDeskResponse;
       const rate = json?.[ticker.toUpperCase()];
       if (!(rate >= 0)) throw new Error('Invalid data received');
@@ -153,7 +153,7 @@ const RateExtractors = {
       if (matches && matches[1]) {
         const usdToRonRate = parseFloat(matches[1]);
         const btcToUsdRate = await RateExtractors.CoinGecko('USD');
-        // Convert BTC to RON using the USD to RON exchange rate
+        // Convert ITC to RON using the USD to RON exchange rate
         return btcToUsdRate * usdToRonRate;
       }
       throw new Error('No valid USD to RON rate found');
@@ -177,7 +177,7 @@ const RateExtractors = {
 
   YadioConvert: async (ticker: string): Promise<number> => {
     try {
-      const json = (await fetchRate(`https://api.yadio.io/convert/1/BTC/${ticker}`)) as YadioConvertResponse;
+      const json = (await fetchRate(`https://api.yadio.io/convert/1/ITC/${ticker}`)) as YadioConvertResponse;
       const rate = Number(json?.rate);
       if (!(rate >= 0)) throw new Error('Invalid data received');
       return rate;

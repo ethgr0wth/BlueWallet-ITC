@@ -1,5 +1,5 @@
-A Bitcoin wallet that allows you to store, send Bitcoin, receive Bitcoin with focus on security and simplicity.
-On BlueWallet, a bitcoin wallet you own you private keys. A Bitcoin wallet made by Bitcoin users for the community.
+A Interchained wallet that allows you to store, send Interchained, receive Interchained with focus on security and simplicity.
+On BlueWallet, a bitcoin wallet you own you private keys. A Interchained wallet made by Interchained users for the community.
 You can instantly transact with anyone in the world and transform the financial system right from your pocket.
 Create for free unlimited number of bitcoin wallets or import your existing one on your Android device. It's simple and fast.
 _____
@@ -35,4 +35,4 @@ Starting from 1 Satoshi. Defined by you, the user
 Watch-only wallets allow you to keep an eye on your cold storage without touching the hardware.
 
 • Lightning Network
-Lightning wallet with zero-configuration. Unfairly cheap and fast transactions with the best Bitcoin user experience.
+Lightning wallet with zero-configuration. Unfairly cheap and fast transactions with the best Interchained user experience.

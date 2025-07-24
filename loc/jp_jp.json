@@ -153,7 +153,7 @@
     "details_create": "作成",
     "details_error_decode": "ビットコインアドレスを復号できません",
     "details_fee_field_is_not_valid": "手数料欄が正しくありません",
-    "details_frozen": "{amount}BTCがフリーズされています",
+    "details_frozen": "{amount}ITCがフリーズされています",
     "details_next": "次",
     "details_no_signed_tx": "選択したファイルには、インポート可能なトランザクションが含まれていません。",
     "details_note_placeholder": "ラベル",
@@ -391,7 +391,7 @@
   },
   "wallets": {
     "add_bitcoin": "ビットコイン",
-    "add_bitcoin_explain": "シンプルかつパワフルなBitcoinウォレット",
+    "add_bitcoin_explain": "シンプルかつパワフルなInterchainedウォレット",
     "add_create": "作成",
     "total_balance": "合計残高",
     "add_entropy_reset_title": "エントロピーをリセット",
@@ -525,7 +525,7 @@
     "vault_key": "金庫キー {number}",
     "required_keys_out_of_total": "全体のうち必要なキー",
     "fee": "費用: {number}",
-    "fee_btc": "{number} BTC",
+    "fee_btc": "{number} ITC",
     "confirm": "承認",
     "header": "送る",
     "share": "共有...",
@@ -626,7 +626,7 @@
     "sort_by": "ソート方法"
   },
   "units": {
-    "BTC": "BTC",
+    "ITC": "ITC",
     "MAX": "最大",
     "sat_vbyte": "sat/vByte",
     "sats": "sats"

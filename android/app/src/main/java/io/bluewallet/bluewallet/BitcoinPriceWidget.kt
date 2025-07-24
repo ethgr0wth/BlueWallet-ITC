@@ -11,10 +11,10 @@ import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.work.WorkManager
 
-class BitcoinPriceWidget : AppWidgetProvider() {
+class InterchainedPriceWidget : AppWidgetProvider() {
 
     companion object {
-        private const val TAG = "BitcoinPriceWidget"
+        private const val TAG = "InterchainedPriceWidget"
         private const val SHARED_PREF_NAME = "group.io.bluewallet.bluewallet"
         
         /**
@@ -82,7 +82,7 @@ class BitcoinPriceWidget : AppWidgetProvider() {
             Log.d(TAG, "Updating widget with ID: $widgetId")
             refreshWidget(context, widgetId)
         }
-        Log.d("BitcoinPriceWidget", "BitcoinPriceWidget updated. Confirming interaction with MainActivity.")
+        Log.d("InterchainedPriceWidget", "InterchainedPriceWidget updated. Confirming interaction with MainActivity.")
     }
 
     override fun onEnabled(context: Context) {

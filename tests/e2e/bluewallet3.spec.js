@@ -44,17 +44,17 @@ describe('BlueWallet UI Tests - import Watch-only wallet (zpub)', () => {
       await element(by.text(`No, and do not ask me again.`)).tap();
       await element(by.text(`No, and do not ask me again.`)).tap(); // sometimes the first click doesnt work (detox issue, not app's)
     } catch (_) {}
-    await expect(element(by.id('BitcoinAddressQRCodeContainer'))).toBeVisible();
+    await expect(element(by.id('InterchainedAddressQRCodeContainer'))).toBeVisible();
     await expect(element(by.text('bc1qc8wun6lf9vcajpddtgdpd2pdrp0kwp29j6upgv'))).toBeVisible();
     await element(by.id('SetCustomAmountButton')).tap();
-    await element(by.id('BitcoinAmountInput')).replaceText('1');
+    await element(by.id('InterchainedAmountInput')).replaceText('1');
     await element(by.id('CustomAmountDescription')).typeText('Test');
     await element(by.id('CustomAmountDescription')).tapReturnKey();
     await element(by.id('CustomAmountSaveButton')).tap();
     await expect(element(by.id('CustomAmountDescriptionText'))).toHaveText('Test');
-    await expect(element(by.id('BitcoinAmountText'))).toHaveText('1 BTC');
+    await expect(element(by.id('InterchainedAmountText'))).toHaveText('1 ITC');
 
-    await expect(element(by.id('BitcoinAddressQRCodeContainer'))).toBeVisible();
+    await expect(element(by.id('InterchainedAddressQRCodeContainer'))).toBeVisible();
 
     await expect(element(by.text('bitcoin:BC1QC8WUN6LF9VCAJPDDTGDPD2PDRP0KWP29J6UPGV?amount=1&label=Test'))).toBeVisible();
     await device.pressBack();

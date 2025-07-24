@@ -18,7 +18,7 @@ struct PriceWidget: Widget {
             PriceWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Price")
-        .description("View the current price of Bitcoin.")
+        .description("View the current price of Interchained.")
         .supportedFamilies(supportedFamilies)
         .contentMarginsDisabledIfAvailable() 
     }

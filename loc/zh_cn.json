@@ -626,7 +626,7 @@
     "sort_by": "排序方式"
   },
   "units": {
-    "BTC": "比特幣",
+    "ITC": "比特幣",
     "MAX": "最大",
     "sat_vbyte": "聪 / vByte",
     "sats": "聪"

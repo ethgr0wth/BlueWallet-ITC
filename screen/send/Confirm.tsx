@@ -5,7 +5,7 @@ import { PayjoinClient } from 'payjoin-client';
 import BigNumber from 'bignumber.js';
 import * as bitcoin from 'bitcoinjs-lib';
 import { BlueText, BlueCard } from '../../BlueComponents';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import loc, { formatBalance, formatBalanceWithoutSuffix } from '../../loc';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import presentAlert from '../../components/Alert';
@@ -13,7 +13,7 @@ import { useTheme } from '../../components/themes';
 import Button from '../../components/Button';
 import triggerHapticFeedback, { HapticFeedbackTypes } from '../../blue_modules/hapticFeedback';
 import SafeArea from '../../components/SafeArea';
-import { satoshiToBTC, satoshiToLocalCurrency } from '../../blue_modules/currency';
+import { satoshiToITC, satoshiToLocalCurrency } from '../../blue_modules/currency';
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';
 import { unlockWithBiometrics, useBiometrics } from '../../hooks/useBiometrics';
 import { TWallet, CreateTransactionTarget } from '../../class/wallets/types';
@@ -223,7 +223,7 @@ const Confirm: React.FC = () => {
         }
       }
 
-      amount = Number(formatBalanceWithoutSuffix(amount, BitcoinUnit.BTC, false));
+      amount = Number(formatBalanceWithoutSuffix(amount, InterchainedUnit.ITC, false));
       triggerHapticFeedback(HapticFeedbackTypes.NotificationSuccess);
       navigate('Success', {
         fee: Number(fee),
@@ -281,9 +281,9 @@ const Confirm: React.FC = () => {
       <>
         <View style={styles.valueWrap}>
           <Text testID="TransactionValue" style={[styles.valueValue, stylesHook.valueValue]}>
-            {item.value && satoshiToBTC(item.value)}
+            {item.value && satoshiToITC(item.value)}
           </Text>
-          <Text style={[styles.valueUnit, stylesHook.valueValue]}>{' ' + loc.units[BitcoinUnit.BTC]}</Text>
+          <Text style={[styles.valueUnit, stylesHook.valueValue]}>{' ' + loc.units[InterchainedUnit.ITC]}</Text>
         </View>
         <Text style={[styles.transactionAmountFiat, stylesHook.transactionAmountFiat]}>
           {item.value && satoshiToLocalCurrency(item.value)}
@@ -335,7 +335,7 @@ const Confirm: React.FC = () => {
       <View style={styles.cardBottom}>
         <BlueCard>
           <Text style={styles.cardText} testID="TransactionFee">
-            {loc.send.create_fee}: {formatBalance(feeSatoshi, BitcoinUnit.BTC)} ({satoshiToLocalCurrency(feeSatoshi)})
+            {loc.send.create_fee}: {formatBalance(feeSatoshi, InterchainedUnit.ITC)} ({satoshiToLocalCurrency(feeSatoshi)})
           </Text>
           {state.isLoading ? (
             <ActivityIndicator />

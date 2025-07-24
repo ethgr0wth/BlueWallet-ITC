@@ -28,7 +28,7 @@ class MainApplication : Application(), ReactApplication {
         if (key == "preferredCurrency") {
             prefs.edit().remove("previous_price").apply()
             
-            // Update BitcoinPrice widgets
+            // Update InterchainedPrice widgets
             WidgetUpdateWorker.scheduleWork(this)
             
             // Immediately refresh Market widgets

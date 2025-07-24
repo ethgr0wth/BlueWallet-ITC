@@ -3,7 +3,7 @@ import { RouteProp, useFocusEffect, useRoute, useLocale } from '@react-navigatio
 import { ActivityIndicator, Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@rneui/themed';
 
-import { btcToSatoshi, fiatToBTC } from '../../blue_modules/currency';
+import { btcToSatoshi, fiatToITC } from '../../blue_modules/currency';
 import triggerHapticFeedback, { HapticFeedbackTypes } from '../../blue_modules/hapticFeedback';
 import { BlueCard } from '../../BlueComponents';
 import Lnurl from '../../class/lnurl';
@@ -15,7 +15,7 @@ import SafeArea from '../../components/SafeArea';
 import { useTheme } from '../../components/themes';
 import { useBiometrics, unlockWithBiometrics } from '../../hooks/useBiometrics';
 import loc, { formatBalanceWithoutSuffix } from '../../loc';
-import { BitcoinUnit, Chain } from '../../models/bitcoinUnits';
+import { InterchainedUnit, Chain } from '../../models/bitcoinUnits';
 import { useStorage } from '../../hooks/context/useStorage';
 import { DismissKeyboardInputAccessory, DismissKeyboardInputAccessoryViewID } from '../../components/DismissKeyboardInputAccessory';
 import DeeplinkSchemaMatch from '../../class/deeplink-schema-match';
@@ -45,7 +45,7 @@ const ScanLNDInvoice = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [renderWalletSelectionButtonHidden, setRenderWalletSelectionButtonHidden] = useState<boolean>(false);
   const [destination, setDestination] = useState<string>('');
-  const [unit, setUnit] = useState<BitcoinUnit>(BitcoinUnit.SATS);
+  const [unit, setUnit] = useState<InterchainedUnit>(InterchainedUnit.SATS);
   const [decoded, setDecoded] = useState<DecodedInvoice | undefined>();
   const [amount, setAmount] = useState<string | undefined>();
   const [isAmountInitiallyEmpty, setIsAmountInitiallyEmpty] = useState<boolean | undefined>();
@@ -186,14 +186,14 @@ const ScanLNDInvoice = () => {
 
     let amountSats: number = parseInt(amount, 10);
     switch (unit) {
-      case BitcoinUnit.SATS:
+      case InterchainedUnit.SATS:
         // amount is already in sats
         break;
-      case BitcoinUnit.BTC:
+      case InterchainedUnit.ITC:
         amountSats = btcToSatoshi(amount);
         break;
-      case BitcoinUnit.LOCAL_CURRENCY:
-        amountSats = btcToSatoshi(fiatToBTC(Number(amount)));
+      case InterchainedUnit.LOCAL_CURRENCY:
+        amountSats = btcToSatoshi(fiatToITC(Number(amount)));
         break;
     }
     setIsLoading(true);
@@ -223,7 +223,7 @@ const ScanLNDInvoice = () => {
 
     navigate('Success', {
       amount: amountSats,
-      amountUnit: BitcoinUnit.SATS,
+      amountUnit: InterchainedUnit.SATS,
       invoiceDescription: decoded.description,
     });
     fetchAndSaveWalletTransactions(wallet.getID());
@@ -274,9 +274,9 @@ const ScanLNDInvoice = () => {
           <TouchableOpacity accessibilityRole="button" disabled={isLoading} style={styles.walletWrapTouch} onPress={naviageToSelectWallet}>
             <Text style={[styles.walletWrapLabel, stylesHook.walletWrapLabel]}>{walletLabel}</Text>
             <Text style={[styles.walletWrapBalance, stylesHook.walletWrapBalance]}>
-              {formatBalanceWithoutSuffix(wallet.getBalance(), BitcoinUnit.SATS, false)}
+              {formatBalanceWithoutSuffix(wallet.getBalance(), InterchainedUnit.SATS, false)}
             </Text>
-            <Text style={[styles.walletWrapSats, stylesHook.walletWrapSats]}>{BitcoinUnit.SATS}</Text>
+            <Text style={[styles.walletWrapSats, stylesHook.walletWrapSats]}>{InterchainedUnit.SATS}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -288,7 +288,7 @@ const ScanLNDInvoice = () => {
     const num_satoshis = parseInt(decoded.num_satoshis.toString(), 10);
     const min = Math.floor(num_satoshis * 0.003);
     const max = Math.floor(num_satoshis * 0.01) + 1;
-    return `${min} ${BitcoinUnit.SATS} - ${max} ${BitcoinUnit.SATS}`;
+    return `${min} ${InterchainedUnit.SATS} - ${max} ${InterchainedUnit.SATS}`;
   };
 
   const onBlur = (): void => {

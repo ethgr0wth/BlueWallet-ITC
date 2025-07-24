@@ -145,7 +145,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     case .modularLarge:
       let template = CLKComplicationTemplateModularLargeStandardBody()
       if #available(watchOSApplicationExtension 6.0, *) {
-        template.headerTextProvider =  CLKTextProvider(format: "Bitcoin Price")
+        template.headerTextProvider =  CLKTextProvider(format: "Interchained Price")
         template.body1TextProvider = CLKTextProvider(format: "%@%@", currencySymbol, valueLabel)
         template.body2TextProvider = CLKTextProvider(format: "at %@", timeLabel)
         entry = CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
@@ -166,7 +166,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     case .graphicRectangular:
       let template = CLKComplicationTemplateGraphicRectangularStandardBody()
       if #available(watchOSApplicationExtension 6.0, *) {
-        template.headerTextProvider =  CLKTextProvider(format: "Bitcoin Price")
+        template.headerTextProvider =  CLKTextProvider(format: "Interchained Price")
         template.body1TextProvider = CLKTextProvider(format: "%@%@", currencySymbol, valueLabel)
         template.body2TextProvider = CLKTextProvider(format: "at %@", timeLabel)
         entry = CLKComplicationTimelineEntry(date: date, complicationTemplate: template)
@@ -273,7 +273,7 @@ func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler
   case .modularLarge:
     let template = CLKComplicationTemplateModularLargeStandardBody()
     if #available(watchOSApplicationExtension 6.0, *) {
-      template.headerTextProvider =  CLKTextProvider(format: "Bitcoin Price")
+      template.headerTextProvider =  CLKTextProvider(format: "Interchained Price")
       template.body1TextProvider = CLKTextProvider(format: "%@%@", "$S", "46,000")
       template.body2TextProvider = lineTimeText
       handler(template)
@@ -288,7 +288,7 @@ func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler
   case .graphicRectangular:
     let template = CLKComplicationTemplateGraphicRectangularStandardBody()
     if #available(watchOSApplicationExtension 6.0, *) {
-      template.headerTextProvider =  CLKTextProvider(format: "Bitcoin Price")
+      template.headerTextProvider =  CLKTextProvider(format: "Interchained Price")
       template.body1TextProvider = CLKTextProvider(format: "%@%@", "$S", "46,000")
       template.body2TextProvider = CLKTextProvider(format: "%@", Date().description)
       handler(template)

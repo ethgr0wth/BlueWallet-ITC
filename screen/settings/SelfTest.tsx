@@ -143,15 +143,15 @@ export default class SelfTest extends Component {
         false,
         0,
       );
-      const txBitcoin = bitcoin.Transaction.fromHex(txNew.tx!.toHex());
+      const txInterchained = bitcoin.Transaction.fromHex(txNew.tx!.toHex());
       assertStrictEqual(
         txNew.tx!.toHex(),
         '0200000001c4ce4282c157a7f1e4524d153d3a251669f10673ad24e49f6d2994a033e944cc000000006b48304502210091e58bd2021f2eeea8d39d7f7b053c9ccc52a747b60f1c3584ba33285e2d150602205b2d35a2536cbe157015e8c54a26f5fc350cc7c72b5ca80b9e548917993f652201210337c09b3cb889801638078fd4e6998218b28c92d338ea2602720a88847aedceb3ffffffff02905f0100000000001976a914aa381cd428a4e91327fd4434aa0a08ff131f1a5a88ac2e260000000000001976a91426e01119d265aa980390c49eece923976c218f1588ac00000000',
       );
-      assertStrictEqual(txBitcoin.ins.length, 1);
-      assertStrictEqual(txBitcoin.outs.length, 2);
-      assertStrictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(txBitcoin.outs[0].script)); // to address
-      assertStrictEqual(l.getAddress(), bitcoin.address.fromOutputScript(txBitcoin.outs[1].script)); // change address
+      assertStrictEqual(txInterchained.ins.length, 1);
+      assertStrictEqual(txInterchained.outs.length, 2);
+      assertStrictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(txInterchained.outs[0].script)); // to address
+      assertStrictEqual(l.getAddress(), bitcoin.address.fromOutputScript(txInterchained.outs[1].script)); // change address
 
       //
 

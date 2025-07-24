@@ -1,7 +1,7 @@
 import Foundation
 
 class Balance {
-    static func formatBalance(_ balance: Decimal, toUnit: BitcoinUnit, withFormatting: Bool = false, completion: @escaping (String) -> Void) {
+    static func formatBalance(_ balance: Decimal, toUnit: InterchainedUnit, withFormatting: Bool = false, completion: @escaping (String) -> Void) {
       switch toUnit {
       case .sats:
         if withFormatting {
@@ -14,7 +14,7 @@ class Balance {
         
       default:
         let value = balance / Decimal(100_000_000)
-        completion("\(value) BTC") // Localize unit names as needed.
+        completion("\(value) ITC") // Localize unit names as needed.
       }
     }
 
@@ -36,7 +36,7 @@ class Balance {
 }
 
 extension Decimal {
-  func formatted(as unit: BitcoinUnit, withFormatting: Bool = false) -> String {
+  func formatted(as unit: InterchainedUnit, withFormatting: Bool = false) -> String {
         switch unit {
         case .sats:
             return withFormatting ? NumberFormatter.localizedString(from: self as NSNumber, number: .decimal) + " SATS" : "\(self) SATS"
@@ -52,7 +52,7 @@ extension Decimal {
             }
         default:
             let value = self / Decimal(100_000_000)
-            return "\(value) BTC"
+            return "\(value) ITC"
         }
     }
 }

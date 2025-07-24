@@ -26,7 +26,7 @@ import {
 } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
-import { btcToSatoshi, fiatToBTC } from '../../blue_modules/currency';
+import { btcToSatoshi, fiatToITC } from '../../blue_modules/currency';
 import * as fs from '../../blue_modules/fs';
 import triggerHapticFeedback, { HapticFeedbackTypes } from '../../blue_modules/hapticFeedback';
 import { BlueText } from '../../BlueComponents';
@@ -50,7 +50,7 @@ import { useStorage } from '../../hooks/context/useStorage';
 import { useExtendedNavigation } from '../../hooks/useExtendedNavigation';
 import { useKeyboard } from '../../hooks/useKeyboard';
 import loc, { formatBalance, formatBalanceWithoutSuffix } from '../../loc';
-import { BitcoinUnit, Chain } from '../../models/bitcoinUnits';
+import { InterchainedUnit, Chain } from '../../models/bitcoinUnits';
 import NetworkTransactionFees, { NetworkTransactionFee, NetworkTransactionFeeType } from '../../models/networkTransactionFees';
 import { SendDetailsStackParamList } from '../../navigation/SendDetailsStackParamList';
 import { CommonToolTipActions, ToolTipAction } from '../../typings/CommonToolTipActions';
@@ -61,7 +61,7 @@ interface IPaymentDestinations {
   amountSats?: number | string;
   amount?: string | number | 'MAX';
   key: string; // random id to look up this record
-  unit: BitcoinUnit;
+  unit: InterchainedUnit;
 }
 
 export interface IFee {
@@ -80,8 +80,8 @@ const SendDetails = () => {
   const selectedDataProcessor = useRef<ToolTipAction | undefined>();
   const setParams = navigation.setParams;
   const route = useRoute<RouteProps>();
-  const feeUnit = route.params?.feeUnit ?? BitcoinUnit.BTC;
-  const amountUnit = route.params?.amountUnit ?? BitcoinUnit.BTC;
+  const feeUnit = route.params?.feeUnit ?? InterchainedUnit.ITC;
+  const amountUnit = route.params?.amountUnit ?? InterchainedUnit.ITC;
   const frozenBalance = route.params?.frozenBalance ?? 0;
   const transactionMemo = route.params?.transactionMemo;
   const utxos = route.params?.utxos;
@@ -108,7 +108,7 @@ const SendDetails = () => {
   const { isEditable } = routeParams;
   // if utxo is limited we use it to calculate available balance
   const balance: number = utxos ? utxos.reduce((prev, curr) => prev + curr.value, 0) : (wallet?.getBalance() ?? 0);
-  const allBalance = formatBalanceWithoutSuffix(balance, BitcoinUnit.BTC, true);
+  const allBalance = formatBalanceWithoutSuffix(balance, InterchainedUnit.ITC, true);
 
   // if cutomFee is not set, we need to choose highest possible fee for wallet balance
   // if there are no funds for even Slow option, use 1 sat/vbyte fee
@@ -156,10 +156,10 @@ const SendDetails = () => {
     const currentAddress = addresses[scrollIndex.current];
     if (routeParams.uri) {
       try {
-        const { address, amount, memo, payjoinUrl: pjUrl } = DeeplinkSchemaMatch.decodeBitcoinUri(routeParams.uri);
+        const { address, amount, memo, payjoinUrl: pjUrl } = DeeplinkSchemaMatch.decodeInterchainedUri(routeParams.uri);
 
         setAddresses(addrs => {
-          addrs[scrollIndex.current].unit = BitcoinUnit.BTC;
+          addrs[scrollIndex.current].unit = InterchainedUnit.ITC;
           return [...addrs];
         });
 
@@ -180,7 +180,7 @@ const SendDetails = () => {
         if (memo?.trim().length > 0) {
           setParams({ transactionMemo: memo });
         }
-        setParams({ payjoinUrl: pjUrl, amountUnit: BitcoinUnit.BTC });
+        setParams({ payjoinUrl: pjUrl, amountUnit: InterchainedUnit.ITC });
       } catch (error) {
         console.log(error);
         triggerHapticFeedback(HapticFeedbackTypes.NotificationError);
@@ -312,7 +312,7 @@ const SendDetails = () => {
 
     let targets = [];
     for (const transaction of addresses) {
-      if (transaction.amount === BitcoinUnit.MAX) {
+      if (transaction.amount === InterchainedUnit.MAX) {
         // single output with MAX
         targets = [{ address: transaction.address }];
         break;
@@ -430,7 +430,7 @@ const SendDetails = () => {
 
       const cl = new ContactList();
 
-      const dataWithoutSchema = data.replace('bitcoin:', '').replace('BITCOIN:', '');
+      const dataWithoutSchema = data.replace('bitcoin:', '').replace('INTERCHAINED:', '');
       if (wallet.isAddressValid(dataWithoutSchema) || cl.isPaymentCodeValid(dataWithoutSchema)) {
         setAddresses(addrs => {
           addrs[scrollIndex.current].address = dataWithoutSchema;
@@ -465,10 +465,10 @@ const SendDetails = () => {
           return [...addrs];
         });
         setAddresses(addrs => {
-          addrs[scrollIndex.current].unit = BitcoinUnit.BTC;
+          addrs[scrollIndex.current].unit = InterchainedUnit.ITC;
           return [...addrs];
         });
-        setParams({ transactionMemo: options.label || '', amountUnit: BitcoinUnit.BTC, payjoinUrl: options.pj || '' }); // there used to be `options.message` here as well. bug?
+        setParams({ transactionMemo: options.label || '', amountUnit: InterchainedUnit.ITC, payjoinUrl: options.pj || '' }); // there used to be `options.message` here as well. bug?
         // RN Bug: contentOffset gets reset to 0 when state changes. Remove code once this bug is resolved.
         setTimeout(() => scrollView.current?.scrollToIndex({ index: currentIndex, animated: false }), 50);
       }
@@ -580,7 +580,7 @@ const SendDetails = () => {
 
     const targets: CreateTransactionTarget[] = [];
     for (const transaction of addresses) {
-      if (transaction.amount === BitcoinUnit.MAX) {
+      if (transaction.amount === InterchainedUnit.MAX) {
         // output with MAX
         targets.push({ address: transaction.address });
         continue;
@@ -1037,12 +1037,12 @@ const SendDetails = () => {
       if (buttonIndex === 1) {
         Keyboard.dismiss();
         setAddresses(addrs => {
-          addrs[scrollIndex.current].amount = BitcoinUnit.MAX;
-          addrs[scrollIndex.current].amountSats = BitcoinUnit.MAX;
+          addrs[scrollIndex.current].amount = InterchainedUnit.MAX;
+          addrs[scrollIndex.current].amountSats = InterchainedUnit.MAX;
           return [...addrs];
         });
         setAddresses(addrs => {
-          addrs[scrollIndex.current].unit = BitcoinUnit.BTC;
+          addrs[scrollIndex.current].unit = InterchainedUnit.ITC;
           return [...addrs];
         });
       }
@@ -1118,7 +1118,7 @@ const SendDetails = () => {
     ];
     walletActions.push(recipientActions);
 
-    const isSendMaxUsed = addresses.some(element => element.amount === BitcoinUnit.MAX);
+    const isSendMaxUsed = addresses.some(element => element.amount === InterchainedUnit.MAX);
     const sendMaxAction: Action[] = [
       {
         ...CommonToolTipActions.SendMax,
@@ -1340,7 +1340,7 @@ const SendDetails = () => {
     );
   };
 
-  const renderBitcoinTransactionInfoFields = (params: { item: IPaymentDestinations; index: number }) => {
+  const renderInterchainedTransactionInfoFields = (params: { item: IPaymentDestinations; index: number }) => {
     const { item, index } = params;
     return (
       <View style={[styles.transactionItemContainer, { width: dimensions.width }]} testID={'Transaction' + index}>
@@ -1348,20 +1348,20 @@ const SendDetails = () => {
           <AmountInput.AmountInput
             isLoading={isLoading}
             amount={item.amount ? item.amount.toString() : undefined}
-            onAmountUnitChange={(unit: BitcoinUnit) => {
+            onAmountUnitChange={(unit: InterchainedUnit) => {
               setAddresses(addrs => {
                 const addr = addrs[index];
 
                 switch (unit) {
-                  case BitcoinUnit.SATS:
+                  case InterchainedUnit.SATS:
                     addr.amountSats = parseInt(String(addr.amount), 10);
                     break;
-                  case BitcoinUnit.BTC:
+                  case InterchainedUnit.ITC:
                     addr.amountSats = btcToSatoshi(String(addr.amount));
                     break;
-                  case BitcoinUnit.LOCAL_CURRENCY:
+                  case InterchainedUnit.LOCAL_CURRENCY:
                     // also accounting for cached fiat->sat conversion to avoid rounding error
-                    addr.amountSats = AmountInput.getCachedSatoshis(String(addr.amount)) || btcToSatoshi(fiatToBTC(Number(addr.amount)));
+                    addr.amountSats = AmountInput.getCachedSatoshis(String(addr.amount)) || btcToSatoshi(fiatToITC(Number(addr.amount)));
                     break;
                 }
 
@@ -1377,13 +1377,13 @@ const SendDetails = () => {
               setAddresses(addrs => {
                 item.amount = text;
                 switch (item.unit || amountUnit) {
-                  case BitcoinUnit.BTC:
+                  case InterchainedUnit.ITC:
                     item.amountSats = btcToSatoshi(item.amount);
                     break;
-                  case BitcoinUnit.LOCAL_CURRENCY:
-                    item.amountSats = btcToSatoshi(fiatToBTC(Number(item.amount)));
+                  case InterchainedUnit.LOCAL_CURRENCY:
+                    item.amountSats = btcToSatoshi(fiatToITC(Number(item.amount)));
                     break;
-                  case BitcoinUnit.SATS:
+                  case InterchainedUnit.SATS:
                   default:
                     item.amountSats = parseInt(text, 10);
                     break;
@@ -1406,7 +1406,7 @@ const SendDetails = () => {
             onPress={handleCoinControl}
           >
             <BlueText>
-              {loc.formatString(loc.send.details_frozen, { amount: formatBalanceWithoutSuffix(frozenBalance, BitcoinUnit.BTC, true) })}
+              {loc.formatString(loc.send.details_frozen, { amount: formatBalanceWithoutSuffix(frozenBalance, InterchainedUnit.ITC, true) })}
             </BlueText>
           </Pressable>
         )}
@@ -1414,7 +1414,7 @@ const SendDetails = () => {
         <View style={styles.addressInputContainer}>
           <AddressInput
             onChangeText={text => {
-              const { address, amount, memo, payjoinUrl: pjUrl } = DeeplinkSchemaMatch.decodeBitcoinUri(text.trim());
+              const { address, amount, memo, payjoinUrl: pjUrl } = DeeplinkSchemaMatch.decodeInterchainedUri(text.trim());
               setAddresses(addrs => {
                 item.address = address || text.trim();
                 item.amount = amount || item.amount;
@@ -1469,7 +1469,7 @@ const SendDetails = () => {
           keyboardShouldPersistTaps="always"
           scrollEnabled={addresses.length > 1}
           data={addresses}
-          renderItem={renderBitcoinTransactionInfoFields}
+          renderItem={renderInterchainedTransactionInfoFields}
           horizontal
           ref={scrollView}
           automaticallyAdjustKeyboardInsets

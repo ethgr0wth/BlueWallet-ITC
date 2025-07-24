@@ -3,7 +3,7 @@ import { InputAccessoryView, Keyboard, Platform, StyleSheet, View } from 'react-
 import { Text } from '@rneui/themed';
 import { BlueButtonLink } from '../BlueComponents';
 import loc from '../loc';
-import { BitcoinUnit } from '../models/bitcoinUnits';
+import { InterchainedUnit } from '../models/bitcoinUnits';
 import { useTheme } from './themes';
 
 interface InputAccessoryAllFundsProps {
@@ -32,10 +32,10 @@ const InputAccessoryAllFunds: React.FC<InputAccessoryAllFundsProps> = ({ balance
       <View style={styles.left}>
         <Text style={[styles.totalLabel, stylesHook.totalLabel]}>{loc.send.input_total}</Text>
         {canUseAll ? (
-          <BlueButtonLink onPress={onUseAllPressed} style={styles.totalCan} title={`${balance} ${BitcoinUnit.BTC}`} />
+          <BlueButtonLink onPress={onUseAllPressed} style={styles.totalCan} title={`${balance} ${InterchainedUnit.ITC}`} />
         ) : (
           <Text style={[styles.totalCanNot, stylesHook.totalCanNot]}>
-            {balance} {BitcoinUnit.BTC}
+            {balance} {InterchainedUnit.ITC}
           </Text>
         )}
       </View>

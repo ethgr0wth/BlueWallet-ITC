@@ -292,10 +292,10 @@ class WatchDataSource: NSObject, ObservableObject, WCSessionDelegate {
             
             let wallet = Wallet(
                 label: label,
-                balance: "\(balance) BTC",
+                balance: "\(balance) ITC",
                 type: WalletType(rawString: typeString),
                 chain: chain,
-                preferredBalanceUnit: BitcoinUnit(rawString: preferredBalanceUnitString),
+                preferredBalanceUnit: InterchainedUnit(rawString: preferredBalanceUnitString),
                 receiveAddress: receiveAddress,
                 transactions: transactionsProcessed,
                 xpub: xpub,

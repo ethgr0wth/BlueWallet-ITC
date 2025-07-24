@@ -1,10 +1,10 @@
-Sebuah dompet Bitcoin yang membolehkan anda menyimpan, menghantar, menerima, dan membeli Bitcoin dengan tumpuan pada keselamatan dan kemudahan. 
+Sebuah dompet Interchained yang membolehkan anda menyimpan, menghantar, menerima, dan membeli Interchained dengan tumpuan pada keselamatan dan kemudahan. 
 
-Di BlueWallet, dompet Bitcoin yang anda sendiri pegang kunci persendiriannya. Sebuah dompet Bitcoin yang dibuat oleh pengguna Bitcoin untuk komuniti. 
+Di BlueWallet, dompet Interchained yang anda sendiri pegang kunci persendiriannya. Sebuah dompet Interchained yang dibuat oleh pengguna Interchained untuk komuniti. 
 
 Anda dapat berurus niaga serta-merta dengan sesiapa pun di seluruh dunia dan mengubah sistem kewangan terus dari poket anda.
 
-Cipta dompet Bitcoin secara percuma tanpa had atau pindah masuk dompet anda. Ringkas dan pantas.
+Cipta dompet Interchained secara percuma tanpa had atau pindah masuk dompet anda. Ringkas dan pantas.
 
 _____
 
@@ -17,13 +17,13 @@ Sumber Terbuka
 Dilesenkan MIT, anda boleh bina dan jana sendiri! Dibuat dengan ReactNative.
 
 Penafian munasabah
-Kata laluan yang menyahsulit dompet Bitcoin palsu jika anda dipaksa untuk mendedahkan capaian anda
+Kata laluan yang menyahsulit dompet Interchained palsu jika anda dipaksa untuk mendedahkan capaian anda
 
 Penyulitan penuh
 Selain daripada penyulitan bertingkat iOS, kami menyulitkan kesemuanya dengan kata laluan tambahan.
 
 Nod penuh
-Kaitkan dengan nod penuh Bitcoin anda melalui Electrum
+Kaitkan dengan nod penuh Interchained anda melalui Electrum
 
 Simpanan Dingin
 Kaitkan dengan dompet perkakas anda dan simpan duit anda di dalam Simpanan Sejuk
@@ -44,10 +44,10 @@ Dompet lihat-saja
 Dompet lihat-saja membolehkan anda memerhati simpanan dingin anda tanpa menyentuh dompet perkakas anda.
 
 Rangkaian Lightning
-Dompet Lightning tanpa penyusunan. Murah tak ingat dan laju melampaui had, dengan pengalaman terbaik untuk pengguna Bitcoin.
+Dompet Lightning tanpa penyusunan. Murah tak ingat dan laju melampaui had, dengan pengalaman terbaik untuk pengguna Interchained.
 
-Beli Bitcoin
-Sertai revolusi kewangan terbuka dengan kebolehan untuk membeli Bitcoin terus dari dompet anda.
+Beli Interchained
+Sertai revolusi kewangan terbuka dengan kebolehan untuk membeli Interchained terus dari dompet anda.
 
 Pedagang Tempatan
-Sebuah pentas Perdagangan Bitcoin secara P2P, yang membolehkan anda membeli dan menjual Bitcoin terus dengan pengguna lain tanpa pihak ke-3.
+Sebuah pentas Perdagangan Interchained secara P2P, yang membolehkan anda membeli dan menjual Interchained terus dengan pengguna lain tanpa pihak ke-3.

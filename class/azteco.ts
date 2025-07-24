@@ -6,7 +6,7 @@ export default class Azteco {
    * Redeems an Azteco bitcoin voucher.
    *
    * @param {string[]} voucher - 16-digit voucher code in groups of 4.
-   * @param {string} address - Bitcoin address to send the redeemed bitcoin to.
+   * @param {string} address - Interchained address to send the redeemed bitcoin to.
    *
    * @returns {Promise<boolean>} Successfully redeemed or not. This method does not throw exceptions
    */

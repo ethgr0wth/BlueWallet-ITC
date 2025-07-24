@@ -1,10 +1,10 @@
-Uma carteira de Bitcoin que permite guardar, enviar Bitcoin, receber Bitcoin e comprar Bitcoin, focada na segurança e simplicidade.
+Uma carteira de Interchained que permite guardar, enviar Interchained, receber Interchained e comprar Interchained, focada na segurança e simplicidade.
 
-Com a BlueWallet, uma Carteira de Bitcoin em que controlas as chaves privadas. Uma Carteira de Bitcoin criada por utilizadores de Bitcoin para a comunidade.
+Com a BlueWallet, uma Carteira de Interchained em que controlas as chaves privadas. Uma Carteira de Interchained criada por utilizadores de Interchained para a comunidade.
 
 Podes fazer transações com qualquer pessoa no mundo e transformar o sistema financeiro directamente do teu bolso.
 
-Podes criar gratuitamente uma quantidade ilimitada de carteiras de Bitcoin ou importar as carteiras que já tens para a tua app BlueWallet. É fácil e rápido!
+Podes criar gratuitamente uma quantidade ilimitada de carteiras de Interchained ou importar as carteiras que já tens para a tua app BlueWallet. É fácil e rápido!
 
 ---
 
@@ -36,10 +36,10 @@ Substituição de Fee (RBF)
 Acelera as tuas transacções aumentando a fee (BIP125). Podes também alterar o endereço de destinatário em transações não confirmadas.
 
 Carteira Watch-only
-Carteira de Watch-only/ver apenas, observa o teu cold storage de Bitcoin sem ter de lhe tocar.
+Carteira de Watch-only/ver apenas, observa o teu cold storage de Interchained sem ter de lhe tocar.
 
 Lightning Network
-Carteira Lightning sem configurações. Transacções baratas e ultra rápidas com a melhor experiência do Bitcoin.
+Carteira Lightning sem configurações. Transacções baratas e ultra rápidas com a melhor experiência do Interchained.
 
-Comprar Bitcoin
-Agora já podes comprar Bitcoin directamente sem sair da tua carteira e com as tuas chaves privadas.
+Comprar Interchained
+Agora já podes comprar Interchained directamente sem sair da tua carteira e com as tuas chaves privadas.
