@@ -16,14 +16,14 @@ type TContext = {
   setSharedCosigner: (cosigner: string) => void;
 };
 
-type TBothInterchainedAndLightning = { bitcoin: string; lndInvoice: string } | undefined;
+type TBothInterchainedAndLightning = { interchained: string; lndInvoice: string } | undefined;
 
 class DeeplinkSchemaMatch {
   static hasSchema(schemaString: string): boolean {
     if (typeof schemaString !== 'string' || schemaString.length <= 0) return false;
     const lowercaseString = schemaString.trim().toLowerCase();
     return (
-      lowercaseString.startsWith('bitcoin:') ||
+      lowercaseString.startsWith('interchained:') ||
       lowercaseString.startsWith('lightning:') ||
       lowercaseString.startsWith('blue:') ||
       lowercaseString.startsWith('bluewallet:') ||
@@ -36,7 +36,7 @@ class DeeplinkSchemaMatch {
    * If the content is recognizable, create a dictionary with the respective
    * navigation dictionary required by react-navigation
    *
-   * @param event {{url: string}} URL deeplink as passed to app, e.g. `bitcoin:bc1qh6tf004ty7z7un2v5ntu4mkf630545gvhs45u7?amount=666&label=Yo`
+   * @param event {{url: string}} URL deeplink as passed to app, e.g. `interchained:bc1qh6tf004ty7z7un2v5ntu4mkf630545gvhs45u7?amount=666&label=Yo`
    * @param completionHandler {function} Callback that returns [string, params: object]
    */
   static navigationRouteFor(
@@ -51,7 +51,7 @@ class DeeplinkSchemaMatch {
       return;
     }
 
-    if (event.url.toLowerCase().startsWith('bluewallet:bitcoin:') || event.url.toLowerCase().startsWith('bluewallet:lightning:')) {
+    if (event.url.toLowerCase().startsWith('bluewallet:interchained:') || event.url.toLowerCase().startsWith('bluewallet:lightning:')) {
       event.url = event.url.substring(11);
     } else if (event.url.toLocaleLowerCase().startsWith('bluewallet://widget?action=')) {
       event.url = event.url.substring('bluewallet://'.length);
@@ -318,7 +318,7 @@ class DeeplinkSchemaMatch {
   }
 
   static isInterchainedAddress(address: string): boolean {
-    address = address.replace('://', ':').replace('bitcoin:', '').replace('INTERCHAINED:', '').replace('bitcoin=', '').split('?')[0];
+    address = address.replace('://', ':').replace('interchained:', '').replace('INTERCHAINED:', '').replace('interchained=', '').split('?')[0];
     let isValidInterchainedAddress = false;
     try {
       bitcoin.address.toOutputScript(address);
@@ -364,15 +364,15 @@ class DeeplinkSchemaMatch {
   }
 
   static isBothInterchainedAndLightning(url: string): TBothInterchainedAndLightning {
-    if (url.includes('lightning') && (url.includes('bitcoin') || url.includes('INTERCHAINED'))) {
-      const txInfo = url.split(/(bitcoin:\/\/|INTERCHAINED:\/\/|bitcoin:|INTERCHAINED:|lightning:|lightning=|bitcoin=)+/);
+    if (url.includes('lightning') && (url.includes('interchained') || url.includes('INTERCHAINED'))) {
+      const txInfo = url.split(/(interchained:\/\/|INTERCHAINED:\/\/|interchained:|INTERCHAINED:|lightning:|lightning=|interchained=)+/);
       let btc: string | false = false;
       let lndInvoice: string | false = false;
       for (const [index, value] of txInfo.entries()) {
         try {
           // Inside try-catch. We dont wan't to  crash in case of an out-of-bounds error.
           if (value.startsWith('bitcoin') || value.startsWith('INTERCHAINED')) {
-            btc = `bitcoin:${txInfo[index + 1]}`;
+            btc = `interchained:${txInfo[index + 1]}`;
             if (!DeeplinkSchemaMatch.isInterchainedAddress(btc)) {
               btc = false;
               break;
@@ -391,7 +391,7 @@ class DeeplinkSchemaMatch {
         if (btc && lndInvoice) break;
       }
       if (btc && lndInvoice) {
-        return { bitcoin: btc, lndInvoice };
+        return { interchained: btc, lndInvoice };
       } else {
         return undefined;
       }
@@ -404,8 +404,8 @@ class DeeplinkSchemaMatch {
       throw new Error('No URI provided');
     }
     let replacedUri = uri;
-    for (const replaceMe of ['INTERCHAINED://', 'bitcoin://', 'INTERCHAINED:']) {
-      replacedUri = replacedUri.replace(replaceMe, 'bitcoin:');
+    for (const replaceMe of ['INTERCHAINED://', 'interchained://', 'INTERCHAINED:']) {
+      replacedUri = replacedUri.replace(replaceMe, 'interchained:');
     }
 
     return bip21.decode(replacedUri);

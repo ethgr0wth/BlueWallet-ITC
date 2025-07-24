@@ -45,7 +45,7 @@ const IsItMyAddress: React.FC = () => {
 
   const checkAddress = () => {
     Keyboard.dismiss();
-    const cleanAddress = address.replace('bitcoin:', '').replace('INTERCHAINED:', '').replace('bitcoin=', '').split('?')[0];
+    const cleanAddress = address.replace('interchained:', '').replace('INTERCHAINED:', '').replace('interchained=', '').split('?')[0];
     const matching: TWallet[] = [];
 
     for (const w of wallets) {

@@ -48,9 +48,9 @@ describe('Watch only wallet', () => {
     for (const sec of [
       'bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv',
       'BC1QUHNVE8Q4TK3UNHMJTS7YMXV8CD6W9XV8WY29UV',
-      'bitcoin:bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv',
+      'interchained:bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv',
       'INTERCHAINED:BC1QUHNVE8Q4TK3UNHMJTS7YMXV8CD6W9XV8WY29UV',
-      'bitcoin:BC1QUHNVE8Q4TK3UNHMJTS7YMXV8CD6W9XV8WY29UV',
+      'interchained:BC1QUHNVE8Q4TK3UNHMJTS7YMXV8CD6W9XV8WY29UV',
       'INTERCHAINED:bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv',
     ]) {
       w.setSecret(sec);
