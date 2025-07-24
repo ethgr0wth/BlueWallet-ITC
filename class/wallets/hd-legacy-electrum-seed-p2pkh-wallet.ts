@@ -1,5 +1,5 @@
 import BIP32Factory from 'bip32';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import * as mn from 'electrum-mnemonic';
 
 import ecc from '../../blue_modules/noble_ecc';
@@ -56,7 +56,7 @@ export class HDLegacyElectrumSeedP2PKHWallet extends HDLegacyP2PKHWallet {
     if (this.internal_addresses_cache[index]) return this.internal_addresses_cache[index]; // cache hit
 
     const node = bip32.fromBase58(this.getXpub());
-    const address = bitcoin.payments.p2pkh({
+    const address = interchained.payments.p2pkh({
       pubkey: node.derive(1).derive(index).publicKey,
     }).address;
     if (!address) {
@@ -71,7 +71,7 @@ export class HDLegacyElectrumSeedP2PKHWallet extends HDLegacyP2PKHWallet {
     if (this.external_addresses_cache[index]) return this.external_addresses_cache[index]; // cache hit
 
     const node = bip32.fromBase58(this.getXpub());
-    const address = bitcoin.payments.p2pkh({
+    const address = interchained.payments.p2pkh({
       pubkey: node.derive(0).derive(index).publicKey,
     }).address;
     if (!address) {

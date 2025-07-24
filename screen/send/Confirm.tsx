@@ -1,9 +1,10 @@
+import { INTERCHAINED } from '../../class/wallets/_interchained-network';
 import React, { useEffect, useMemo, useReducer } from 'react';
 import { ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, Switch, View } from 'react-native';
 import { Text } from '@rneui/themed';
 import { PayjoinClient } from 'payjoin-client';
 import BigNumber from 'bignumber.js';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import { BlueText, BlueCard } from '../../BlueComponents';
 import { InterchainedUnit } from '../../models/bitcoinUnits';
 import loc, { formatBalance, formatBalanceWithoutSuffix } from '../../loc';
@@ -168,7 +169,7 @@ const Confirm: React.FC = () => {
     if (!(recipients.length > 0) || !recipients[0].address) {
       return undefined;
     }
-    return bitcoin.address.toOutputScript(recipients[0].address, bitcoin.networks.bitcoin);
+    return interchained.address.toOutputScript(recipients[0].address, INTERCHAINED);
   };
 
   const handleSendTransaction = async () => {
@@ -213,7 +214,7 @@ const Confirm: React.FC = () => {
         }
       }
 
-      const txid = bitcoin.Transaction.fromHex(tx).getId();
+      const txid = interchained.Transaction.fromHex(tx).getId();
       txidsToWatch.push(txid);
       majorTomToGroundControl([], [], txidsToWatch);
       let amount = 0;

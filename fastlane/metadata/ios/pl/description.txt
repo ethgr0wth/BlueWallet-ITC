@@ -17,7 +17,7 @@ Otwarte Źródła
 Na licencji MIT, możesz budować, uruchamiać na własną rękę! Wykonane przy użyciu ReactNative
 
 Wiarygodna zaprzeczalność
-Hasło, które deszyfruje fałszywe portfele bitcoin, gdy jesteś zmuszony do ujawnienia dostępu
+Hasło, które deszyfruje fałszywe portfele interchained, gdy jesteś zmuszony do ujawnienia dostępu
 
 Pełne szyfrowanie
 Korzystając z wielo-warstwowego szyfrowania systemu iOS, szyfrujemy wszystko z dodatkowymi hasłami

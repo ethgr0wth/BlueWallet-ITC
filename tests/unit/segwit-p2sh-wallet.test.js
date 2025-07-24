@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import { SegwitP2SHWallet } from '../../class';
 
@@ -21,7 +21,7 @@ describe('Segwit P2SH wallet', () => {
     ];
 
     let txNew = wallet.createTransaction(utxos, [{ value: 90000, address: '1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB' }], 1, wallet.getAddress());
-    let tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    let tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     const satPerVbyte = txNew.fee / tx.virtualSize();
     assert.strictEqual(Math.round(satPerVbyte), 1);
     assert.strictEqual(
@@ -30,15 +30,15 @@ describe('Segwit P2SH wallet', () => {
     );
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 2);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
-    assert.strictEqual(bitcoin.address.fromOutputScript(tx.outs[1].script), wallet.getAddress()); // change address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual(interchained.address.fromOutputScript(tx.outs[1].script), wallet.getAddress()); // change address
 
     // sendMax
     txNew = wallet.createTransaction(utxos, [{ address: '1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB' }], 1, wallet.getAddress());
-    tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 1);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
   });
 
   it('can sign and verify messages', async () => {

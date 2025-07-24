@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import { HDLegacyP2PKHWallet } from '../../class';
 
@@ -102,13 +102,13 @@ describe('Legacy HD (BIP44)', () => {
       1,
       hd._getInternalAddressByIndex(hd.next_free_change_address_index),
     );
-    let tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    let tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(tx.ins.length, 3);
     assert.strictEqual(tx.outs.length, 2);
     assert.strictEqual(tx.outs[0].value, 80000n); // payee
     assert.strictEqual(tx.outs[1].value, 9478n); // change
-    let toAddress = bitcoin.address.fromOutputScript(tx.outs[0].script);
-    const changeAddress = bitcoin.address.fromOutputScript(tx.outs[1].script);
+    let toAddress = interchained.address.fromOutputScript(tx.outs[0].script);
+    const changeAddress = interchained.address.fromOutputScript(tx.outs[1].script);
     assert.strictEqual('3GcKN7q7gZuZ8eHygAhHrvPa5zZbG5Q1rK', toAddress);
     assert.strictEqual(hd._getInternalAddressByIndex(hd.next_free_change_address_index), changeAddress);
 
@@ -119,10 +119,10 @@ describe('Legacy HD (BIP44)', () => {
       1,
       hd._getInternalAddressByIndex(hd.next_free_change_address_index),
     );
-    tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(tx.ins.length, 4);
     assert.strictEqual(tx.outs.length, 1);
-    toAddress = bitcoin.address.fromOutputScript(tx.outs[0].script);
+    toAddress = interchained.address.fromOutputScript(tx.outs[0].script);
     assert.strictEqual('3GcKN7q7gZuZ8eHygAhHrvPa5zZbG5Q1rK', toAddress);
   });
 

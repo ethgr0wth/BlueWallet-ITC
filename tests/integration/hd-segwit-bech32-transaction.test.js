@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';
 import { HDSegwitBech32Transaction, HDSegwitBech32Wallet, SegwitBech32Wallet, SegwitP2SHWallet } from '../../class';
@@ -115,7 +115,7 @@ describe('HDSegwitBech32Transaction', () => {
 
     const { tx } = await tt.createRBFcancelTx(25);
 
-    const createdTx = bitcoin.Transaction.fromHex(tx.toHex());
+    const createdTx = interchained.Transaction.fromHex(tx.toHex());
     assert.strictEqual(createdTx.ins.length, 2);
     assert.strictEqual(createdTx.outs.length, 1);
     const addr = SegwitBech32Wallet.scriptPubKeyToAddress(createdTx.outs[0].script);
@@ -143,7 +143,7 @@ describe('HDSegwitBech32Transaction', () => {
 
     const { tx } = await tt.createRBFbumpFee(27);
 
-    const createdTx = bitcoin.Transaction.fromHex(tx.toHex());
+    const createdTx = interchained.Transaction.fromHex(tx.toHex());
     assert.strictEqual(createdTx.ins.length, 2);
     assert.strictEqual(createdTx.outs.length, 2);
     const addr0 = SegwitP2SHWallet.scriptPubKeyToAddress(createdTx.outs[0].script);

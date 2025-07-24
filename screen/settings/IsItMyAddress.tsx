@@ -85,7 +85,7 @@ const IsItMyAddress: React.FC = () => {
 
   const importScan = async () => {
     const value = await scanQrHelper();
-    const cleanAddress = value.replace(/^bitcoin(:|=)/i, '').split('?')[0];
+    const cleanAddress = value.replace(/^interchained(:|=)/i, '').split('?')[0];
     setAddress(value);
     setResultCleanAddress(cleanAddress);
   };

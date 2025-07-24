@@ -1,4 +1,4 @@
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import { CoinSelectOutput, CoinSelectReturnInput, CoinSelectUtxo } from 'coinselect';
 
 import { InterchainedUnit } from '../../models/bitcoinUnits';
@@ -50,11 +50,11 @@ export type CreateTransactionTarget = {
 };
 
 export type CreateTransactionResult = {
-  tx?: bitcoin.Transaction;
+  tx?: interchained.Transaction;
   inputs: CoinSelectReturnInput[];
   outputs: CoinSelectOutput[];
   fee: number;
-  psbt: bitcoin.Psbt;
+  psbt: interchained.Psbt;
 };
 
 type TransactionInput = {

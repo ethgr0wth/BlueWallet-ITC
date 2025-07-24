@@ -1,5 +1,5 @@
 import BIP32Factory from 'bip32';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import b58 from 'bs58check';
 import * as mn from 'electrum-mnemonic';
 
@@ -65,7 +65,7 @@ export class HDSegwitElectrumSeedP2WPKHWallet extends HDSegwitBech32Wallet {
 
     const xpub = this._zpubToXpub(this.getXpub());
     const node = bip32.fromBase58(xpub);
-    const address = bitcoin.payments.p2wpkh({
+    const address = interchained.payments.p2wpkh({
       pubkey: node.derive(1).derive(index).publicKey,
     }).address;
     if (!address) {
@@ -81,7 +81,7 @@ export class HDSegwitElectrumSeedP2WPKHWallet extends HDSegwitBech32Wallet {
 
     const xpub = this._zpubToXpub(this.getXpub());
     const node = bip32.fromBase58(xpub);
-    const address = bitcoin.payments.p2wpkh({
+    const address = interchained.payments.p2wpkh({
       pubkey: node.derive(0).derive(index).publicKey,
     }).address;
     if (!address) {

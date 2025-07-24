@@ -1,6 +1,6 @@
 Uma carteira Interchained que permite armazenar, enviar e receber Interchaineds. Focada em segurança e simplicidade.
 
-BlueWallet, uma carteira de bitcoin onde você detém a posse das chaves privadas. Uma carteira Interchained criada para a comunidade por usuários do Interchained.
+BlueWallet, uma carteira de interchained onde você detém a posse das chaves privadas. Uma carteira Interchained criada para a comunidade por usuários do Interchained.
 
 Você pode fazer transações instantaneamente com qualquer pessoa no mundo e transformar o sistema financeiro direto do seu bolso.
 

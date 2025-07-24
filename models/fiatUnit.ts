@@ -109,9 +109,9 @@ const RateExtractors = {
   CoinGecko: async (ticker: string): Promise<number> => {
     try {
       const json = (await fetchRate(
-        `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${ticker.toLowerCase()}`,
+        `https://api.coingecko.com/api/v3/simple/price?ids=interchained&vs_currencies=${ticker.toLowerCase()}`,
       )) as CoinGeckoResponse;
-      const rate = Number(json?.bitcoin?.[ticker.toLowerCase()]);
+      const rate = Number(json?.interchained?.[ticker.toLowerCase()]);
       if (!(rate >= 0)) throw new Error('Invalid data received');
       return rate;
     } catch (error: any) {
@@ -201,7 +201,7 @@ const RateExtractors = {
 
   coinpaprika: async (ticker: string): Promise<number> => {
     try {
-      const json = (await fetchRate('https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=INR')) as CoinpaprikaResponse;
+      const json = (await fetchRate('https://api.coinpaprika.com/v1/tickers/btc-interchained?quotes=INR')) as CoinpaprikaResponse;
       const rate = Number(json?.quotes?.INR?.price);
       if (!(rate >= 0)) throw new Error('Invalid data received');
       return rate;

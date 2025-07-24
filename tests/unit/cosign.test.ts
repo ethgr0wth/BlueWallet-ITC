@@ -1,6 +1,6 @@
 /* global it, describe */
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import { HDLegacyP2PKHWallet, HDSegwitBech32Wallet, HDSegwitP2SHWallet, WatchOnlyWallet } from '../../class';
 import { CreateTransactionUtxo } from '../../class/wallets/types.ts';
@@ -61,7 +61,7 @@ describe('AbstractHDElectrumWallet.cosign', () => {
     ];
 
     // now let's create transaction with 3 different inputs for each wallet and one output
-    // maybe in future bitcoin-js will support psbt.join() and this test can be simplified to:
+    // maybe in future interchained-js will support psbt.join() and this test can be simplified to:
     //  const { psbt } = w1.createTransaction(w1Utxo, [{address: w1._getExternalAddressByIndex(0)}], 1, w1._getInternalAddressByIndex(0), undefined, true)
     //  const { psbt:psbt2 } = w2.createTransaction(w2Utxo, [{address: w2._getExternalAddressByIndex(0)}], 1, w2._getInternalAddressByIndex(0), undefined, true)
     //  const { psbt:psbt3 } = w3.createTransaction(w3Utxo, [{address: w3._getExternalAddressByIndex(0)}], 1, w3._getInternalAddressByIndex(0), undefined, true)
@@ -70,7 +70,7 @@ describe('AbstractHDElectrumWallet.cosign', () => {
 
     const sequence = HDSegwitBech32Wallet.defaultRBFSequence;
     const masterFingerprintBuffer = Buffer.from([0x00, 0x00, 0x00, 0x00]);
-    const psbt = new bitcoin.Psbt();
+    const psbt = new interchained.Psbt();
 
     // add one input from each wallet
     {
@@ -104,7 +104,7 @@ describe('AbstractHDElectrumWallet.cosign', () => {
       const path = w2._getDerivationPathByAddress(input.address);
       assert.ok(pubkey);
       assert.ok(path);
-      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey });
+      const p2wpkh = interchained.payments.p2wpkh({ pubkey });
       assert.ok(p2wpkh.output);
 
       psbt.addInput({
@@ -132,8 +132,8 @@ describe('AbstractHDElectrumWallet.cosign', () => {
       const path = w3._getDerivationPathByAddress(input.address);
       assert.ok(pubkey);
       assert.ok(path);
-      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey });
-      const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh });
+      const p2wpkh = interchained.payments.p2wpkh({ pubkey });
+      const p2sh = interchained.payments.p2sh({ redeem: p2wpkh });
       assert.ok(p2sh.output);
 
       psbt.addInput({
@@ -203,7 +203,7 @@ describe('AbstractHDElectrumWallet.cosign', () => {
 
     const psbtWithCorrectFpBase64 =
       'cHNidP8BAFUCAAAAAfsmeQ1mJJqC9cD0DxDRFQoG2hvU6S4koB0jl+8TEDKjAAAAAAD/////AQpfAAAAAAAAGXapFBkSnVPmMZuvGdugWb6tFm35Crj1iKwAAAAAAAEBH8p3AAAAAAAAFgAUf8fcrCg92McSzWkmw+UAluC4IjsiBgLfsmddhS3oxlnlGrUPDBVoVHSMa8RcXlGsyhfc8CcGpRjTfq2IVAAAgAAAAIAAAACAAAAAAAQAAAAAAA==';
-    const psbtWithCorrectFp = bitcoin.Psbt.fromBase64(psbtWithCorrectFpBase64);
+    const psbtWithCorrectFp = interchained.Psbt.fromBase64(psbtWithCorrectFpBase64);
 
     assert.strictEqual(w.calculateHowManySignaturesWeHaveFromPsbt(psbtWithCorrectFp), 0);
 

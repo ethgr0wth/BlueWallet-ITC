@@ -46,5 +46,5 @@ Les portefeuilles spectateurs vous permettent de garder un oeil sur votre stocka
 Réseau Lightning
 Un portefeuille Lightning sans aucune configuration nécessaire. Des transactions rapides et très peu chères avec la meilleure expérience utilisateur Interchained.
 
-Acheter du bitcoin
-Rejoignez la révolution la finance ouverte avec la possibilité d'acheter du bitcoin directement depuis votre portefeuille.
+Acheter du interchained
+Rejoignez la révolution la finance ouverte avec la possibilité d'acheter du interchained directement depuis votre portefeuille.

@@ -1,5 +1,6 @@
+import { INTERCHAINED } from './_interchained-network';
 import BigNumber from 'bignumber.js';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import bitcoinMessage from 'bitcoinjs-message';
 import coinSelect, { CoinSelectOutput, CoinSelectReturnInput, CoinSelectTarget } from 'coinselect';
 import coinSelectSplit from 'coinselect/split';
@@ -12,7 +13,7 @@ import { randomBytes } from '../rng';
 import { AbstractWallet } from './abstract-wallet';
 import { CreateTransactionResult, CreateTransactionTarget, CreateTransactionUtxo, Transaction, Utxo } from './types';
 const ECPair: ECPairAPI = ECPairFactory(ecc);
-bitcoin.initEccLib(ecc);
+interchained.initEccLib(ecc);
 
 /**
  *  Has private key and single address like "1ABCD....."
@@ -74,7 +75,7 @@ export class LegacyWallet extends AbstractWallet {
     let address;
     try {
       const keyPair = ECPair.fromWIF(this.secret);
-      address = bitcoin.payments.p2pkh({
+      address = interchained.payments.p2pkh({
         pubkey: keyPair.publicKey,
       }).address;
     } catch (err) {
@@ -394,7 +395,7 @@ export class LegacyWallet extends AbstractWallet {
     for (const t of _targets) {
       if (t.address?.startsWith('bc1')) {
         // in case address is non-typical and takes more bytes than coinselect library anticipates by default
-        t.script = { length: bitcoin.address.toOutputScript(t.address).length + 3 };
+        t.script = { length: interchained.address.toOutputScript(t.address).length + 3 };
       }
 
       if (t.script?.hex) {
@@ -436,7 +437,7 @@ export class LegacyWallet extends AbstractWallet {
     if (targets.length === 0) throw new Error('No destination provided');
     const { inputs, outputs, fee } = this.coinselect(utxos, targets, feeRate);
     sequence = sequence || 0xffffffff; // disable RBF by default
-    const psbt = new bitcoin.Psbt();
+    const psbt = new interchained.Psbt();
     let c = 0;
     const values: Record<number, number> = {};
     let keyPair: Signer | null = null;
@@ -507,17 +508,17 @@ export class LegacyWallet extends AbstractWallet {
    * p2tr addresses have extra logic, rejecting all versions >1
    * @see https://github.com/BlueWallet/BlueWallet/issues/3394
    * @see https://github.com/bitcoinjs/bitcoinjs-lib/issues/1750
-   * @see https://github.com/bitcoin/bips/blob/edffe529056f6dfd33d8f716fb871467c3c09263/bip-0350.mediawiki#Addresses_for_segregated_witness_outputs
+   * @see https://github.com/interchained/bips/blob/edffe529056f6dfd33d8f716fb871467c3c09263/bip-0350.mediawiki#Addresses_for_segregated_witness_outputs
    *
    * @param address
    * @returns {boolean}
    */
   isAddressValid(address: string): boolean {
     try {
-      bitcoin.address.toOutputScript(address); // throws, no?
+      interchained.address.toOutputScript(address); // throws, no?
 
       if (!address.toLowerCase().startsWith('bc1')) return true;
-      const decoded = bitcoin.address.fromBech32(address);
+      const decoded = interchained.address.fromBech32(address);
       if (decoded.version === 0) return true;
       if (decoded.version === 1 && decoded.data.length !== 32) return false;
       if (decoded.version === 1 && !ecc.isPoint(Buffer.concat([Buffer.from([2]), decoded.data]))) return false;
@@ -539,9 +540,9 @@ export class LegacyWallet extends AbstractWallet {
     try {
       const scriptPubKey2 = Buffer.from(scriptPubKey, 'hex');
       return (
-        bitcoin.payments.p2pkh({
+        interchained.payments.p2pkh({
           output: scriptPubKey2,
-          network: bitcoin.networks.bitcoin,
+          network: INTERCHAINED,
         }).address ?? false
       );
     } catch (_) {

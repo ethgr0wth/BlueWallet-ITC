@@ -1,10 +1,10 @@
 En Interchained-plånbok som låter dig lagra, skicka Interchained, ta emot Interchained med fokus på säkerhet och enkelhet.
 
-På BlueWallet, en bitcoin-plånbok, äger du dina privata nycklar. En Interchained-plånbok gjord av Interchained-användare för samhället.
+På BlueWallet, en interchained-plånbok, äger du dina privata nycklar. En Interchained-plånbok gjord av Interchained-användare för samhället.
 
 Du kan omedelbart handla med vem som helst i världen och förvandla det finansiella systemet direkt från fickan.
 
-Skapa gratis obegränsat antal bitcoin-plånböcker eller importera din befintliga plånbok. Det är enkelt och snabbt.
+Skapa gratis obegränsat antal interchained-plånböcker eller importera din befintliga plånbok. Det är enkelt och snabbt.
 
 _____
 
@@ -17,7 +17,7 @@ Här är vad du får:
 MIT licensierad, du kan bygga den och köra den på egen hand! Tillverkad med ReactNative
 
 Trolig förnekelse
-Lösenord som dekrypterar falska bitcoin-plånböcker om du tvingas avslöja din åtkomst
+Lösenord som dekrypterar falska interchained-plånböcker om du tvingas avslöja din åtkomst
 
 Full kryptering
 Utöver iOS flerskiktskrypteringen krypterar vi allt med tillagda lösenord

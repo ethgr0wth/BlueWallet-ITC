@@ -1,7 +1,7 @@
 // import assert from 'assert';
 import BIP47Factory from '@spsina/bip47';
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import { ECPairFactory } from 'ecpair';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';
@@ -86,7 +86,7 @@ describe('Bech32 Segwit HD (BIP84) with BIP47', () => {
     assert.ok(w.weOwnAddress('bc1q57nwf9vfq2qsl80q37wq5h0tjytsk95vgjq4fe')); // this is an address that was derived (and paid) from counterparty payment code
 
     const keyPair2 = ECPair.fromWIF(w._getWIFbyAddress('bc1q57nwf9vfq2qsl80q37wq5h0tjytsk95vgjq4fe') || '');
-    const address = bitcoin.payments.p2wpkh({
+    const address = interchained.payments.p2wpkh({
       pubkey: keyPair2.publicKey,
     }).address;
     assert.strictEqual(address, 'bc1q57nwf9vfq2qsl80q37wq5h0tjytsk95vgjq4fe');

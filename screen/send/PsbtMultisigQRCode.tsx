@@ -1,5 +1,5 @@
 import { RouteProp, StackActions, useIsFocused, useRoute } from '@react-navigation/native';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import presentAlert from '../../components/Alert';
@@ -29,7 +29,7 @@ const PsbtMultisigQRCode: React.FC = () => {
   const dynamicQRCode = useRef<DynamicQRCode>(null);
   const isFocused = useIsFocused();
 
-  const psbt = bitcoin.Psbt.fromBase64(psbtBase64);
+  const psbt = interchained.Psbt.fromBase64(psbtBase64);
   const stylesHook = StyleSheet.create({
     root: {
       backgroundColor: colors.elevated,

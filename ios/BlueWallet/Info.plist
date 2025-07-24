@@ -107,7 +107,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>bitcoin</string>
+				<string>interchained</string>
 				<string>lightning</string>
 				<string>bluewallet</string>
 				<string>lapp</string>

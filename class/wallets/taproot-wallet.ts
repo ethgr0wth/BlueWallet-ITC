@@ -1,4 +1,5 @@
-import * as bitcoin from 'bitcoinjs-lib';
+import { INTERCHAINED } from './_interchained-network';
+import * as interchained from 'bitcoinjs-lib';
 import { ECPairFactory } from 'ecpair';
 
 import ecc from '../../blue_modules/noble_ecc';
@@ -27,7 +28,7 @@ export class TaprootWallet extends SegwitBech32Wallet {
   static scriptPubKeyToAddress(scriptPubKey: string): string | false {
     try {
       const publicKey = hexToUint8Array(scriptPubKey);
-      return bitcoin.address.fromOutputScript(publicKey, bitcoin.networks.bitcoin);
+      return interchained.address.fromOutputScript(publicKey, INTERCHAINED);
     } catch (_) {
       return false;
     }
@@ -59,7 +60,7 @@ export class TaprootWallet extends SegwitBech32Wallet {
         return false;
       }
       const xOnlyPubkey = keyPair.publicKey.subarray(1, 33);
-      address = bitcoin.payments.p2tr({
+      address = interchained.payments.p2tr({
         pubkey: xOnlyPubkey,
       }).address;
     } catch (err: any) {
@@ -90,12 +91,12 @@ export class TaprootWallet extends SegwitBech32Wallet {
     const xOnlyPub = pubkey.subarray(1, 33); // strip prefix
 
     // Precompute the P2TR payment (to rebuild scriptPubKey)
-    const p2tr = bitcoin.payments.p2tr({
+    const p2tr = interchained.payments.p2tr({
       pubkey: xOnlyPub,
     });
     if (!p2tr.output) throw new Error('Could not build p2tr.output');
 
-    const psbt = new bitcoin.Psbt();
+    const psbt = new interchained.Psbt();
 
     // Add Taproot inputs
     inputs.forEach((input, idx) => {

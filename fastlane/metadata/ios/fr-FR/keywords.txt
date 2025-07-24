@@ -1,1 +1,1 @@
-bitcoin,wallet,wallet bitcoin,blockchain,btc,cryptomonnaie,acheter du bitcoin,samourai,electrum
+interchained,wallet,wallet interchained,blockchain,btc,cryptomonnaie,acheter du interchained,samourai,electrum

@@ -16,7 +16,7 @@ Código aberto/Open Source
 Com licença MIT, podes construí-la e executá-la por conta própria. Feita em React Native.
 
 Negação plausível
-Password que decripta carteiras falsas. Para casos especias onde possas ser obrigado a revelar a sua password, podes revelar a password falsa. Matem as tuas bitcoin protegidas.
+Password que decripta carteiras falsas. Para casos especias onde possas ser obrigado a revelar a sua password, podes revelar a password falsa. Matem as tuas interchained protegidas.
 
 Encriptação completa
 Construída em cima da multi-camada criptografica do iOS, A BlueWallet encripta tudo com uma password adicional.

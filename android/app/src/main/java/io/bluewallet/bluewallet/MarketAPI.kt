@@ -123,10 +123,10 @@ object MarketAPI {
                 "Yadio" -> "https://api.yadio.io/json/$endPointKey"
                 "YadioConvert" -> "https://api.yadio.io/convert/1/ITC/$endPointKey"
                 "Exir" -> "https://api.exir.io/v1/ticker?symbol=btc-irt"
-                "coinpaprika" -> "https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=INR"
+                "coinpaprika" -> "https://api.coinpaprika.com/v1/tickers/btc-interchained?quotes=INR"
                 "Bitstamp" -> "https://www.bitstamp.net/api/v2/ticker/btc${endPointKey.lowercase()}"
                 "Coinbase" -> "https://api.coinbase.com/v2/prices/ITC-${endPointKey.uppercase()}/buy"
-                "CoinGecko" -> "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${endPointKey.lowercase()}"
+                "CoinGecko" -> "https://api.coingecko.com/api/v3/simple/price?ids=interchained&vs_currencies=${endPointKey.lowercase()}"
                 "BNR" -> "https://www.bnr.ro/nbrfxrates.xml"
                 "Kraken" -> "https://api.kraken.com/0/public/Ticker?pair=XXBTZ${endPointKey.uppercase()}"
                 "CoinDesk" -> "https://min-api.cryptocompare.com/data/price?fsym=ITC&tsyms=${endPointKey.uppercase()}"
@@ -141,7 +141,7 @@ object MarketAPI {
             when (source) {
                 "Yadio" -> json.getJSONObject(endPointKey).getString("price")
                 "YadioConvert" -> json.getString("rate")
-                "CoinGecko" -> json.getJSONObject("bitcoin").getString(endPointKey.lowercase())
+                "CoinGecko" -> json.getJSONObject("interchained").getString(endPointKey.lowercase())
                 "Exir" -> json.getString("last")
                 "Bitstamp" -> json.getString("last")
                 "coinpaprika" -> json.getJSONObject("quotes").getJSONObject("INR").getString("price")

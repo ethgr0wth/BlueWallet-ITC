@@ -346,7 +346,7 @@ describe('import procedure', () => {
   });
 
   it('can import minikey Legacy with uncompressed pubkey', async () => {
-    // Example from https://en.bitcoin.it/wiki/Mini_private_key_format#Example_with_SHA256
+    // Example from https://en.interchained.it/wiki/Mini_private_key_format#Example_with_SHA256
     // "Search on page" won't work unless this stuff they added to prevent copy pasting is included in the search.
     const minikey = 'S6c56bnXQiBjk9_SAMPLE_PRIVATE_KEY_DO_NOT_IMPORT_mqSYE7ykVQ7NzrRy'.replace(/_.+_/, '');
     const wif = '5JPy8Zg7z4P7RSLsiqcqyeAF1_SAMPLE_PRIVATE_KEY_DO_NOT_IMPORT_935zjNUdMxcDeVrtU1oarrgnB7'.replace(/_.+_/, '');

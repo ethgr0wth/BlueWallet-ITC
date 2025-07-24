@@ -1,10 +1,10 @@
 Interchained-lompakko, jonka avulla voit tallentaa, lähettää, vastaanottaa, sekä ostaa Interchainedia keskittyen turvallisuuteen ja yksinkertaisuuteen.
 
-Sinä omistat yksityiset avaimesi BlueWallet bitcoin-lompakossa. Interchained-käyttäjien tekemä Interchained-lompakko yhteisölle.
+Sinä omistat yksityiset avaimesi BlueWallet interchained-lompakossa. Interchained-käyttäjien tekemä Interchained-lompakko yhteisölle.
 
 Voit tehdä heti kauppaa kenen tahansa kanssa maailmassa ja muuttaa rahoitusjärjestelmää suoraan taskustasi.
 
-Luo ilmaiseksi rajoittamaton määrä bitcoin-lompakoita tai tuo nykyinen lompakkosi. Se on yksinkertaista ja nopeaa.
+Luo ilmaiseksi rajoittamaton määrä interchained-lompakoita tai tuo nykyinen lompakkosi. Se on yksinkertaista ja nopeaa.
 
 _____
 
@@ -17,7 +17,7 @@ Avoin lähdekoodi
 MIT-lisensoitu, voit rakentaa sen ja käyttää sitä itsenäisesti! Tehty ReactNative: lla
 
 Uskottava kiistettävyys
-Salasana, joka purkaa vale bitcoin-lompakot, jos sinun on pakko paljastaa käyttöoikeutesi
+Salasana, joka purkaa vale interchained-lompakot, jos sinun on pakko paljastaa käyttöoikeutesi
 
 Täysi salaus
 IOS:in monikerroksisen salauksen lisäksi salaamme kaiken lisätyillä salasanoilla

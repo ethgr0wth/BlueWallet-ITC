@@ -1,5 +1,5 @@
 import BIP32Factory from 'bip32';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import ecc from '../../blue_modules/noble_ecc';
 import { AbstractWallet } from './abstract-wallet';
@@ -60,7 +60,7 @@ export class WatchOnlyWallet extends LegacyWallet {
     if (this.secret.startsWith('xpub') || this.secret.startsWith('ypub') || this.secret.startsWith('zpub')) return this.isXpubValid();
 
     try {
-      bitcoin.address.toOutputScript(this.getAddress());
+      interchained.address.toOutputScript(this.getAddress());
       return true;
     } catch (_) {
       return false;

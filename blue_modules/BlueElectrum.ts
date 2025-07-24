@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import DefaultPreference from 'react-native-default-preference';
 import RNFS from 'react-native-fs';
 import Realm from 'realm';
@@ -86,7 +86,7 @@ const storageKey = 'ELECTRUM_PEERS';
 const defaultPeer = { host: 'electrum1.bluewallet.io', ssl: 443 };
 export const hardcodedPeers: Peer[] = [
   { host: 'mainnet.foundationdevices.com', ssl: 50002 },
-  // { host: 'bitcoin.lukechilds.co', ssl: 50002 },
+  // { host: 'interchained.lukechilds.co', ssl: 50002 },
   // { host: 'electrum.jochen-hoenicke.de', ssl: '50006' },
   { host: 'electrum1.bluewallet.io', ssl: 443 },
   { host: 'electrum.acinq.co', ssl: 50002 },
@@ -490,7 +490,7 @@ async function getRandomDynamicPeer(): Promise<Peer> {
 export const getBalanceByAddress = async function (address: string): Promise<{ confirmed: number; unconfirmed: number }> {
   try {
     if (!mainClient) throw new Error('Electrum client is not connected');
-    const script = bitcoin.address.toOutputScript(address);
+    const script = interchained.address.toOutputScript(address);
     const hash = bitcoinjs_crypto_sha256(script);
     const reversedHash = Buffer.from(hash).reverse();
     const balance = await mainClient.blockchainScripthash_getBalance(reversedHash.toString('hex'));
@@ -518,7 +518,7 @@ export const getSecondsSinceLastRequest = function () {
 
 export const getTransactionsByAddress = async function (address: string): Promise<ElectrumHistory[]> {
   if (!mainClient) throw new Error('Electrum client is not connected');
-  const script = bitcoin.address.toOutputScript(address);
+  const script = interchained.address.toOutputScript(address);
   const hash = bitcoinjs_crypto_sha256(script);
   const reversedHash = Buffer.from(hash).reverse();
   const history = await mainClient.blockchainScripthash_getHistory(reversedHash.toString('hex'));
@@ -531,7 +531,7 @@ export const getTransactionsByAddress = async function (address: string): Promis
 
 export const getMempoolTransactionsByAddress = async function (address: string): Promise<MempoolTransaction[]> {
   if (!mainClient) throw new Error('Electrum client is not connected');
-  const script = bitcoin.address.toOutputScript(address);
+  const script = interchained.address.toOutputScript(address);
   const hash = bitcoinjs_crypto_sha256(script);
   const reversedHash = Buffer.from(hash).reverse();
   return mainClient.blockchainScripthash_getMempool(reversedHash.toString('hex'));
@@ -549,7 +549,7 @@ export const ping = async function () {
 
 // exported only to be used in unit tests
 export function txhexToElectrumTransaction(txhex: string): ElectrumTransactionWithHex {
-  const tx = bitcoin.Transaction.fromHex(txhex);
+  const tx = interchained.Transaction.fromHex(txhex);
 
   const ret: ElectrumTransactionWithHex = {
     txid: tx.getId(),
@@ -674,7 +674,7 @@ export const getTransactionsFullByAddress = async (address: string): Promise<Ele
         if (prevTxForVin.vout[input.vout].scriptPubKey && prevTxForVin.vout[input.vout].scriptPubKey.addresses) {
           input.addresses = prevTxForVin.vout[input.vout].scriptPubKey.addresses;
         }
-        // in bitcoin core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
+        // in interchained core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
         if (prevTxForVin.vout[input.vout]?.scriptPubKey?.address) {
           input.addresses = [prevTxForVin.vout[input.vout].scriptPubKey.address];
         }
@@ -683,7 +683,7 @@ export const getTransactionsFullByAddress = async (address: string): Promise<Ele
 
     for (const output of full.vout) {
       if (output?.scriptPubKey && output.scriptPubKey.addresses) output.addresses = output.scriptPubKey.addresses;
-      // in bitcoin core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
+      // in interchained core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
       if (output?.scriptPubKey?.address) output.addresses = [output.scriptPubKey.address];
     }
     full.inputs = full.vin;
@@ -717,7 +717,7 @@ export const multiGetBalanceByAddress = async (addresses: string[], batchsize: n
     const scripthashes = [];
     const scripthash2addr: Record<string, string> = {};
     for (const addr of chunk) {
-      const script = bitcoin.address.toOutputScript(addr);
+      const script = interchained.address.toOutputScript(addr);
       const hash = bitcoinjs_crypto_sha256(script);
       const reversedHash = Buffer.from(hash).reverse().toString('hex');
       scripthashes.push(reversedHash);
@@ -761,7 +761,7 @@ export const multiGetUtxoByAddress = async function (addresses: string[], batchs
     const scripthashes = [];
     const scripthash2addr: Record<string, string> = {};
     for (const addr of chunk) {
-      const script = bitcoin.address.toOutputScript(addr);
+      const script = interchained.address.toOutputScript(addr);
       const hash = bitcoinjs_crypto_sha256(script);
       const reversedHash = Buffer.from(hash).reverse().toString('hex');
       scripthashes.push(reversedHash);
@@ -811,7 +811,7 @@ export const multiGetHistoryByAddress = async function (
     const scripthashes = [];
     const scripthash2addr: Record<string, string> = {};
     for (const addr of chunk) {
-      const script = bitcoin.address.toOutputScript(addr);
+      const script = interchained.address.toOutputScript(addr);
       const hash = bitcoinjs_crypto_sha256(script);
       const reversedHash = Buffer.from(hash).reverse().toString('hex');
       scripthashes.push(reversedHash);
@@ -966,7 +966,7 @@ export async function multiGetTransactionByTxid<T extends boolean>(
     }
   }
 
-  // in bitcoin core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
+  // in interchained core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
   for (const txid of Object.keys(ret)) {
     const tx = ret[txid];
     if (typeof tx === 'string') continue;
@@ -1099,7 +1099,7 @@ export const estimateFees = async function (): Promise<{ fast: number; medium: n
     clearTimeout(timeoutId);
   }
 
-  // fetching what electrum (which uses bitcoin core) thinks about fees:
+  // fetching what electrum (which uses interchained core) thinks about fees:
   const _fast = await estimateFee(1);
   const _medium = await estimateFee(18);
   const _slow = await estimateFee(144);
@@ -1107,7 +1107,7 @@ export const estimateFees = async function (): Promise<{ fast: number; medium: n
   /**
    * sanity check, see
    * @see https://github.com/cculianu/Fulcrum/issues/197
-   * (fallback to bitcoin core estimates)
+   * (fallback to interchained core estimates)
    */
   if (!histogram || histogram?.[0]?.[0] > 1000) return { fast: _fast, medium: _medium, slow: _slow };
 

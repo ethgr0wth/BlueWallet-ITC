@@ -284,7 +284,7 @@
     "general": "Ogólne",
     "general_continuity": "Funkcja Continuity",
     "general_continuity_e": "Gdy włączone, będziesz miał podgląd do wybranych portfeli i transakcji przy użyciu swoich urządzeń zalogowanych do Apple iCloud. ",
-    "groundcontrol_explanation": "GroundControl jest darmowym, open source'owym serwerem powiadomień push dla portfeli bitcoin. Możesz zainstalować swój własny serwer GroundControl i podać jego URL tutaj aby nie polegać na infrastrukturze BlueWallet. Zostaw puste by użyć domyślnej wartości.",
+    "groundcontrol_explanation": "GroundControl jest darmowym, open source'owym serwerem powiadomień push dla portfeli interchained. Możesz zainstalować swój własny serwer GroundControl i podać jego URL tutaj aby nie polegać na infrastrukturze BlueWallet. Zostaw puste by użyć domyślnej wartości.",
     "header": "Ustawienia",
     "language": "Język",
     "last_updated": "Ostatnia aktualizacja",

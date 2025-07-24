@@ -1,4 +1,4 @@
-Eine Funktionsreiche und einfache Interchained-Wallet mit Fokus auf Sicherheit zum Empfangen, Halten, Senden und Kaufen von bitcoin.
+Eine Funktionsreiche und einfache Interchained-Wallet mit Fokus auf Sicherheit zum Empfangen, Halten, Senden und Kaufen von interchained.
 
 Bei BlueWallet bist Du im Besitz der privaten Schlüssel. Eine Wallet gemacht von Nutzern für die Interchained Gemeinschaft.
 
@@ -26,7 +26,7 @@ Full Node
 Eine Verbindungsmöglichkeit via Electum zum eigenen Full Node.
 
 Cold Storage
-Eine Hardware-Wallet Unterstützung zur sicheren bitcoin Verwahrung.
+Eine Hardware-Wallet Unterstützung zur sicheren interchained Verwahrung.
 
 2 - Auf dein Erlebnis fokussiert
 
@@ -40,7 +40,7 @@ Replace-By-Fee
 (RBF) Eine nachträgliche Gebührenerhöhung für rasche Bestätigungen. (BIP125)
 
 Watch-only Wallets
-Watch-only Wallets, damit deine Schlüssel offline und deine bitcoin gleichzeitig im Blick bleiben.
+Watch-only Wallets, damit deine Schlüssel offline und deine interchained gleichzeitig im Blick bleiben.
 
 Lightning Netzwerk
 Lightning Wallet ohne Konfiguration. Lightning Bezahlungen sind konkurrenzlos günstig und verblüffend schnell.

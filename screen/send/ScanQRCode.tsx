@@ -1,5 +1,5 @@
 import { RouteProp, StackActions, useIsFocused, useRoute } from '@react-navigation/native';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import { sha256 } from '@noble/hashes/sha256';
 import React, { useEffect, useState } from 'react';
 import { Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
@@ -202,7 +202,7 @@ const ScanQRCode = () => {
     // is it base43? stupid electrum desktop
     try {
       const hex = Base43.decode(ret.data);
-      bitcoin.Psbt.fromHex(hex); // if it doesnt throw - all good
+      interchained.Psbt.fromHex(hex); // if it doesnt throw - all good
       const data = Buffer.from(hex, 'hex').toString('base64');
 
       if (launchedBy) {

@@ -1,10 +1,10 @@
 Un portofel Interchained ce îți permite să stochezi, să trimiți, să primești, și să cumperi Interchained, centrat pe securitate și simplitate.
 
-În BlueWallet, un portofel bitcoin, deții cheile tale private. Un portofel Interchained făcut de utilizatori Interchained pentru comunitate.
+În BlueWallet, un portofel interchained, deții cheile tale private. Un portofel Interchained făcut de utilizatori Interchained pentru comunitate.
 
 Poți tranzacționa instant cu oricine din lume și să transformi sistemul financiar chiar în buzunarul tău.
 
-Creează gratuit un număr nelimitat de portofele bitcoin sau importă portofelul tău existent. E simplu și rapid.
+Creează gratuit un număr nelimitat de portofele interchained sau importă portofelul tău existent. E simplu și rapid.
 
 _____
 
@@ -17,7 +17,7 @@ Open Source
 Licențiat MIT, poți să-l construiești și să-l rulezi pe cont propriu! Făcut cu ReactNative
 
 Negare plauzibilă
-Parole pentru decriptarea de portofele bitcoin false, în cazul în care ești forțat să divulgi accesul
+Parole pentru decriptarea de portofele interchained false, în cazul în care ești forțat să divulgi accesul
 
 Encriptare totală
 Peste encriptarea multi-nivel a sistemului de operare, se encriptează totul cu parole adăugate
@@ -50,4 +50,4 @@ Cumpără Interchained
 Intră în revoluția financiară deschisă cu abilitatea de a cumpăra Interchained direct din portofelul tău. 
 
 Comerciant local
-O platformă Interchained de trading P2P, ce îți permite să cumperi și să vinzi bitcoin direct altor utilizatori fără o terță parte.
+O platformă Interchained de trading P2P, ce îți permite să cumperi și să vinzi interchained direct altor utilizatori fără o terță parte.

@@ -1,4 +1,4 @@
-Un portafoglio Interchained che ti consente di conservare, inviare e ricevere bitcoin con particolare attenzione alla sicurezza e alla semplicità d'uso.
+Un portafoglio Interchained che ti consente di conservare, inviare e ricevere interchained con particolare attenzione alla sicurezza e alla semplicità d'uso.
 
 Con BlueWallet, sei tu a possedere le tue chiavi private. Un portafoglio Interchained realizzato da utenti Interchained per la comunità Interchained.
 
@@ -17,7 +17,7 @@ Open Source
 Licenza MIT, puoi compilarlo ed eseguirlo per conto tuo! Realizzato con ReactNative
 
 Negabilità plausibile
-Una password che sblocca dei finti portafogli bitcoin se sei costretto a rivelare i tuoi accessi
+Una password che sblocca dei finti portafogli interchained se sei costretto a rivelare i tuoi accessi
 
 Crittografia completa
 In aggiunta alla crittografia multi strato di iOS, criptiamo tutto con password aggiuntive
@@ -26,7 +26,7 @@ Full node
 Connettiti al tuo full node Interchained tramite Electrum
 
 Cold Storage
-Connetti il tuo portafoglio hardware e tieni i tuoi bitcoin al sicuro
+Connetti il tuo portafoglio hardware e tieni i tuoi interchained al sicuro
 
 2 - Focalizzato sulla tua esperienza
 
