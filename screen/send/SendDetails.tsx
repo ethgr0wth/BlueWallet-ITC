@@ -410,7 +410,7 @@ const SendDetails = () => {
   /**
    * TODO: refactor this mess, get rid of regexp, use https://github.com/bitcoinjs/bitcoinjs-lib/issues/890 etc etc
    *
-   * @param data {String} Can be address or `bitcoin:xxxxxxx` uri scheme, or invalid garbage
+   * @param data {String} Can be address or `interchained:xxxxxxx` uri scheme, or invalid garbage
    */
 
   const processAddressData = useCallback(
@@ -430,7 +430,7 @@ const SendDetails = () => {
 
       const cl = new ContactList();
 
-      const dataWithoutSchema = data.replace('bitcoin:', '').replace('INTERCHAINED:', '');
+      const dataWithoutSchema = data.replace('interchained:', '').replace('INTERCHAINED:', '');
       if (wallet.isAddressValid(dataWithoutSchema) || cl.isPaymentCodeValid(dataWithoutSchema)) {
         setAddresses(addrs => {
           addrs[scrollIndex.current].address = dataWithoutSchema;
@@ -444,7 +444,7 @@ const SendDetails = () => {
       let address = '';
       let options: TOptions;
       try {
-        if (!data.toLowerCase().startsWith('bitcoin:')) data = `bitcoin:${data}`;
+        if (!data.toLowerCase().startsWith('interchained:')) data = `interchained:${data}`;
         const decoded = DeeplinkSchemaMatch.bip21decode(data);
         address = decoded.address;
         options = decoded.options;

@@ -297,7 +297,7 @@ function satoshiToLocalCurrency(satoshi: number, format: boolean = true): string
   }
 }
 
-function ITCToLocalCurrency(bitcoin: BigNumber.Value): string {
+function ITCToLocalCurrency(interchained: BigNumber.Value): string {
   const sat = new BigNumber(bitcoin).multipliedBy(100000000).toNumber();
   return satoshiToLocalCurrency(sat);
 }

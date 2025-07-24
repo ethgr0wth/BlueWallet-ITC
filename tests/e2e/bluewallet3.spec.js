@@ -56,7 +56,7 @@ describe('BlueWallet UI Tests - import Watch-only wallet (zpub)', () => {
 
     await expect(element(by.id('InterchainedAddressQRCodeContainer'))).toBeVisible();
 
-    await expect(element(by.text('bitcoin:BC1QC8WUN6LF9VCAJPDDTGDPD2PDRP0KWP29J6UPGV?amount=1&label=Test'))).toBeVisible();
+    await expect(element(by.text('interchained:BC1QC8WUN6LF9VCAJPDDTGDPD2PDRP0KWP29J6UPGV?amount=1&label=Test'))).toBeVisible();
     await device.pressBack();
     await element(by.id('SendButton')).tap();
     await element(by.text('OK')).tap();

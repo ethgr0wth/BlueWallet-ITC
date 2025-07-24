@@ -113,7 +113,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await element(by.id('changeAmountUnitButton')).tap(); // switched to SATS
     await element(by.id('BlueAddressInputScanQrButton')).tap();
 
-    await scanText('bitcoin:bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7?amount=0.00015&pj=https://btc.donate.kukks.org/ITC/pj');
+    await scanText('interchained:bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7?amount=0.00015&pj=https://btc.donate.kukks.org/ITC/pj');
 
     if (process.env.TRAVIS) await sleep(5000);
     try {
@@ -578,7 +578,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
 
     await device.launchApp({
       newInstance: true,
-      url: 'bitcoin:BC1QH6TF004TY7Z7UN2V5NTU4MKF630545GVHS45U7?amount=0.0001&label=Yo',
+      url: 'interchained:BC1QH6TF004TY7Z7UN2V5NTU4MKF630545GVHS45U7?amount=0.0001&label=Yo',
     });
 
     // setting fee rate:
