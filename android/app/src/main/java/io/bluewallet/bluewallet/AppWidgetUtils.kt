@@ -10,11 +10,11 @@ object AppWidgetUtils {
     private const val TAG = "AppWidgetUtils"
     
     /**
-     * Get all Bitcoin Price Widget IDs
+     * Get all Interchained Price Widget IDs
      */
-    fun getBitcoinPriceWidgetIds(context: Context): IntArray {
+    fun getInterchainedPriceWidgetIds(context: Context): IntArray {
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        val component = ComponentName(context, BitcoinPriceWidget::class.java)
+        val component = ComponentName(context, InterchainedPriceWidget::class.java)
         return appWidgetManager.getAppWidgetIds(component)
     }
     
@@ -24,11 +24,11 @@ object AppWidgetUtils {
     fun updateWidgetsForThemeChange(context: Context) {
         Log.d(TAG, "Updating widgets for theme change")
         
-        // Update Bitcoin Price widgets - force a complete refresh
-        val bitcoinWidgetIds = getBitcoinPriceWidgetIds(context)
+        // Update Interchained Price widgets - force a complete refresh
+        val bitcoinWidgetIds = getInterchainedPriceWidgetIds(context)
         if (bitcoinWidgetIds.isNotEmpty()) {
             for (widgetId in bitcoinWidgetIds) {
-                BitcoinPriceWidget.refreshWidget(context, widgetId)
+                InterchainedPriceWidget.refreshWidget(context, widgetId)
             }
         }
         

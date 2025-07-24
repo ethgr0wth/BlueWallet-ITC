@@ -1,5 +1,5 @@
 //
-//  BitcoinUnit.swift
+//  InterchainedUnit.swift
 //  BlueWallet
 //
 //  Created by Marcos Rodriguez on 4/14/24.
@@ -9,17 +9,17 @@ import Foundation
 
 /// Represents the various balance units used in the application.
 /// Conforms to `String`, `Codable`, `Equatable`, and `CustomStringConvertible` for easy encoding/decoding, comparisons, and descriptions.
-enum BitcoinUnit: String, Codable, Equatable, CustomStringConvertible {
-    case btc = "BTC"
+enum InterchainedUnit: String, Codable, Equatable, CustomStringConvertible {
+    case btc = "ITC"
     case sats = "sats"
     case localCurrency = "local_currency"
     case max = "MAX"
 
-    /// Provides a user-friendly description of the `BitcoinUnit`.
+    /// Provides a user-friendly description of the `InterchainedUnit`.
     var description: String {
         switch self {
         case .btc:
-            return "BTC"
+            return "ITC"
         case .sats:
             return "sats"
         case .localCurrency:
@@ -29,7 +29,7 @@ enum BitcoinUnit: String, Codable, Equatable, CustomStringConvertible {
         }
     }
 
-    /// Initializes a `BitcoinUnit` from a raw string.
+    /// Initializes a `InterchainedUnit` from a raw string.
     /// - Parameter rawString: The raw string representing the balance unit.
     init(rawString: String) {
         switch rawString.lowercased() {
@@ -49,8 +49,8 @@ enum BitcoinUnit: String, Codable, Equatable, CustomStringConvertible {
     }
 }
 
-extension BitcoinUnit {
-    static var mockUnit: BitcoinUnit {
+extension InterchainedUnit {
+    static var mockUnit: InterchainedUnit {
         return .sats
     }
 }

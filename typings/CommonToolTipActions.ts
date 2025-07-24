@@ -11,7 +11,7 @@ const keys = {
   ManageWallets: 'manageWallets',
   ImportWallet: 'importWallet',
   HideBalance: 'hideBalance',
-  ViewInBitcoin: 'viewInBitcoin',
+  ViewInInterchained: 'viewInInterchained',
   ViewInSats: 'viewInSats',
   ViewInFiat: 'viewInFiat',
   Entropy: 'entropy',
@@ -61,7 +61,7 @@ const icons = {
   Note: { iconValue: 'note.text' },
   ManageWallets: { iconValue: 'slider.horizontal.3' },
   ImportWallet: { iconValue: 'square.and.arrow.down.on.square' },
-  ViewInBitcoin: { iconValue: 'bitcoinsign.circle' },
+  ViewInInterchained: { iconValue: 'bitcoinsign.circle' },
   ViewInFiat: { iconValue: 'coloncurrencysign.circle' },
   Entropy: { iconValue: 'dice' },
   SearchAccount: { iconValue: 'magnifyingglass' },
@@ -178,13 +178,13 @@ export const CommonToolTipActions: Record<string, ToolTipAction> = {
   ViewInSats: {
     id: keys.ViewInSats,
     text: loc.total_balance_view.display_in_sats,
-    icon: icons.ViewInBitcoin,
+    icon: icons.ViewInInterchained,
     hidden: false,
   },
-  ViewInBitcoin: {
-    id: keys.ViewInBitcoin,
+  ViewInInterchained: {
+    id: keys.ViewInInterchained,
     text: loc.total_balance_view.display_in_bitcoin,
-    icon: icons.ViewInBitcoin,
+    icon: icons.ViewInInterchained,
     hidden: false,
   },
   Entropy: {

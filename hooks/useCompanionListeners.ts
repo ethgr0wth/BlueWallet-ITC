@@ -30,7 +30,7 @@ import useMenuElements from './useMenuElements';
 import { useExtendedNavigation } from './useExtendedNavigation';
 
 const ClipboardContentType = Object.freeze({
-  BITCOIN: 'BITCOIN',
+  INTERCHAINED: 'INTERCHAINED',
   LIGHTNING: 'LIGHTNING',
 });
 
@@ -259,7 +259,7 @@ const useCompanionListeners = (skipIfNotInitialized = true) => {
         ActionSheet.showActionSheetWithOptions(
           {
             title: loc._.clipboard,
-            message: contentType === ClipboardContentType.BITCOIN ? loc.wallets.clipboard_bitcoin : loc.wallets.clipboard_lightning,
+            message: contentType === ClipboardContentType.INTERCHAINED ? loc.wallets.clipboard_bitcoin : loc.wallets.clipboard_lightning,
             options: [loc._.cancel, loc._.continue],
             cancelButtonIndex: 0,
           },
@@ -296,22 +296,22 @@ const useCompanionListeners = (skipIfNotInitialized = true) => {
             return (wallet as LightningCustodianWallet).isInvoiceGeneratedByWallet(clipboard) || wallet.weOwnAddress(clipboard);
           }
         });
-        const isBitcoinAddress = DeeplinkSchemaMatch.isBitcoinAddress(clipboard);
+        const isInterchainedAddress = DeeplinkSchemaMatch.isInterchainedAddress(clipboard);
         const isLightningInvoice = DeeplinkSchemaMatch.isLightningInvoice(clipboard);
         const isLNURL = DeeplinkSchemaMatch.isLnUrl(clipboard);
-        const isBothBitcoinAndLightning = DeeplinkSchemaMatch.isBothBitcoinAndLightning(clipboard);
+        const isBothInterchainedAndLightning = DeeplinkSchemaMatch.isBothInterchainedAndLightning(clipboard);
         if (
           !isAddressFromStoredWallet &&
           clipboardContent.current !== clipboard &&
-          (isBitcoinAddress || isLightningInvoice || isLNURL || isBothBitcoinAndLightning)
+          (isInterchainedAddress || isLightningInvoice || isLNURL || isBothInterchainedAndLightning)
         ) {
           let contentType;
-          if (isBitcoinAddress) {
-            contentType = ClipboardContentType.BITCOIN;
+          if (isInterchainedAddress) {
+            contentType = ClipboardContentType.INTERCHAINED;
           } else if (isLightningInvoice || isLNURL) {
             contentType = ClipboardContentType.LIGHTNING;
-          } else if (isBothBitcoinAndLightning) {
-            contentType = ClipboardContentType.BITCOIN;
+          } else if (isBothInterchainedAndLightning) {
+            contentType = ClipboardContentType.INTERCHAINED;
           }
           showClipboardAlert({ contentType });
         }

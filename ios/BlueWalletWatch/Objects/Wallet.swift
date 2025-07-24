@@ -8,7 +8,7 @@ struct Wallet: Codable, Identifiable, Equatable {
     let balance: String
     let type: WalletType
     let chain: Chain
-  let preferredBalanceUnit:  BitcoinUnit
+  let preferredBalanceUnit:  InterchainedUnit
     let receiveAddress: String
     let transactions: [Transaction]
     let xpub: String
@@ -21,13 +21,13 @@ struct Wallet: Codable, Identifiable, Equatable {
     ///   - label: Display label for the wallet.
     ///   - balance: Current balance of the wallet as a string.
     ///   - type: The type of the wallet, defined by `WalletType`.
-    ///   - preferredBalanceUnit: The preferred unit for displaying balance (e.g., BTC).
+    ///   - preferredBalanceUnit: The preferred unit for displaying balance (e.g., ITC).
     ///   - receiveAddress: The address to receive funds.
     ///   - transactions: An array of transactions associated with the wallet.
     ///   - xpub: Extended public key for HD wallets.
     ///   - hideBalance: Indicates whether the balance should be hidden.
     ///   - paymentCode: Optional payment code associated with the wallet.
-  init(id: UUID = UUID(), label: String, balance: String, type: WalletType, chain: Chain = .onchain, preferredBalanceUnit: BitcoinUnit = .sats, receiveAddress: String, transactions: [Transaction], xpub: String, hideBalance: Bool, paymentCode: String? = nil) {
+  init(id: UUID = UUID(), label: String, balance: String, type: WalletType, chain: Chain = .onchain, preferredBalanceUnit: InterchainedUnit = .sats, receiveAddress: String, transactions: [Transaction], xpub: String, hideBalance: Bool, paymentCode: String? = nil) {
         self.id = id
         self.label = label
         self.balance = balance
@@ -46,7 +46,7 @@ extension Wallet {
     static var mock: Wallet {
         Wallet(
             label: "Mock Wallet",
-            balance: "1.2345 BTC",
+            balance: "1.2345 ITC",
             type: .hdSegwitBech32Wallet,
             preferredBalanceUnit: .sats,
             receiveAddress: "bc1qmockaddressxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",

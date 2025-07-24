@@ -9,7 +9,7 @@ import * as BlueElectrum from '../../blue_modules/BlueElectrum';
 import triggerHapticFeedback, { HapticFeedbackTypes } from '../../blue_modules/hapticFeedback';
 import { startAndDecrypt } from '../../blue_modules/start-and-decrypt';
 import { isNotificationsEnabled, majorTomToGroundControl, unsubscribe } from '../../blue_modules/notifications';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import { navigationRef } from '../../NavigationService';
 
 const BlueApp = BlueAppClass.getInstance();
@@ -464,7 +464,7 @@ export const StorageProvider = ({ children }: { children: React.ReactNode }) => 
   function confirmWalletDeletion(wallet: any, onConfirmed: () => void) {
     triggerHapticFeedback(HapticFeedbackTypes.NotificationWarning);
     try {
-      const balance = formatBalanceWithoutSuffix(wallet.getBalance(), BitcoinUnit.SATS, true);
+      const balance = formatBalanceWithoutSuffix(wallet.getBalance(), InterchainedUnit.SATS, true);
       presentAlert({
         title: loc.wallets.details_delete_wallet,
         message: loc.formatString(loc.wallets.details_del_wb_q, { balance }),

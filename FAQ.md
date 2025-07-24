@@ -13,7 +13,7 @@ Also, really risky dependencies (like, from not-reputable/anonymous maintainers)
 we fork and use under our organization, and when we update them from upstream (rarely)
 we do review the code
 
-## Does BlueWallet download the Bitcoin Headers? I see no place you call blockchain.block.headers so I'm wondering how do you guys deal with the headers? How can you make sure you follow the correct chain in order to make sure you're spending a confirmed UTXO?
+## Does BlueWallet download the Interchained Headers? I see no place you call blockchain.block.headers so I'm wondering how do you guys deal with the headers? How can you make sure you follow the correct chain in order to make sure you're spending a confirmed UTXO?
 
 The idea is that by default BW doesn’t use public electrum servers, only
 ones hosted by BlueWallet, so they are kinda trusted. And end-user has an

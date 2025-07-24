@@ -288,7 +288,7 @@
     "title": "पूरा रकम"
   },
   "multisig": {
-    "fee_btc": "{number} BTC",
+    "fee_btc": "{number} ITC",
     "confirm": "पक्का ",
     "header": "पठाउनुहोस्",
     "view": "हेर्नुहोस्",

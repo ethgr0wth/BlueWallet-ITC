@@ -17,7 +17,7 @@ import {
 } from './LazyLoadSendDetailsStack';
 import { SendDetailsStackParamList } from './SendDetailsStackParamList';
 import HeaderRightButton from '../components/HeaderRightButton';
-import { BitcoinUnit } from '../models/bitcoinUnits';
+import { InterchainedUnit } from '../models/bitcoinUnits';
 import { ScanQRCodeComponent } from './LazyLoadScanQRCodeStack';
 import SelectFeeScreen from '../screen/SelectFeeScreen';
 import { Platform } from 'react-native';
@@ -41,7 +41,7 @@ const SendDetailsStack = () => {
           statusBarStyle: 'light',
           closeButtonPosition: CloseButtonPosition.Left,
         })(theme)}
-        initialParams={{ isEditable: true, feeUnit: BitcoinUnit.BTC, amountUnit: BitcoinUnit.BTC }} // Correctly typed now
+        initialParams={{ isEditable: true, feeUnit: InterchainedUnit.ITC, amountUnit: InterchainedUnit.ITC }} // Correctly typed now
       />
       <Stack.Screen
         name="SelectFee"

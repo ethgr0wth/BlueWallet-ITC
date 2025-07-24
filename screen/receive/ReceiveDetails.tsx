@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { BackHandler, InteractionManager, LayoutAnimation, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import Share from 'react-native-share';
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';
-import { fiatToBTC, satoshiToBTC } from '../../blue_modules/currency';
+import { fiatToITC, satoshiToITC } from '../../blue_modules/currency';
 import triggerHapticFeedback, { HapticFeedbackTypes } from '../../blue_modules/hapticFeedback';
 import { majorTomToGroundControl, tryToObtainPermissions } from '../../blue_modules/notifications';
 import { BlueButtonLink, BlueCard, BlueText } from '../../BlueComponents';
@@ -26,7 +26,7 @@ import { useSettings } from '../../hooks/context/useSettings';
 import { useStorage } from '../../hooks/context/useStorage';
 import { useExtendedNavigation } from '../../hooks/useExtendedNavigation';
 import loc, { formatBalance } from '../../loc';
-import { BitcoinUnit, Chain } from '../../models/bitcoinUnits';
+import { InterchainedUnit, Chain } from '../../models/bitcoinUnits';
 import { ReceiveDetailsStackParamList } from '../../navigation/ReceiveDetailsStackParamList';
 import { CommonToolTipActions } from '../../typings/CommonToolTipActions';
 import { SuccessView } from '../send/success';
@@ -72,12 +72,12 @@ const ReceiveDetails = () => {
   const { colors } = useTheme();
   const [customLabel, setCustomLabel] = useState('');
   const [customAmount, setCustomAmount] = useState('');
-  const [customUnit, setCustomUnit] = useState<BitcoinUnit>(BitcoinUnit.BTC);
+  const [customUnit, setCustomUnit] = useState<InterchainedUnit>(InterchainedUnit.ITC);
   const [bip21encoded, setBip21encoded] = useState('');
   const [isCustom, setIsCustom] = useState(false);
   const [tempCustomLabel, setTempCustomLabel] = useState('');
   const [tempCustomAmount, setTempCustomAmount] = useState('');
-  const [tempCustomUnit, setTempCustomUnit] = useState<BitcoinUnit>(BitcoinUnit.BTC);
+  const [tempCustomUnit, setTempCustomUnit] = useState<InterchainedUnit>(InterchainedUnit.ITC);
   const [showPendingBalance, setShowPendingBalance] = useState(false);
   const [showConfirmedBalance, setShowConfirmedBalance] = useState(false);
   const [showAddress, setShowAddress] = useState(false);
@@ -275,8 +275,8 @@ const ReceiveDetails = () => {
 
           setDisplayBalance(
             loc.formatString(loc.transactions.pending_with_amount, {
-              amt1: formatBalance(balance.unconfirmed, BitcoinUnit.LOCAL_CURRENCY, true).toString(),
-              amt2: formatBalance(balance.unconfirmed, BitcoinUnit.BTC, true).toString(),
+              amt1: formatBalance(balance.unconfirmed, InterchainedUnit.LOCAL_CURRENCY, true).toString(),
+              amt2: formatBalance(balance.unconfirmed, InterchainedUnit.ITC, true).toString(),
             }),
           );
           setShowPendingBalance(true);
@@ -293,8 +293,8 @@ const ReceiveDetails = () => {
             setShowAddress(false);
             setDisplayBalance(
               loc.formatString(loc.transactions.received_with_amount, {
-                amt1: formatBalance(balanceToShow, BitcoinUnit.LOCAL_CURRENCY, true).toString(),
-                amt2: formatBalance(balanceToShow, BitcoinUnit.BTC, true).toString(),
+                amt1: formatBalance(balanceToShow, InterchainedUnit.LOCAL_CURRENCY, true).toString(),
+                amt2: formatBalance(balanceToShow, InterchainedUnit.ITC, true).toString(),
               }),
             );
             if (walletID) {
@@ -387,7 +387,7 @@ const ReceiveDetails = () => {
               {isCustom && (
                 <>
                   {getDisplayAmount() && (
-                    <BlueText testID="BitcoinAmountText" style={[styles.amount, stylesHook.amount]} numberOfLines={1}>
+                    <BlueText testID="InterchainedAmountText" style={[styles.amount, stylesHook.amount]} numberOfLines={1}>
                       {getDisplayAmount()}
                     </BlueText>
                   )}
@@ -462,18 +462,18 @@ const ReceiveDetails = () => {
     let amount = tempCustomAmount;
     const amountNumber = Number(amount);
     switch (tempCustomUnit) {
-      case BitcoinUnit.BTC:
+      case InterchainedUnit.ITC:
         // nop
         break;
-      case BitcoinUnit.SATS:
-        amount = satoshiToBTC(amountNumber);
+      case InterchainedUnit.SATS:
+        amount = satoshiToITC(amountNumber);
         break;
-      case BitcoinUnit.LOCAL_CURRENCY:
-        if (AmountInput.conversionCache[amount + BitcoinUnit.LOCAL_CURRENCY]) {
+      case InterchainedUnit.LOCAL_CURRENCY:
+        if (AmountInput.conversionCache[amount + InterchainedUnit.LOCAL_CURRENCY]) {
           // cache hit! we reuse old value that supposedly doesnt have rounding errors
-          amount = satoshiToBTC(Number(AmountInput.conversionCache[amount + BitcoinUnit.LOCAL_CURRENCY]));
+          amount = satoshiToITC(Number(AmountInput.conversionCache[amount + InterchainedUnit.LOCAL_CURRENCY]));
         } else {
-          amount = fiatToBTC(amountNumber);
+          amount = fiatToITC(amountNumber);
         }
         break;
     }
@@ -488,10 +488,10 @@ const ReceiveDetails = () => {
   const resetCustomAmount = () => {
     setTempCustomLabel('');
     setTempCustomAmount('');
-    setTempCustomUnit(wallet?.getPreferredBalanceUnit() || BitcoinUnit.BTC);
+    setTempCustomUnit(wallet?.getPreferredBalanceUnit() || InterchainedUnit.ITC);
     setCustomLabel('');
     setCustomAmount('');
-    setCustomUnit(wallet?.getPreferredBalanceUnit() || BitcoinUnit.BTC);
+    setCustomUnit(wallet?.getPreferredBalanceUnit() || InterchainedUnit.ITC);
     // address is always defined here
     setBip21encoded(DeeplinkSchemaMatch.bip21encode(address!));
     setShowAddress(true);
@@ -499,18 +499,18 @@ const ReceiveDetails = () => {
   };
 
   /**
-   * @returns {string} BTC amount, accounting for current `customUnit` and `customUnit`
+   * @returns {string} ITC amount, accounting for current `customUnit` and `customUnit`
    */
   const getDisplayAmount = (): string | null => {
     const number = Number(customAmount);
     if (number > 0) {
       switch (customUnit) {
-        case BitcoinUnit.BTC:
-          return customAmount + ' BTC';
-        case BitcoinUnit.SATS:
-          return satoshiToBTC(number) + ' BTC';
-        case BitcoinUnit.LOCAL_CURRENCY:
-          return fiatToBTC(number) + ' BTC';
+        case InterchainedUnit.ITC:
+          return customAmount + ' ITC';
+        case InterchainedUnit.SATS:
+          return satoshiToITC(number) + ' ITC';
+        case InterchainedUnit.LOCAL_CURRENCY:
+          return fiatToITC(number) + ' ITC';
       }
       return customAmount + ' ' + customUnit;
     } else {

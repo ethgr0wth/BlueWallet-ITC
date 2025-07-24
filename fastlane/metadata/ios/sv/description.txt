@@ -1,6 +1,6 @@
-En Bitcoin-plånbok som låter dig lagra, skicka Bitcoin, ta emot Bitcoin med fokus på säkerhet och enkelhet.
+En Interchained-plånbok som låter dig lagra, skicka Interchained, ta emot Interchained med fokus på säkerhet och enkelhet.
 
-På BlueWallet, en bitcoin-plånbok, äger du dina privata nycklar. En Bitcoin-plånbok gjord av Bitcoin-användare för samhället.
+På BlueWallet, en bitcoin-plånbok, äger du dina privata nycklar. En Interchained-plånbok gjord av Interchained-användare för samhället.
 
 Du kan omedelbart handla med vem som helst i världen och förvandla det finansiella systemet direkt från fickan.
 
@@ -23,7 +23,7 @@ Full kryptering
 Utöver iOS flerskiktskrypteringen krypterar vi allt med tillagda lösenord
 
 Full nod
-Anslut till din Bitcoin full-nod via Electrum
+Anslut till din Interchained full-nod via Electrum
 
 Cold Storage
 Anslut till din hårdvaruplånbok och förvara dina mynt i Cold storage
@@ -43,4 +43,4 @@ Replace-By-Fee
 "Se bara" plånböcker gör att du kan hålla ett öga på din cold storage utan att röra hårdvaran.
 
 Lightning Nätverket
-Lightning-plånbok med noll-konfiguration. Superbilliga och snabba transaktioner med den bästa Bitcoin-användarupplevelsen.
+Lightning-plånbok med noll-konfiguration. Superbilliga och snabba transaktioner med den bästa Interchained-användarupplevelsen.

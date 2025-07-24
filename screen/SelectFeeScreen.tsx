@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useReducer, useEffect, FC } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Keyboard } from 'react-native';
 import { useTheme } from '../components/themes';
 import loc, { formatBalance } from '../loc';
-import { BitcoinUnit } from '../models/bitcoinUnits';
+import { InterchainedUnit } from '../models/bitcoinUnits';
 import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { SendDetailsStackParamList } from '../navigation/SendDetailsStackParamList';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -138,7 +138,7 @@ const SelectFeeScreen = () => {
   const route = useRoute<SelectFeeScreenRouteProp>();
   const { colors } = useTheme();
 
-  const { networkTransactionFees, feePrecalc, feeRate, feeUnit = BitcoinUnit.BTC, walletID, customFee } = route.params;
+  const { networkTransactionFees, feePrecalc, feeRate, feeUnit = InterchainedUnit.ITC, walletID, customFee } = route.params;
 
   const [state, dispatch] = useReducer(feeScreenReducer, {
     customFeeValue: customFee || '',

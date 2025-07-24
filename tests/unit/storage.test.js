@@ -172,7 +172,7 @@ it('AppStorage - getTransactions() work', async () => {
   for (const tx of txs) {
     assert.ok([w.getID(), w2.getID()].includes(tx.walletID));
     assert.strictEqual(tx.walletPreferredBalanceUnit, w.getPreferredBalanceUnit());
-    assert.strictEqual(tx.walletPreferredBalanceUnit, 'BTC');
+    assert.strictEqual(tx.walletPreferredBalanceUnit, 'ITC');
   }
 
   //
@@ -183,7 +183,7 @@ it('AppStorage - getTransactions() work', async () => {
   for (const tx of txs) {
     assert.ok([w.getID()].includes(tx.walletID));
     assert.strictEqual(tx.walletPreferredBalanceUnit, w.getPreferredBalanceUnit());
-    assert.strictEqual(tx.walletPreferredBalanceUnit, 'BTC');
+    assert.strictEqual(tx.walletPreferredBalanceUnit, 'ITC');
   }
 
   //
@@ -194,7 +194,7 @@ it('AppStorage - getTransactions() work', async () => {
   for (const tx of txs) {
     assert.ok([w2.getID()].includes(tx.walletID));
     assert.strictEqual(tx.walletPreferredBalanceUnit, w.getPreferredBalanceUnit());
-    assert.strictEqual(tx.walletPreferredBalanceUnit, 'BTC');
+    assert.strictEqual(tx.walletPreferredBalanceUnit, 'ITC');
   }
 });
 

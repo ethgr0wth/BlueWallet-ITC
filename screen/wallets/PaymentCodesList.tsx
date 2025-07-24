@@ -18,7 +18,7 @@ import { Action } from '../../components/types';
 import confirm from '../../helpers/confirm';
 import prompt from '../../helpers/prompt';
 import loc, { formatBalance } from '../../loc';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import SafeArea from '../../components/SafeArea';
 import { useExtendedNavigation } from '../../hooks/useExtendedNavigation';
 import { useStorage } from '../../hooks/context/useStorage';
@@ -334,7 +334,7 @@ export default function PaymentCodesList() {
     if (
       await confirm(
         loc.bip47.onchain_tx_needed,
-        `${loc.send.create_fee}: ${formatBalance(fee, BitcoinUnit.BTC)} (${satoshiToLocalCurrency(fee)}). `,
+        `${loc.send.create_fee}: ${formatBalance(fee, InterchainedUnit.ITC)} (${satoshiToLocalCurrency(fee)}). `,
       )
     ) {
       setLoadingText('Broadcasting...');

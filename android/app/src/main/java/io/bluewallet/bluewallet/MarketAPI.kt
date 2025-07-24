@@ -31,7 +31,7 @@ object MarketAPI {
     data class PriceResult(val rateDouble: Double, val formattedRate: String?)
 
     suspend fun fetchPrice(context: Context, currency: String): String? {
-        Log.i(TAG, "Fetching Bitcoin price for currency: $currency")
+        Log.i(TAG, "Fetching Interchained price for currency: $currency")
         val startTime = System.currentTimeMillis()
         
         return try {
@@ -121,16 +121,16 @@ object MarketAPI {
         } else {
             when (source) {
                 "Yadio" -> "https://api.yadio.io/json/$endPointKey"
-                "YadioConvert" -> "https://api.yadio.io/convert/1/BTC/$endPointKey"
+                "YadioConvert" -> "https://api.yadio.io/convert/1/ITC/$endPointKey"
                 "Exir" -> "https://api.exir.io/v1/ticker?symbol=btc-irt"
                 "coinpaprika" -> "https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=INR"
                 "Bitstamp" -> "https://www.bitstamp.net/api/v2/ticker/btc${endPointKey.lowercase()}"
-                "Coinbase" -> "https://api.coinbase.com/v2/prices/BTC-${endPointKey.uppercase()}/buy"
+                "Coinbase" -> "https://api.coinbase.com/v2/prices/ITC-${endPointKey.uppercase()}/buy"
                 "CoinGecko" -> "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${endPointKey.lowercase()}"
                 "BNR" -> "https://www.bnr.ro/nbrfxrates.xml"
                 "Kraken" -> "https://api.kraken.com/0/public/Ticker?pair=XXBTZ${endPointKey.uppercase()}"
-                "CoinDesk" -> "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=${endPointKey.uppercase()}"
-                else -> "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=${endPointKey.uppercase()}"
+                "CoinDesk" -> "https://min-api.cryptocompare.com/data/price?fsym=ITC&tsyms=${endPointKey.uppercase()}"
+                else -> "https://min-api.cryptocompare.com/data/price?fsym=ITC&tsyms=${endPointKey.uppercase()}"
             }
         }
     }

@@ -9,7 +9,7 @@ import { CreateTransactionResult, CreateTransactionUtxo } from './types';
 const ECPair = ECPairFactory(ecc);
 
 /**
- * Creates Segwit P2SH Bitcoin address
+ * Creates Segwit P2SH Interchained address
  * @param pubkey
  * @param network
  * @returns {String}

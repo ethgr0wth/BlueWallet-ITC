@@ -12,7 +12,7 @@ import TransactionOnchainIcon from '../components/icons/TransactionOnchainIcon';
 import TransactionOutgoingIcon from '../components/icons/TransactionOutgoingIcon';
 import TransactionPendingIcon from '../components/icons/TransactionPendingIcon';
 import loc, { formatBalanceWithoutSuffix, transactionTimeToReadable } from '../loc';
-import { BitcoinUnit } from '../models/bitcoinUnits';
+import { InterchainedUnit } from '../models/bitcoinUnits';
 import { useSettings } from '../hooks/context/useSettings';
 import ListItem from './ListItem';
 import { useTheme } from './themes';
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 });
 
 interface TransactionListItemProps {
-  itemPriceUnit?: BitcoinUnit;
+  itemPriceUnit?: InterchainedUnit;
   walletID: string;
   item: Transaction & LightningTransaction; // using type intersection to have less issues with ts
   searchQuery?: string;
@@ -53,7 +53,7 @@ interface TransactionListItemProps {
 type NavigationProps = NativeStackNavigationProp<DetailViewStackParamList>;
 
 export const TransactionListItem: React.FC<TransactionListItemProps> = memo(
-  ({ item, itemPriceUnit = BitcoinUnit.BTC, walletID, searchQuery, style, renderHighlightedText, onPress: customOnPress }) => {
+  ({ item, itemPriceUnit = InterchainedUnit.ITC, walletID, searchQuery, style, renderHighlightedText, onPress: customOnPress }) => {
     const [subtitleNumberOfLines, setSubtitleNumberOfLines] = useState(1);
     const { colors } = useTheme();
     const { navigate } = useExtendedNavigation<NavigationProps>();
@@ -225,7 +225,7 @@ export const TransactionListItem: React.FC<TransactionListItemProps> = memo(
     const { label: transactionTypeLabel, icon: avatar } = determineTransactionTypeAndAvatar();
 
     const amountWithUnit = useMemo(() => {
-      const unitSuffix = itemPriceUnit === BitcoinUnit.BTC || itemPriceUnit === BitcoinUnit.SATS ? ` ${itemPriceUnit}` : ' ';
+      const unitSuffix = itemPriceUnit === InterchainedUnit.ITC || itemPriceUnit === InterchainedUnit.SATS ? ` ${itemPriceUnit}` : ' ';
       return `${formattedAmount}${unitSuffix}`;
     }, [formattedAmount, itemPriceUnit]);
 

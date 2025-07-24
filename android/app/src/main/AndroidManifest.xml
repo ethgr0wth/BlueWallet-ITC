@@ -73,7 +73,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".BitcoinPriceWidget" android:exported="true">
+        <receiver android:name=".InterchainedPriceWidget" android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
                 <action android:name="android.intent.action.SCREEN_ON"/>

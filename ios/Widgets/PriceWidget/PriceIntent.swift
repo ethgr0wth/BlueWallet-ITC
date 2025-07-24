@@ -17,7 +17,7 @@ enum PriceIntentError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .fetchFailed:
-            return "Failed to fetch Bitcoin price data"
+            return "Failed to fetch Interchained price data"
         case .invalidData:
             return "Received invalid price data"
         case .networkUnavailable:
@@ -41,7 +41,7 @@ struct PriceIntent: AppIntent {
     // MARK: - Intent Metadata
     
     static var title: LocalizedStringResource = "Market Rate"
-    static var description = IntentDescription("View the current Bitcoin market rate in your preferred currency.")
+    static var description = IntentDescription("View the current Interchained market rate in your preferred currency.")
     static var openAppWhenRun: Bool { false }
 
     // MARK: - Parameters
@@ -67,7 +67,7 @@ struct PriceIntent: AppIntent {
             
             return .result(
                 value: priceData.rate,
-                dialog: "Current Bitcoin Market Rate",
+                dialog: "Current Interchained Market Rate",
                 view: successView
             )
         } catch {
@@ -80,7 +80,7 @@ struct PriceIntent: AppIntent {
             
             return .result(
                 value: 0.0,
-                dialog: "Failed to retrieve the Bitcoin market rate.",
+                dialog: "Failed to retrieve the Interchained market rate.",
                 view: errorView
             )
         }

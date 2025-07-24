@@ -22,16 +22,16 @@
     "Balance" : {
 
     },
-    "Bitcoin (%@)" : {
+    "Interchained (%@)" : {
 
     },
-    "Bitcoin price: %@" : {
+    "Interchained price: %@" : {
 
     },
     "Brazil (Brazilian Real)" : {
 
     },
-    "BTC" : {
+    "ITC" : {
 
     },
     "Canada (Canadian Dollar)" : {
@@ -76,10 +76,10 @@
     "Currency: %@" : {
 
     },
-    "Current Bitcoin Market Rate" : {
+    "Current Interchained Market Rate" : {
 
     },
-    "Current Bitcoin Price: %@" : {
+    "Current Interchained Price: %@" : {
 
     },
     "Czech Republic (Czech Koruna)" : {
@@ -119,7 +119,7 @@
     "European Union (Euro)" : {
 
     },
-    "Failed to retrieve the Bitcoin market rate." : {
+    "Failed to retrieve the Interchained market rate." : {
 
     },
     "Fiat Currency" : {
@@ -315,22 +315,22 @@
     "Venezuela (Venezuelan Bolívar Soberano)" : {
 
     },
-    "View the current Bitcoin market rate in your preferred currency." : {
+    "View the current Interchained market rate in your preferred currency." : {
 
     },
-    "View the current Bitcoin market rate in your preferred fiat currency." : {
+    "View the current Interchained market rate in your preferred fiat currency." : {
 
     },
-    "View the current Bitcoin market rate." : {
+    "View the current Interchained market rate." : {
 
     },
     "View the current market information." : {
 
     },
-    "View the current price of Bitcoin" : {
+    "View the current price of Interchained" : {
 
     },
-    "View the current price of Bitcoin." : {
+    "View the current price of Interchained." : {
 
     },
     "View the Electrum host connected to/being attempted" : {

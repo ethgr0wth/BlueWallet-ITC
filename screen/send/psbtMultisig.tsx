@@ -16,14 +16,14 @@ import {
 } from 'react-native';
 import { Icon } from '@rneui/themed';
 
-import { satoshiToBTC, satoshiToLocalCurrency } from '../../blue_modules/currency';
+import { satoshiToITC, satoshiToLocalCurrency } from '../../blue_modules/currency';
 import { BlueCard, BlueText } from '../../BlueComponents';
 import presentAlert from '../../components/Alert';
 import Button from '../../components/Button';
 import SafeArea from '../../components/SafeArea';
 import { useTheme } from '../../components/themes';
 import loc from '../../loc';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import { useStorage } from '../../hooks/context/useStorage';
 import { useExtendedNavigation } from '../../hooks/useExtendedNavigation';
 import { combinePSBTs } from '../../utils/combinePSBTs';
@@ -300,7 +300,7 @@ const PsbtMultisig = () => {
         <View style={styles.textBtcUnit}>
           <BlueText selectable style={stylesHook.textBtcUnitValue}>
             {' '}
-            {BitcoinUnit.BTC}
+            {InterchainedUnit.ITC}
           </BlueText>
         </View>
       </View>
@@ -370,7 +370,7 @@ const PsbtMultisig = () => {
                 <BlueText selectable style={stylesHook.feeFiatText}>
                   {loc.formatString(loc.multisig.fee, { number: satoshiToLocalCurrency(getFee()) })} -{' '}
                 </BlueText>
-                <BlueText selectable>{loc.formatString(loc.multisig.fee_btc, { number: satoshiToBTC(getFee()) })}</BlueText>
+                <BlueText selectable>{loc.formatString(loc.multisig.fee_btc, { number: satoshiToITC(getFee()) })}</BlueText>
               </View>
             </View>
           </View>

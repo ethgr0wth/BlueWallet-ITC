@@ -11,7 +11,7 @@ import Foundation
 struct WalletData {
   var balance: Double
   var latestTransactionTime: LatestTransaction = LatestTransaction(isUnconfirmed: false, epochValue: 0)
-  var formattedBalanceBTC: String {
+  var formattedBalanceITC: String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .none
     formatter.usesSignificantDigits = true
@@ -19,9 +19,9 @@ struct WalletData {
     formatter.roundingMode = .up
     let value = NSNumber(value: balance / 100000000);
     if let valueString = formatter.string(from: value) {
-      return "\(String(describing: valueString)) \(BitcoinUnit.btc.rawValue)"
+      return "\(String(describing: valueString)) \(InterchainedUnit.btc.rawValue)"
     } else {
-      return "0 \(BitcoinUnit.btc.rawValue)"
+      return "0 \(InterchainedUnit.btc.rawValue)"
     }
   }
 }

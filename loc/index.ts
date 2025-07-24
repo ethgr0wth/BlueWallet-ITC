@@ -8,7 +8,7 @@ import { I18nManager } from 'react-native';
 import * as RNLocalize from 'react-native-localize';
 
 import { satoshiToLocalCurrency } from '../blue_modules/currency';
-import { BitcoinUnit } from '../models/bitcoinUnits';
+import { InterchainedUnit } from '../models/bitcoinUnits';
 import { AvailableLanguages } from './languages';
 import enJson from './en.json';
 
@@ -310,18 +310,18 @@ export const removeTrailingZeros = (value: number | string): string => {
  *
  * @param balance {number} Satoshis
  * @param toUnit {string} Value from models/bitcoinUnits.js
- * @param withFormatting {boolean} Works only with `BitcoinUnit.SATS`, makes spaces wetween groups of 000
+ * @param withFormatting {boolean} Works only with `InterchainedUnit.SATS`, makes spaces wetween groups of 000
  * @returns {string}
  */
 export function formatBalance(balance: number, toUnit: string, withFormatting = false): string {
   if (toUnit === undefined) {
-    return balance + ' ' + loc.units[BitcoinUnit.BTC];
+    return balance + ' ' + loc.units[InterchainedUnit.ITC];
   }
-  if (toUnit === BitcoinUnit.BTC) {
+  if (toUnit === InterchainedUnit.ITC) {
     const value = new BigNumber(balance).dividedBy(100000000).toFixed(8);
-    return removeTrailingZeros(+value) + ' ' + loc.units[BitcoinUnit.BTC];
-  } else if (toUnit === BitcoinUnit.SATS) {
-    return (withFormatting ? new Intl.NumberFormat().format(balance).toString() : String(balance)) + ' ' + loc.units[BitcoinUnit.SATS];
+    return removeTrailingZeros(+value) + ' ' + loc.units[InterchainedUnit.ITC];
+  } else if (toUnit === InterchainedUnit.SATS) {
+    return (withFormatting ? new Intl.NumberFormat().format(balance).toString() : String(balance)) + ' ' + loc.units[InterchainedUnit.SATS];
   } else {
     return satoshiToLocalCurrency(balance);
   }
@@ -330,18 +330,18 @@ export function formatBalance(balance: number, toUnit: string, withFormatting = 
 /**
  *
  * @param balance {number} Satoshis
- * @param toUnit {string} Value from models/bitcoinUnits.js, for example `BitcoinUnit.SATS`
- * @param withFormatting {boolean} Works only with `BitcoinUnit.SATS`, makes spaces wetween groups of 000
+ * @param toUnit {string} Value from models/bitcoinUnits.js, for example `InterchainedUnit.SATS`
+ * @param withFormatting {boolean} Works only with `InterchainedUnit.SATS`, makes spaces wetween groups of 000
  * @returns {string}
  */
 export function formatBalanceWithoutSuffix(balance = 0, toUnit: string, withFormatting = false): string | number {
   if (toUnit === undefined) {
     return balance;
   }
-  if (toUnit === BitcoinUnit.BTC) {
+  if (toUnit === InterchainedUnit.ITC) {
     const value = new BigNumber(balance).dividedBy(100000000).toFixed(8);
     return removeTrailingZeros(value);
-  } else if (toUnit === BitcoinUnit.SATS) {
+  } else if (toUnit === InterchainedUnit.SATS) {
     return withFormatting ? new Intl.NumberFormat().format(balance).toString() : String(balance);
   } else {
     return satoshiToLocalCurrency(balance);
@@ -352,8 +352,8 @@ export function formatBalanceWithoutSuffix(balance = 0, toUnit: string, withForm
  * Should be used when we need a simple string to be put in text input, for example
  *
  * @param  balance {number} Satoshis
- * @param toUnit {string} Value from models/bitcoinUnits.js, for example `BitcoinUnit.SATS`
- * @param withFormatting {boolean} Works only with `BitcoinUnit.SATS`, makes spaces wetween groups of 000
+ * @param toUnit {string} Value from models/bitcoinUnits.js, for example `InterchainedUnit.SATS`
+ * @param withFormatting {boolean} Works only with `InterchainedUnit.SATS`, makes spaces wetween groups of 000
  * @returns {string}
  */
 export function formatBalancePlain(balance = 0, toUnit: string, withFormatting = false) {

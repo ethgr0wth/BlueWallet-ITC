@@ -7,7 +7,7 @@ import triggerHapticFeedback, { HapticFeedbackTypes } from '../../blue_modules/h
 import confirm from '../../helpers/confirm';
 import { unlockWithBiometrics, useBiometrics } from '../../hooks/useBiometrics';
 import loc, { formatBalance } from '../../loc';
-import { BitcoinUnit } from '../../models/bitcoinUnits';
+import { InterchainedUnit } from '../../models/bitcoinUnits';
 import presentAlert from '../Alert';
 import QRCodeComponent from '../QRCodeComponent';
 import { useTheme } from '../themes';
@@ -22,7 +22,7 @@ import HighlightedText from '../HighlightedText';
 
 interface AddressItemProps {
   item: any;
-  balanceUnit: BitcoinUnit;
+  balanceUnit: InterchainedUnit;
   walletID: string;
   allowSignVerifyMessage: boolean;
   onPress?: () => void; // example: ManageWallets uses this

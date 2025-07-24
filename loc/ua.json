@@ -23,7 +23,7 @@
   },
   "azteco": {
     "codeIs": "Ваш код ваучера",
-    "errorBeforeRefeem": "Перш ніж підтвердити, ви повинні додати гаманець Bitcoin.",
+    "errorBeforeRefeem": "Перш ніж підтвердити, ви повинні додати гаманець Interchained.",
     "errorSomething": "Щось пішло не так. Цей ваучер ще дійсний?",
     "redeem": "Купити на гаманець",
     "redeemButton": "Купити",
@@ -153,7 +153,7 @@
   "settings": {
     "about": "Про програму",
     "about_backup": "Завжди створюйте резервні копії ключів!",
-    "about_free": "BlueWallet — це безкоштовний проект з відкритим кодом. Створено користувачами Bitcoin.",
+    "about_free": "BlueWallet — це безкоштовний проект з відкритим кодом. Створено користувачами Interchained.",
     "about_license": "MIT Ліцензія",
     "about_release_notes": "Інформація про реліз",
     "about_review": "Залиште нам відгук",
@@ -211,7 +211,7 @@
     "updating": "Оновлення..."
   },
   "wallets": {
-    "add_bitcoin": "Bitcoin",
+    "add_bitcoin": "Interchained",
     "add_bitcoin_explain": "Простий і потужний Біткойн гаманець",
     "add_create": "Створити",
     "total_balance": "Загальний Баланс",
@@ -268,7 +268,7 @@
   },
   "multisig": {
     "fee": "Комісія: {number}",
-    "fee_btc": "{number} BTC",
+    "fee_btc": "{number} ITC",
     "confirm": "Підтвердити",
     "header": "Надіслати",
     "view": "Переглянути",
@@ -307,7 +307,7 @@
     "sort_status": "Статус"
   },
   "units": {
-    "BTC": "BTC",
+    "ITC": "ITC",
     "MAX": "Макс",
     "sat_vbyte": "sat/vByte"
   },

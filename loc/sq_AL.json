@@ -30,7 +30,7 @@
   },
   "azteco": {
     "codeIs": "Kodi promocional është",
-    "errorBeforeRefeem": "Para përdorimit, duhet të shtoni një portofol Bitcoin-i.",
+    "errorBeforeRefeem": "Para përdorimit, duhet të shtoni një portofol Interchained-i.",
     "errorSomething": "Diçka shkoi gabim. Eshtë ky kod promocional akoma i vlefshëm?",
     "redeem": "Përdore në portofol",
     "redeemButton": "Përdor",
@@ -57,7 +57,7 @@
     "placeholder": "Fatura ose adresa",
     "potentialFee": "Komisioni potencial: {fee}",
     "refill": "Rimbush",
-    "refill_create": "Krijoni në portofol Bitcoin-i për të vazhduar.",
+    "refill_create": "Krijoni në portofol Interchained-i për të vazhduar.",
     "refill_external": "Rimbush nga një portofol tjetër",
     "refill_lnd_balance": "Rimbush ballancën e portofolit Lightning.",
     "sameWalletAsInvoiceError": "Nuk mund të paguash një faturë me të njëjtin portofol që e ka krijuar atë",
@@ -140,9 +140,9 @@
     "details_amount_field_is_not_valid": "Sasia e perdorur nuk eshte e vlefshme",
     "details_amount_field_is_less_than_minimum_amount_sat": "Sasia e percaktuar eshte shume e vogel. Ju lutem fusni nje sasi me te madhe se 500 sats.",
     "details_create": "Krijo një Faturë",
-    "details_error_decode": "E pamundur me de-koduar adresen e Bitcoin-it",
+    "details_error_decode": "E pamundur me de-koduar adresen e Interchained-it",
     "details_fee_field_is_not_valid": "Komisioni nuk eshte i vlefshem",
-    "details_frozen": "{amount} BTC jane te ngrira.",
+    "details_frozen": "{amount} ITC jane te ngrira.",
     "details_next": "Pas",
     "details_no_signed_tx": "File-at e zgjedhur nuk permbajne asnje transferte e cila mund te importohet.",
     "details_note_placeholder": "Shenim per veten",
@@ -152,7 +152,7 @@
     "details_total_exceeds_balance": "Sasia qe deshironi te dergoni e tejkalon ballancen tuaj",
     "details_total_exceeds_balance_frozen": "Shuma që po dërgoni tejkalon ballancen e disponueshëm. Ju lutemi vini re se monedhat e ngrira nuk mund te dergohen.",
     "details_unrecognized_file_format": "Formati i file-it eshte i panjohur.",
-    "details_wallet_before_tx": "Para se te krijoni nje transferte, duhet te keni nje portofolo Bitcoin-i.",
+    "details_wallet_before_tx": "Para se te krijoni nje transferte, duhet te keni nje portofolo Interchained-i.",
     "dynamic_init": "Duke filluar",
     "dynamic_next": "Pas",
     "dynamic_prev": "Para",
@@ -205,7 +205,7 @@
     "password": "Fjalekalim",
     "plausible_deniability": "Mohim i besueshëm",
     "privacy": "Privatesia",
-    "push_notifications_explanation": "Duke aktivizuar njoftimet, kodi i pajisjes suaj do të dërgohet në server, së bashku me adresat e portofolit dhe ID-të e transaksioneve për të gjitha portofolat dhe transfertat e kryera pasi të aktivizoni njoftimet. Kodi i pajisjes përdoret për të dërguar njoftime, ndërsa informacioni i portofolit na mundëson t’ju njoftojmë për Bitcoin-in që ju vjen ose për konfirmimet e transaksioneve.\n\nVetëm informacioni i krijuar pas aktivizimit të njoftimeve transmetohet—asnjanjë të dhënë nga më parë nuk mblidhet.\n\nÇaktivizimi i njoftimeve do të fshijë të gjithë këtë informacion nga serveri. Gjithashtu, fshirja e një portofoli nga aplikacioni do të heqë edhe informacionin e tij përkatës nga serveri.",
+    "push_notifications_explanation": "Duke aktivizuar njoftimet, kodi i pajisjes suaj do të dërgohet në server, së bashku me adresat e portofolit dhe ID-të e transaksioneve për të gjitha portofolat dhe transfertat e kryera pasi të aktivizoni njoftimet. Kodi i pajisjes përdoret për të dërguar njoftime, ndërsa informacioni i portofolit na mundëson t’ju njoftojmë për Interchained-in që ju vjen ose për konfirmimet e transaksioneve.\n\nVetëm informacioni i krijuar pas aktivizimit të njoftimeve transmetohet—asnjanjë të dhënë nga më parë nuk mblidhet.\n\nÇaktivizimi i njoftimeve do të fshijë të gjithë këtë informacion nga serveri. Gjithashtu, fshirja e një portofoli nga aplikacioni do të heqë edhe informacionin e tij përkatës nga serveri.",
     "save": "Ruaj",
     "saved": "Shpetuar",
     "total_balance": "Ballanca Totale"
@@ -221,7 +221,7 @@
     "updating": "Duke u perditesuar..."
   },
   "wallets": {
-    "add_bitcoin": "Bitcoin",
+    "add_bitcoin": "Interchained",
     "add_create": "Krijo",
     "total_balance": "Ballanca Totale",
     "add_entropy": "Entropia",
@@ -253,7 +253,7 @@
     "manage_title": "Menaxho Portofolat",
     "no_results_found": "Asnje rezultat",
     "please_continue_scanning": "Vazhdo skanimin.",
-    "select_no_bitcoin": "Per momentin nuk ka asnje portofol Bitcoin-i.",
+    "select_no_bitcoin": "Per momentin nuk ka asnje portofol Interchained-i.",
     "select_wallet": "Zgjidh Portofolin",
     "share_number": "Shperndaj {number}",
     "more_info": "Me shum Info"
@@ -310,7 +310,7 @@
     "sort_by": "Radhiti sipas"
   },
   "units": {
-    "BTC": "BTC",
+    "ITC": "ITC",
     "MAX": "Max",
     "sat_vbyte": "sat/vByte",
     "sats": "sats"

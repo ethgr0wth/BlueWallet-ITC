@@ -1,5 +1,5 @@
 import bolt11 from 'bolt11';
-import { BitcoinUnit, Chain } from '../../models/bitcoinUnits';
+import { InterchainedUnit, Chain } from '../../models/bitcoinUnits';
 import { LegacyWallet } from './legacy-wallet';
 import { fetch } from '../../util/fetch';
 
@@ -22,7 +22,7 @@ export class LightningCustodianWallet extends LegacyWallet {
   transactions_raw: any[] = [];
   user_invoices_raw: any[] = [];
   info_raw: false | { uris?: string[] } = false;
-  preferredBalanceUnit = BitcoinUnit.SATS;
+  preferredBalanceUnit = InterchainedUnit.SATS;
   chain = Chain.OFFCHAIN;
   last_paid_invoice_result?: any;
   decoded_invoice_raw?: any;
@@ -490,11 +490,11 @@ export class LightningCustodianWallet extends LegacyWallet {
       throw new Error('API error: ' + json.message + ' (code ' + json.code + ')');
     }
 
-    if (!json.BTC || typeof json.BTC.AvailableBalance === 'undefined') {
+    if (!json.ITC || typeof json.ITC.AvailableBalance === 'undefined') {
       throw new Error('API unexpected response: ' + JSON.stringify(json));
     }
 
-    this.balance = json.BTC.AvailableBalance;
+    this.balance = json.ITC.AvailableBalance;
     this._lastBalanceFetch = +new Date();
   }
 

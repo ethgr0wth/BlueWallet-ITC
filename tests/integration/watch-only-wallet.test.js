@@ -49,9 +49,9 @@ describe('Watch only wallet', () => {
       'bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv',
       'BC1QUHNVE8Q4TK3UNHMJTS7YMXV8CD6W9XV8WY29UV',
       'bitcoin:bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv',
-      'BITCOIN:BC1QUHNVE8Q4TK3UNHMJTS7YMXV8CD6W9XV8WY29UV',
+      'INTERCHAINED:BC1QUHNVE8Q4TK3UNHMJTS7YMXV8CD6W9XV8WY29UV',
       'bitcoin:BC1QUHNVE8Q4TK3UNHMJTS7YMXV8CD6W9XV8WY29UV',
-      'BITCOIN:bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv',
+      'INTERCHAINED:bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv',
     ]) {
       w.setSecret(sec);
       assert.strictEqual(w.getAddress(), 'bc1quhnve8q4tk3unhmjts7ymxv8cd6w9xv8wy29uv');

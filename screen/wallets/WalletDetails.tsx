@@ -33,7 +33,7 @@ import prompt from '../../helpers/prompt';
 import { unlockWithBiometrics, useBiometrics } from '../../hooks/useBiometrics';
 import { useExtendedNavigation } from '../../hooks/useExtendedNavigation';
 import loc, { formatBalanceWithoutSuffix } from '../../loc';
-import { BitcoinUnit, Chain } from '../../models/bitcoinUnits';
+import { InterchainedUnit, Chain } from '../../models/bitcoinUnits';
 import { useStorage } from '../../hooks/context/useStorage';
 import { useFocusEffect, useRoute, RouteProp, usePreventRemove, useLocale } from '@react-navigation/native';
 import { LightningTransaction, Transaction, TWallet } from '../../class/wallets/types';
@@ -102,7 +102,7 @@ const WalletDetails: React.FC = () => {
   const presentWalletHasBalanceAlert = useCallback(async () => {
     triggerHapticFeedback(HapticFeedbackTypes.NotificationWarning);
     try {
-      const balance = formatBalanceWithoutSuffix(wallet.getBalance(), BitcoinUnit.SATS, true);
+      const balance = formatBalanceWithoutSuffix(wallet.getBalance(), InterchainedUnit.SATS, true);
       const walletBalanceConfirmation = await prompt(
         loc.wallets.details_delete_wallet,
         loc.formatString(loc.wallets.details_del_wb_q, { balance }),
@@ -163,7 +163,7 @@ const WalletDetails: React.FC = () => {
   }, [isBiometricUseCapableAndEnabled, navigateToOverviewAndDeleteWallet, presentWalletHasBalanceAlert, wallet]);
 
   const exportHistoryContent = useCallback(() => {
-    const headers = [loc.transactions.date, loc.transactions.txid, `${loc.send.create_amount} (${BitcoinUnit.BTC})`, loc.send.create_memo];
+    const headers = [loc.transactions.date, loc.transactions.txid, `${loc.send.create_amount} (${InterchainedUnit.ITC})`, loc.send.create_memo];
     if (wallet.chain === Chain.OFFCHAIN) {
       headers.push(loc.lnd.payment);
     }
@@ -172,7 +172,7 @@ const WalletDetails: React.FC = () => {
     const transactions = wallet.getTransactions();
 
     transactions.forEach((transaction: Transaction & LightningTransaction) => {
-      const value = formatBalanceWithoutSuffix(transaction.value || 0, BitcoinUnit.BTC, true);
+      const value = formatBalanceWithoutSuffix(transaction.value || 0, InterchainedUnit.ITC, true);
       let hash: string = transaction.hash || '';
       let memo = (transaction.hash && txMetadata[transaction.hash]?.memo?.trim()) || '';
       let status = '';

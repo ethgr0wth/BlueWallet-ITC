@@ -395,7 +395,7 @@ const WalletsAdd: React.FC = () => {
     confirmResetEntropy(ButtonSelected.VAULT);
   };
 
-  const handleOnBitcoinButtonPressed = () => {
+  const handleOnInterchainedButtonPressed = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     Keyboard.dismiss();
     setSelectedWalletType(ButtonSelected.ONCHAIN);
@@ -444,10 +444,10 @@ const WalletsAdd: React.FC = () => {
       <BlueFormLabel>{loc.wallets.add_wallet_type}</BlueFormLabel>
       <View style={styles.buttons}>
         <WalletButton
-          buttonType="Bitcoin"
-          testID="ActivateBitcoinButton"
+          buttonType="Interchained"
+          testID="ActivateInterchainedButton"
           active={selectedWalletType === ButtonSelected.ONCHAIN}
-          onPress={handleOnBitcoinButtonPressed}
+          onPress={handleOnInterchainedButtonPressed}
           size={styles.button}
         />
         <WalletButton

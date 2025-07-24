@@ -1,10 +1,10 @@
-Un portafoglio Bitcoin che ti consente di conservare, inviare e ricevere bitcoin con particolare attenzione alla sicurezza e alla semplicità d'uso.
+Un portafoglio Interchained che ti consente di conservare, inviare e ricevere bitcoin con particolare attenzione alla sicurezza e alla semplicità d'uso.
 
-Con BlueWallet, sei tu a possedere le tue chiavi private. Un portafoglio Bitcoin realizzato da utenti Bitcoin per la comunità Bitcoin.
+Con BlueWallet, sei tu a possedere le tue chiavi private. Un portafoglio Interchained realizzato da utenti Interchained per la comunità Interchained.
 
 Puoi effettuare transazioni in maniera istantanea con chiunque e trasformare il sistema finanziario dal palmo della tua mano.
 
-Crea nuovi portafogli Bitcoin o importa il tuo portafoglio esistente. È semplice e veloce.
+Crea nuovi portafogli Interchained o importa il tuo portafoglio esistente. È semplice e veloce.
 
 _____
 
@@ -23,7 +23,7 @@ Crittografia completa
 In aggiunta alla crittografia multi strato di iOS, criptiamo tutto con password aggiuntive
 
 Full node
-Connettiti al tuo full node Bitcoin tramite Electrum
+Connettiti al tuo full node Interchained tramite Electrum
 
 Cold Storage
 Connetti il tuo portafoglio hardware e tieni i tuoi bitcoin al sicuro

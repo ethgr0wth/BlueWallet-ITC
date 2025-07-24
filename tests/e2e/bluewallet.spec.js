@@ -212,17 +212,17 @@ describe('BlueWallet UI Tests - no wallets', () => {
       await element(by.text(`No, and do not ask me again.`)).tap();
       await element(by.text(`No, and do not ask me again.`)).tap(); // sometimes the first click doesnt work (detox issue, not app's)
     } catch (_) {}
-    await waitForId('BitcoinAddressQRCodeContainer');
+    await waitForId('InterchainedAddressQRCodeContainer');
     await waitForId('CopyTextToClipboard');
     await element(by.id('SetCustomAmountButton')).tap();
-    await element(by.id('BitcoinAmountInput')).replaceText('1');
+    await element(by.id('InterchainedAmountInput')).replaceText('1');
     await element(by.id('CustomAmountDescription')).replaceText('test');
     await element(by.id('CustomAmountDescription')).tapReturnKey();
     await tapAndTapAgainIfElementIsNotVisible('CustomAmountSaveButton', 'CustomAmountDescriptionText');
     await expect(element(by.id('CustomAmountDescriptionText'))).toHaveText('test');
-    await expect(element(by.id('BitcoinAmountText'))).toHaveText('1 BTC');
+    await expect(element(by.id('InterchainedAmountText'))).toHaveText('1 ITC');
 
-    await waitForId('BitcoinAddressQRCodeContainer');
+    await waitForId('InterchainedAddressQRCodeContainer');
     await waitForId('CopyTextToClipboard');
 
     process.env.TRAVIS && require('fs').writeFileSync(lockFile, '1');
@@ -595,8 +595,8 @@ describe('BlueWallet UI Tests - no wallets', () => {
     await element(by.id('SendButton')).tap();
 
     await element(by.id('AddressInput')).replaceText('bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl');
-    await element(by.id('BitcoinAmountInput')).typeText('0.0005\n');
-    await element(by.id('BitcoinAmountInput')).tapReturnKey();
+    await element(by.id('InterchainedAmountInput')).typeText('0.0005\n');
+    await element(by.id('InterchainedAmountInput')).tapReturnKey();
 
     // setting fee rate:
     const feeRate = 3;
@@ -797,7 +797,7 @@ describe('BlueWallet UI Tests - no wallets', () => {
     await waitForId('SelectWalletsList');
     await element(by.text('cr34t3d')).tap();
     await expect(element(by.id('AddressInput'))).toHaveText('1DamianM2k8WfNEeJmyqSe2YW1upB7UATx'); // send screen, and ONCHAIN invoice is prefilled!
-    await expect(element(by.id('BitcoinAmountInput'))).toHaveText('0.000001');
+    await expect(element(by.id('InterchainedAmountInput'))).toHaveText('0.000001');
 
     process.env.TRAVIS && require('fs').writeFileSync(lockFile, '1');
   });

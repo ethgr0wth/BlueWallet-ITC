@@ -158,9 +158,9 @@ export async function helperCreateWallet(walletName) {
   await sleep(200); // Wait until bounce animation finishes.
   await tapAndTapAgainIfElementIsNotVisible('CreateAWallet', 'WalletNameInput');
   await element(by.id('WalletNameInput')).replaceText(walletName || 'cr34t3d');
-  await waitForId('ActivateBitcoinButton');
-  await element(by.id('ActivateBitcoinButton')).tap();
-  await element(by.id('ActivateBitcoinButton')).tap();
+  await waitForId('ActivateInterchainedButton');
+  await element(by.id('ActivateInterchainedButton')).tap();
+  await element(by.id('ActivateInterchainedButton')).tap();
   // why tf we need 2 taps for it to work..? mystery
   await tapAndTapAgainIfElementIsNotVisible('Create', 'PleaseBackupScrollView');
 

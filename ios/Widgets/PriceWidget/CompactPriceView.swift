@@ -17,7 +17,7 @@ struct CompactPriceView: View {
                 .multilineTextAlignment(.center)
                 .dynamicTypeSize(.large ... .accessibility5)
                 .foregroundColor(textColor)
-                .accessibilityLabel("Bitcoin price: \(price)")
+                .accessibilityLabel("Interchained price: \(price)")
 
             VStack(alignment: .center, spacing: 8) {
                 Text(code)
@@ -59,7 +59,7 @@ struct CompactPriceView_Previews: PreviewProvider {
             CompactPriceView(
                 price: "$50,000",
                 lastUpdated: "Last updated: Oct 10, 2023",
-                code: "BTC",
+                code: "ITC",
                 dataSource: "Data source: CoinDesk"
             )
         }

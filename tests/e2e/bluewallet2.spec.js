@@ -65,7 +65,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await waitForId('SendButton');
     await element(by.id('SendButton')).tap();
     await element(by.id('AddressInput')).replaceText('bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl');
-    await element(by.id('BitcoinAmountInput')).typeText('0.0001\n');
+    await element(by.id('InterchainedAmountInput')).typeText('0.0001\n');
 
     // setting fee rate:
     const feeRate = 2;
@@ -83,7 +83,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await waitForId('TransactionValue');
     await expect(element(by.id('TransactionValue'))).toHaveText('0.0001');
     const transactionFee = await extractTextFromElementById('TransactionFee');
-    assert.ok(transactionFee.startsWith('Fee: 0.00000292 BTC'), 'Unexpected tx fee: ' + transactionFee);
+    assert.ok(transactionFee.startsWith('Fee: 0.00000292 ITC'), 'Unexpected tx fee: ' + transactionFee);
     await element(by.id('TransactionDetailsButton')).tap();
 
     let txhex = await extractTextFromElementById('TxhexInput');
@@ -113,7 +113,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await element(by.id('changeAmountUnitButton')).tap(); // switched to SATS
     await element(by.id('BlueAddressInputScanQrButton')).tap();
 
-    await scanText('bitcoin:bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7?amount=0.00015&pj=https://btc.donate.kukks.org/BTC/pj');
+    await scanText('bitcoin:bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7?amount=0.00015&pj=https://btc.donate.kukks.org/ITC/pj');
 
     if (process.env.TRAVIS) await sleep(5000);
     try {
@@ -134,7 +134,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await device.pressBack();
     await element(by.id('changeAmountUnitButton')).tap(); // switched to SATS
     await element(by.id('changeAmountUnitButton')).tap(); // switched to FIAT
-    await element(by.id('BitcoinAmountInput')).replaceText('1.1');
+    await element(by.id('InterchainedAmountInput')).replaceText('1.1');
     await element(by.id('BlueAddressInputScanQrButton')).tap();
 
     await scanText('bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
@@ -150,22 +150,22 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     txhex = await extractTextFromElementById('TxhexInput');
     transaction = bitcoin.Transaction.fromHex(txhex);
     assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
-    assert.notEqual(transaction.outs[0].value, 110000000n); // check that it is 1.1 USD, not 1 BTC
+    assert.notEqual(transaction.outs[0].value, 110000000n); // check that it is 1.1 USD, not 1 ITC
     assert.ok(Number(transaction.outs[0].value) < 10000); // 1.1 USD ~ 0,00001964 sats in march 2021
 
     // now, testing units switching, and then creating tx with SATS:
 
     await device.pressBack();
     await device.pressBack();
-    await element(by.id('changeAmountUnitButton')).tap(); // switched to BTC
-    await element(by.id('BitcoinAmountInput')).replaceText('0.00015');
+    await element(by.id('changeAmountUnitButton')).tap(); // switched to ITC
+    await element(by.id('InterchainedAmountInput')).replaceText('0.00015');
     await element(by.id('changeAmountUnitButton')).tap(); // switched to sats
-    assert.strictEqual(await extractTextFromElementById('BitcoinAmountInput'), '15000');
+    assert.strictEqual(await extractTextFromElementById('InterchainedAmountInput'), '15000');
     await element(by.id('changeAmountUnitButton')).tap(); // switched to FIAT
-    await element(by.id('changeAmountUnitButton')).tap(); // switched to BTC
-    assert.strictEqual(await extractTextFromElementById('BitcoinAmountInput'), '0.00015');
+    await element(by.id('changeAmountUnitButton')).tap(); // switched to ITC
+    assert.strictEqual(await extractTextFromElementById('InterchainedAmountInput'), '0.00015');
     await element(by.id('changeAmountUnitButton')).tap(); // switched to sats
-    await element(by.id('BitcoinAmountInput')).replaceText('50000');
+    await element(by.id('InterchainedAmountInput')).replaceText('50000');
 
     if (process.env.TRAVIS) await sleep(5000);
     try {
@@ -201,13 +201,13 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
 
     // Add a few recipients initially
     await element(by.id('AddressInput')).replaceText('bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
-    await element(by.id('BitcoinAmountInput')).replaceText('0.0001\n');
+    await element(by.id('InterchainedAmountInput')).replaceText('0.0001\n');
 
     await element(by.id('HeaderMenuButton')).tap();
     await element(by.text('Add Recipient')).tap();
     await waitForId('Transaction1');
     await element(by.id('AddressInput').withAncestor(by.id('Transaction1'))).replaceText('bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl');
-    await element(by.id('BitcoinAmountInput').withAncestor(by.id('Transaction1'))).replaceText('0.0002\n');
+    await element(by.id('InterchainedAmountInput').withAncestor(by.id('Transaction1'))).replaceText('0.0002\n');
 
     // Now remove all recipients before proceeding
     await element(by.id('HeaderMenuButton')).tap();
@@ -217,7 +217,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     // Now, let's proceed with the batch send process again
     // Let's create a real transaction again:
     await element(by.id('AddressInput')).replaceText('bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
-    await element(by.id('BitcoinAmountInput')).replaceText('0.0001\n');
+    await element(by.id('InterchainedAmountInput')).replaceText('0.0001\n');
 
     // Setting fee rate:
     const feeRate = 2;
@@ -231,13 +231,13 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await element(by.text('Add Recipient')).tap();
     await waitForId('Transaction1'); // Adding a recipient autoscrolls it to the last one
     await element(by.id('AddressInput').withAncestor(by.id('Transaction1'))).replaceText('bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl');
-    await element(by.id('BitcoinAmountInput').withAncestor(by.id('Transaction1'))).replaceText('0.0002\n');
+    await element(by.id('InterchainedAmountInput').withAncestor(by.id('Transaction1'))).replaceText('0.0002\n');
 
     await element(by.id('HeaderMenuButton')).tap();
     await element(by.text('Add Recipient')).tap();
     await waitForId('Transaction2'); // Adding a recipient autoscrolls it to the last one
     await element(by.id('AddressInput').withAncestor(by.id('Transaction2'))).replaceText('bc1qh6tf004ty7z7un2v5ntu4mkf630545gvhs45u7');
-    await element(by.id('BitcoinAmountInput').withAncestor(by.id('Transaction2'))).replaceText('0.0003\n');
+    await element(by.id('InterchainedAmountInput').withAncestor(by.id('Transaction2'))).replaceText('0.0003\n');
 
     // Remove last output, check if second output is shown
     await element(by.id('HeaderMenuButton')).tap();
@@ -249,7 +249,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await element(by.text('Add Recipient')).tap();
     await waitForId('Transaction2'); // Adding a recipient autoscrolls it to the last one
     await element(by.id('AddressInput').withAncestor(by.id('Transaction2'))).replaceText('bc1qh6tf004ty7z7un2v5ntu4mkf630545gvhs45u7');
-    await element(by.id('BitcoinAmountInput').withAncestor(by.id('Transaction2'))).replaceText('0.0003\n');
+    await element(by.id('InterchainedAmountInput').withAncestor(by.id('Transaction2'))).replaceText('0.0003\n');
 
     // Remove second output
     await element(by.id('Transaction2')).swipe('right', 'fast', NaN, 0.2);
@@ -301,7 +301,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
 
     // first send MAX output
     await element(by.id('AddressInput')).replaceText('bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
-    await element(by.id('BitcoinAmountInput')).typeText('0.0001\n');
+    await element(by.id('InterchainedAmountInput')).typeText('0.0001\n');
     await element(by.id('HeaderMenuButton')).tap();
     await element(by.text('Use Full Balance')).tap();
     await element(by.text('OK')).tap();
@@ -325,7 +325,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await element(by.text('Add Recipient')).tap();
     await waitForId('Transaction1');
     await element(by.id('AddressInput').withAncestor(by.id('Transaction1'))).replaceText('bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl');
-    await element(by.id('BitcoinAmountInput').withAncestor(by.id('Transaction1'))).typeText('0.0001\n');
+    await element(by.id('InterchainedAmountInput').withAncestor(by.id('Transaction1'))).typeText('0.0001\n');
 
     if (process.env.TRAVIS) await sleep(5000);
     try {
@@ -484,15 +484,15 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await tapAndTapAgainIfElementIsNotVisible('SendButton', 'HeaderMenuButton');
     await element(by.id('HeaderMenuButton')).tap();
     await element(by.text('Insert Contact')).tap();
-    await tapAndTapAgainIfElementIsNotVisible('ContactListItem0', 'BitcoinAmountInput');
-    await element(by.id('BitcoinAmountInput')).typeText('0.0001\n');
+    await tapAndTapAgainIfElementIsNotVisible('ContactListItem0', 'InterchainedAmountInput');
+    await element(by.id('InterchainedAmountInput')).typeText('0.0001\n');
 
     await element(by.id('HeaderMenuButton')).tap();
     await element(by.text('Add Recipient')).tap();
     await element(by.id('HeaderMenuButton')).tap();
     await element(by.text('Insert Contact')).tap();
     await element(by.id('ContactListItem1')).tap();
-    await element(by.id('BitcoinAmountInput')).atIndex(1).typeText('0.0002\n');
+    await element(by.id('InterchainedAmountInput')).atIndex(1).typeText('0.0002\n');
     await sleep(1000);
     // setting fee rate:
     await element(by.id('chooseFee')).tap();
@@ -615,7 +615,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     // go inside the wallet
     await element(by.text('Imported HD SegWit (BIP84 Bech32 Native)')).tap();
 
-    await waitFor(element(by.id('NoTxBuyBitcoin')))
+    await waitFor(element(by.id('NoTxBuyInterchained')))
       .not.toExist()
       .withTimeout(300 * 1000);
 
@@ -798,7 +798,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     // ^^^ its supposed to refetch txs and balance
 
     // asserting balance and txs loaded:
-    await waitForText('0.00105526 BTC '); // the wait inside allows network request to propagate. also, stupid space in the end of the string
+    await waitForText('0.00105526 ITC '); // the wait inside allows network request to propagate. also, stupid space in the end of the string
     assert.ok((await countElements('TransactionListItem')) >= 2); // 2 is arbitrary, real txs on screen depend on screen size
   });
 });

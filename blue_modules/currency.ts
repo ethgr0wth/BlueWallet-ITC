@@ -9,7 +9,7 @@ const PREFERRED_CURRENCY_LOCALE_STORAGE_KEY = 'preferredCurrencyLocale';
 const EXCHANGE_RATES_STORAGE_KEY = 'exchangeRates';
 const LAST_UPDATED = 'LAST_UPDATED';
 export const GROUP_IO_BLUEWALLET = 'group.io.bluewallet.bluewallet';
-const BTC_PREFIX = 'BTC_';
+const ITC_PREFIX = 'ITC_';
 
 export interface CurrencyRate {
   LastUpdated: Date | null;
@@ -80,7 +80,7 @@ async function updateExchangeRate(): Promise<void> {
   try {
     const rate = await getFiatRate(preferredFiatCurrency.endPointKey);
     exchangeRates[LAST_UPDATED] = Date.now();
-    exchangeRates[BTC_PREFIX + preferredFiatCurrency.endPointKey] = rate;
+    exchangeRates[ITC_PREFIX + preferredFiatCurrency.endPointKey] = rate;
     exchangeRates.LAST_UPDATED_ERROR = false;
 
     try {
@@ -269,7 +269,7 @@ async function initCurrencyDaemon(clearLastUpdatedTime: boolean = false): Promis
 }
 
 function satoshiToLocalCurrency(satoshi: number, format: boolean = true): string {
-  const exchangeRateKey = BTC_PREFIX + preferredFiatCurrency.endPointKey;
+  const exchangeRateKey = ITC_PREFIX + preferredFiatCurrency.endPointKey;
   const exchangeRate = exchangeRates[exchangeRateKey];
 
   if (typeof exchangeRate !== 'number') {
@@ -297,7 +297,7 @@ function satoshiToLocalCurrency(satoshi: number, format: boolean = true): string
   }
 }
 
-function BTCToLocalCurrency(bitcoin: BigNumber.Value): string {
+function ITCToLocalCurrency(bitcoin: BigNumber.Value): string {
   const sat = new BigNumber(bitcoin).multipliedBy(100000000).toNumber();
   return satoshiToLocalCurrency(sat);
 }
@@ -325,7 +325,7 @@ async function mostRecentFetchedRate(): Promise<CurrencyRate> {
       currencyInformation = {};
     }
 
-    const rate = currencyInformation[BTC_PREFIX + preferredFiatCurrency.endPointKey];
+    const rate = currencyInformation[ITC_PREFIX + preferredFiatCurrency.endPointKey];
     return {
       LastUpdated: currencyInformation[LAST_UPDATED] ? new Date(currencyInformation[LAST_UPDATED]) : null,
       Rate: rate ? getCurrencyFormatter().format(rate) : '...',
@@ -338,7 +338,7 @@ async function mostRecentFetchedRate(): Promise<CurrencyRate> {
   }
 }
 
-function satoshiToBTC(satoshi: number): string {
+function satoshiToITC(satoshi: number): string {
   return new BigNumber(satoshi).dividedBy(100000000).toString(10);
 }
 
@@ -346,8 +346,8 @@ function btcToSatoshi(btc: BigNumber.Value): number {
   return new BigNumber(btc).multipliedBy(100000000).toNumber();
 }
 
-function fiatToBTC(fiatFloat: number): string {
-  const exchangeRateKey = BTC_PREFIX + preferredFiatCurrency.endPointKey;
+function fiatToITC(fiatFloat: number): string {
+  const exchangeRateKey = ITC_PREFIX + preferredFiatCurrency.endPointKey;
   const exchangeRate = exchangeRates[exchangeRateKey];
 
   if (typeof exchangeRate !== 'number') {
@@ -362,7 +362,7 @@ function getCurrencySymbol(): string {
   return preferredFiatCurrency.symbol;
 }
 
-function formatBTC(btc: BigNumber.Value): string {
+function formatITC(btc: BigNumber.Value): string {
   return new BigNumber(btc).toFormat(8);
 }
 
@@ -382,10 +382,10 @@ export {
   _setExchangeRate,
   _setPreferredFiatCurrency,
   _setSkipUpdateExchangeRate,
-  BTCToLocalCurrency,
+  ITCToLocalCurrency,
   btcToSatoshi,
   EXCHANGE_RATES_STORAGE_KEY,
-  fiatToBTC,
+  fiatToITC,
   getCurrencySymbol,
   getPreferredCurrency,
   initCurrencyDaemon,
@@ -394,9 +394,9 @@ export {
   mostRecentFetchedRate,
   PREFERRED_CURRENCY_STORAGE_KEY,
   restoreSavedPreferredFiatCurrencyAndExchangeFromStorage,
-  satoshiToBTC,
+  satoshiToITC,
   satoshiToLocalCurrency,
   setPreferredCurrency,
   updateExchangeRate,
-  formatBTC,
+  formatITC,
 };

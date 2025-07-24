@@ -39,7 +39,7 @@ struct WalletInformationView: View {
   
     var body: some View {
         VStack(alignment: .leading, spacing:nil , content: {
-            Text(allWalletsBalance.formattedBalanceBTC).font(Font.system(size: 15, weight: .medium, design: .default)).foregroundColor(.textColorLightGray).lineLimit(1).minimumScaleFactor(0.01)
+            Text(allWalletsBalance.formattedBalanceITC).font(Font.system(size: 15, weight: .medium, design: .default)).foregroundColor(.textColorLightGray).lineLimit(1).minimumScaleFactor(0.01)
           
   
           Text(formattedBalance).lineLimit(1).foregroundColor(.textColor).font(Font.system(size:28, weight: .bold, design: .default)).minimumScaleFactor(0.01)

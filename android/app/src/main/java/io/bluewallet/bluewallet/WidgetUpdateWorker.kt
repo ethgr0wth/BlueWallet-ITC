@@ -31,7 +31,7 @@ class WidgetUpdateWorker(context: Context, workerParams: WorkerParameters) : Cor
         private const val NETWORK_RETRY_DELAY_SECONDS = 30L
 
         /**
-         * Schedule periodic work for Bitcoin Price Widget
+         * Schedule periodic work for Interchained Price Widget
          */
         fun scheduleWork(context: Context) {
             val workRequest = PeriodicWorkRequestBuilder<WidgetUpdateWorker>(
@@ -42,7 +42,7 @@ class WidgetUpdateWorker(context: Context, workerParams: WorkerParameters) : Cor
                 ExistingPeriodicWorkPolicy.REPLACE,
                 workRequest
             )
-            Log.d(TAG, "Scheduling work for Bitcoin price widget updates, will run every $REPEAT_INTERVAL_MINUTES minutes")
+            Log.d(TAG, "Scheduling work for Interchained price widget updates, will run every $REPEAT_INTERVAL_MINUTES minutes")
         }
 
         /**
@@ -72,7 +72,7 @@ class WidgetUpdateWorker(context: Context, workerParams: WorkerParameters) : Cor
 
     override suspend fun doWork(): Result {
         Log.d(TAG, "WidgetUpdateWorker running. Confirming interaction with MainActivity.")
-        Log.d(TAG, "Bitcoin price widget update worker running")
+        Log.d(TAG, "Interchained price widget update worker running")
         
         sharedPref = applicationContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         
@@ -80,11 +80,11 @@ class WidgetUpdateWorker(context: Context, workerParams: WorkerParameters) : Cor
         if (!NetworkUtils.isNetworkAvailable(applicationContext)) {
             Log.d(TAG, "No network connection available")
             
-            // Update all Bitcoin price widgets to show offline status
-            val component = ComponentName(applicationContext, BitcoinPriceWidget::class.java)
+            // Update all Interchained price widgets to show offline status
+            val component = ComponentName(applicationContext, InterchainedPriceWidget::class.java)
             val widgetIds = AppWidgetManager.getInstance(applicationContext).getAppWidgetIds(component)
             
-            BitcoinPriceWidget.updateNetworkStatus(applicationContext, widgetIds)
+            InterchainedPriceWidget.updateNetworkStatus(applicationContext, widgetIds)
             
             // Schedule retry with network constraint
             scheduleRetryOnNetworkAvailable(applicationContext, widgetIds)
@@ -97,7 +97,7 @@ class WidgetUpdateWorker(context: Context, workerParams: WorkerParameters) : Cor
 
     private suspend fun updatePriceWidgets(): Result {
         val appWidgetManager = AppWidgetManager.getInstance(applicationContext)
-        val thisWidget = ComponentName(applicationContext, BitcoinPriceWidget::class.java)
+        val thisWidget = ComponentName(applicationContext, InterchainedPriceWidget::class.java)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
         val views = RemoteViews(applicationContext.packageName, R.layout.widget_layout)
 

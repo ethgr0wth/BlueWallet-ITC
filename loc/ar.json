@@ -393,7 +393,7 @@
     "vault_key": "مفتاح الخزنة {number}",
     "required_keys_out_of_total": "المفاتيح المطلوبة من الاجمالي",
     "fee": "الرسوم: {number}",
-    "fee_btc": "{number} BTC",
+    "fee_btc": "{number} ITC",
     "confirm": "تأكيد",
     "header": "إرسال",
     "view": "عرض",
@@ -470,7 +470,7 @@
     "sort_status": "الحالة"
   },
   "units": {
-    "BTC": "BTC",
+    "ITC": "ITC",
     "MAX": "الحد الاقصى",
     "sat_vbyte": "ساتوشي/بايت افتراضي",
     "sats": "ساتوشي"

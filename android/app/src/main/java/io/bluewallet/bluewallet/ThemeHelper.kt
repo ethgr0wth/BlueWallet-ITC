@@ -61,10 +61,10 @@ object ThemeHelper {
      * @param context Application context
      */
     fun updateAllWidgets(context: Context) {
-        // Update Bitcoin Price Widgets
-        val bitcoinPriceWidgetIds = AppWidgetUtils.getBitcoinPriceWidgetIds(context)
+        // Update Interchained Price Widgets
+        val bitcoinPriceWidgetIds = AppWidgetUtils.getInterchainedPriceWidgetIds(context)
         if (bitcoinPriceWidgetIds.isNotEmpty()) {
-            BitcoinPriceWidget.updateNetworkStatus(context, bitcoinPriceWidgetIds)
+            InterchainedPriceWidget.updateNetworkStatus(context, bitcoinPriceWidgetIds)
         }
         
         // Update Market Widgets
