@@ -1,7 +1,7 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import BigNumber from 'bignumber.js';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect } from 'react';
 import { Alert, FlatList, Linking, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -23,7 +23,7 @@ import { BlueSpacing20 } from '../../components/BlueSpacing';
 
 const SendCreate = () => {
   const { fee, recipients, memo = '', satoshiPerByte, psbt, showAnimatedQr, tx } = useRoute().params;
-  const transaction = bitcoin.Transaction.fromHex(tx);
+  const transaction = interchained.Transaction.fromHex(tx);
   const size = transaction.virtualSize();
   const { isPrivacyBlurEnabled } = useSettings();
   const { colors } = useTheme();

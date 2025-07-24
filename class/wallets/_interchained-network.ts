@@ -1,4 +1,3 @@
-// class/wallets/_interchained-network.ts
 export const INTERCHAINED = {
   messagePrefix: '\x18Interchained Signed Message:\n',
   bech32: 'itc',
@@ -10,3 +9,4 @@ export const INTERCHAINED = {
   scriptHash: 0x05,
   wif: 0x80,
 };
+export default INTERCHAINED;

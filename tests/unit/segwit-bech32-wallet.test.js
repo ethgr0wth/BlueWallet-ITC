@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import { SegwitBech32Wallet } from '../../class';
 
@@ -26,7 +26,7 @@ describe('Segwit P2SH wallet', () => {
       feeRate,
       wallet.getAddress(),
     );
-    let tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    let tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     // check fee rate up to the second decimal place
     assert.strictEqual(Math.round((txNew.fee / tx.virtualSize()) * 10), feeRate * 10);
     assert.strictEqual(
@@ -35,16 +35,16 @@ describe('Segwit P2SH wallet', () => {
     );
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 2);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
-    assert.strictEqual(bitcoin.address.fromOutputScript(tx.outs[1].script), wallet.getAddress()); // change address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual(interchained.address.fromOutputScript(tx.outs[1].script), wallet.getAddress()); // change address
 
     // sendMax
     txNew = wallet.createTransaction(utxos, [{ address: '1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB' }], feeRate, wallet.getAddress());
-    tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(Math.round((txNew.fee / tx.virtualSize()) * 10), feeRate * 10);
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 1);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
 
     // batch send + send max
     txNew = wallet.createTransaction(
@@ -53,12 +53,12 @@ describe('Segwit P2SH wallet', () => {
       feeRate,
       wallet.getAddress(),
     );
-    tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(Math.round((txNew.fee / tx.virtualSize()) * 10), feeRate * 10);
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 2);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
-    assert.strictEqual('14YZ6iymQtBVQJk6gKnLCk49UScJK7SH4M', bitcoin.address.fromOutputScript(tx.outs[1].script)); // to address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual('14YZ6iymQtBVQJk6gKnLCk49UScJK7SH4M', interchained.address.fromOutputScript(tx.outs[1].script)); // to address
   });
 
   it('can create transaction with decimal fee rate', async () => {
@@ -83,7 +83,7 @@ describe('Segwit P2SH wallet', () => {
       feeRate,
       wallet.getAddress(),
     );
-    let tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    let tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     // check fee rate up to the second decimal place
     assert.strictEqual(Math.round((txNew.fee / tx.virtualSize()) * 10), feeRate * 10);
     assert.strictEqual(
@@ -92,16 +92,16 @@ describe('Segwit P2SH wallet', () => {
     );
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 2);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
-    assert.strictEqual(bitcoin.address.fromOutputScript(tx.outs[1].script), wallet.getAddress()); // change address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual(interchained.address.fromOutputScript(tx.outs[1].script), wallet.getAddress()); // change address
 
     // sendMax
     txNew = wallet.createTransaction(utxos, [{ address: '1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB' }], feeRate, wallet.getAddress());
-    tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(Math.round((txNew.fee / tx.virtualSize()) * 10), feeRate * 10);
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 1);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
 
     // batch send + send max
     txNew = wallet.createTransaction(
@@ -110,12 +110,12 @@ describe('Segwit P2SH wallet', () => {
       feeRate,
       wallet.getAddress(),
     );
-    tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(Math.round((txNew.fee / tx.virtualSize()) * 10), feeRate * 10);
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 2);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
-    assert.strictEqual('14YZ6iymQtBVQJk6gKnLCk49UScJK7SH4M', bitcoin.address.fromOutputScript(tx.outs[1].script)); // to address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual('14YZ6iymQtBVQJk6gKnLCk49UScJK7SH4M', interchained.address.fromOutputScript(tx.outs[1].script)); // to address
   });
 
   it('can sign and verify messages', async () => {
@@ -141,7 +141,7 @@ describe('Segwit P2SH wallet', () => {
     for (let feeRate = 1; feeRate < 20; feeRate += 0.1) {
       wallet.coinselect(utxos, [{ value: 90000, address: '1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB' }], feeRate);
       const txNew = wallet.createTransaction(utxos, [{ value: 90000, address: '1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB' }], feeRate, change);
-      const tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+      const tx = interchained.Transaction.fromHex(txNew.tx.toHex());
       const actualFeeRate = txNew.fee / tx.virtualSize();
       const diffPercentage = (Math.abs(actualFeeRate - feeRate) / feeRate) * 100;
       // check that actual fee rate is not more that 3% different from the expected fee rate

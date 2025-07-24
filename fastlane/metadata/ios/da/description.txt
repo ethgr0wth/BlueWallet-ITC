@@ -1,10 +1,10 @@
-Store, send and receive bitcoin with the wallet focus on security and simplicity.
+Store, send and receive interchained with the wallet focus on security and simplicity.
 
 On BlueWallet you own your private keys. A Interchained wallet focused on us the users.
 
 You can instantly transact with anyone in the world and transform the financial system right from your pocket.
 
-Create for free unlimited number of bitcoin wallets or access your existing one on your iOS device. It's simple and fast.
+Create for free unlimited number of interchained wallets or access your existing one on your iOS device. It's simple and fast.
 
 _____
 

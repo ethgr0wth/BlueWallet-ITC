@@ -19,13 +19,13 @@ class MarketAPI {
         case "Exir":
             return "https://api.exir.io/v1/ticker?symbol=btc-irt"
         case "coinpaprika":
-            return "https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=INR"
+            return "https://api.coinpaprika.com/v1/tickers/btc-interchained?quotes=INR"
         case "Bitstamp":
             return "https://www.bitstamp.net/api/v2/ticker/btc\(endPointKey.lowercased())"
         case "Coinbase":
             return "https://api.coinbase.com/v2/prices/ITC-\(endPointKey.uppercased())/buy"
         case "CoinGecko":
-            return "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=\(endPointKey.lowercased())"
+            return "https://api.coingecko.com/api/v3/simple/price?ids=interchained&vs_currencies=\(endPointKey.lowercased())"
         case "BNR":
             return "https://www.bnr.ro/nbrfxrates.xml"
         case "Kraken":
@@ -68,7 +68,7 @@ class MarketAPI {
             latestRateDataStore = WidgetDataStore(rate: String(rateDouble), lastUpdate: lastUpdatedString, rateDouble: rateDouble)
             return latestRateDataStore
         case "CoinGecko":
-            if let bitcoinDict = json["bitcoin"] as? [String: Any],
+            if let bitcoinDict = json["interchained"] as? [String: Any],
                let rateDouble = bitcoinDict[endPointKey.lowercased()] as? Double {
                 let lastUpdatedString = ISO8601DateFormatter().string(from: Date())
                 latestRateDataStore = WidgetDataStore(rate: String(rateDouble), lastUpdate: lastUpdatedString, rateDouble: rateDouble)
@@ -147,10 +147,10 @@ class MarketAPI {
         let delegate = BNRXMLParserDelegate()
         parser.delegate = delegate
         if parser.parse(), let usdToRonRate = delegate.usdRate {
-            let coinGeckoUrl = URL(string: "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")!
+            let coinGeckoUrl = URL(string: "https://api.coingecko.com/api/v3/simple/price?ids=interchained&vs_currencies=usd")!
             let (data, _) = try await URLSession.shared.data(from: coinGeckoUrl)
             if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               let bitcoinDict = json["bitcoin"] as? [String: Double],
+               let bitcoinDict = json["interchained"] as? [String: Double],
                let btcToUsdRate = bitcoinDict["usd"] {
                 let btcToRonRate = btcToUsdRate * usdToRonRate
                 let lastUpdatedString = ISO8601DateFormatter().string(from: Date())

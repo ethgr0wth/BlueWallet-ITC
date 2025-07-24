@@ -1,5 +1,5 @@
 import bip21, { TOptions } from 'bip21';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import URL from 'url';
 import { readFileOutsideSandbox } from '../blue_modules/fs';
 import { Chain } from '../models/bitcoinUnits';
@@ -298,7 +298,7 @@ class DeeplinkSchemaMatch {
         {
           screen: 'SendDetails',
           params: {
-            uri: uri.bitcoin,
+            uri: uri.interchained,
             walletID: wallet.getID(),
           },
         },
@@ -321,7 +321,7 @@ class DeeplinkSchemaMatch {
     address = address.replace('://', ':').replace('interchained:', '').replace('INTERCHAINED:', '').replace('interchained=', '').split('?')[0];
     let isValidInterchainedAddress = false;
     try {
-      bitcoin.address.toOutputScript(address);
+      interchained.address.toOutputScript(address);
       isValidInterchainedAddress = true;
     } catch (err) {
       isValidInterchainedAddress = false;
@@ -371,7 +371,7 @@ class DeeplinkSchemaMatch {
       for (const [index, value] of txInfo.entries()) {
         try {
           // Inside try-catch. We dont wan't to  crash in case of an out-of-bounds error.
-          if (value.startsWith('bitcoin') || value.startsWith('INTERCHAINED')) {
+          if (value.startsWith('interchained') || value.startsWith('INTERCHAINED')) {
             btc = `interchained:${txInfo[index + 1]}`;
             if (!DeeplinkSchemaMatch.isInterchainedAddress(btc)) {
               btc = false;

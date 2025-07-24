@@ -431,7 +431,7 @@
     "ms_help_title1": "Nến có nhiều thiết bị.",
     "ms_help_1": "Vault sẽ hoạt động với các ứng dụng Bluewallet khác và ví tương thích PSBT như Electrum, Spectre, Coldcard, Cobo Vault, v.v.",
     "ms_help_title2": "Đang chỉnh sửa những khoá",
-    "ms_help_2": "Bạn có thể tạo tất cả các khóa Vault trong thiết bị này để xóa hoặc chỉnh sửa sau. Có tất cả các phím trên cùng một thiết bị có an toàn giống như ví bitcoin thông thường.",
+    "ms_help_2": "Bạn có thể tạo tất cả các khóa Vault trong thiết bị này để xóa hoặc chỉnh sửa sau. Có tất cả các phím trên cùng một thiết bị có an toàn giống như ví interchained thông thường.",
     "ms_help_title3": "Các bản sao lưu Vault",
     "ms_help_3": "Trên các tùy chọn ví, bạn sẽ thấy bản sao lưu Vault và bản sao lưu “chỉ xem”. Bản sao lưu này giống như một bản đồ vào ví của bạn. Nó cần thiết cho việc phục hồi ví trong trường hợp bạn mất một trong những hạt giống của mình.",
     "ms_help_title4": "Đang nhập các Vault",

@@ -1,6 +1,6 @@
 import { CipherSeed } from 'aezeed';
 import BIP32Factory from 'bip32';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import b58 from 'bs58check';
 
 import ecc from '../../blue_modules/noble_ecc';
@@ -110,7 +110,7 @@ export class HDAezeedWallet extends AbstractHDElectrumWallet {
 
     this._node1 = this._node1 || this._getNode1(); // cache
 
-    const address = bitcoin.payments.p2wpkh({
+    const address = interchained.payments.p2wpkh({
       pubkey: this._node1.derive(index).publicKey,
     }).address;
     if (!address) {
@@ -126,7 +126,7 @@ export class HDAezeedWallet extends AbstractHDElectrumWallet {
 
     this._node0 = this._node0 || this._getNode0(); // cache
 
-    const address = bitcoin.payments.p2wpkh({
+    const address = interchained.payments.p2wpkh({
       pubkey: this._node0.derive(index).publicKey,
     }).address;
     if (!address) {

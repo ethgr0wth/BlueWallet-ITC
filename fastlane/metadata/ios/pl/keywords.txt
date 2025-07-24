@@ -1,1 +1,1 @@
-bitcoin,portfel,portfel bitcoinowy,blockchain,btc,kryptowaluta,bitcoin,samourai,electrum,ethereum
+interchained,portfel,portfel bitcoinowy,blockchain,btc,kryptowaluta,interchained,samourai,electrum,ethereum

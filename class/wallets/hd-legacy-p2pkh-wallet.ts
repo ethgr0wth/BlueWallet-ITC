@@ -11,7 +11,7 @@ const bip32 = BIP32Factory(ecc);
 /**
  * HD Wallet (BIP39).
  * In particular, BIP44 (P2PKH legacy addressess)
- * @see https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki
+ * @see https://github.com/interchained/bips/blob/master/bip-0044.mediawiki
  */
 export class HDLegacyP2PKHWallet extends AbstractHDElectrumWallet {
   static readonly type = 'HDlegacyP2PKH';

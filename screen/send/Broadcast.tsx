@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import { ActivityIndicator, Keyboard, Linking, StyleSheet, TextInput, View } from 'react-native';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';
@@ -47,7 +47,7 @@ const Broadcast: React.FC = () => {
 
     try {
       // should be base64 encoded PSBT
-      const validTx = bitcoin.Psbt.fromBase64(scannedData).extractTransaction();
+      const validTx = interchained.Psbt.fromBase64(scannedData).extractTransaction();
       return handleUpdateTxHex(validTx.toHex());
     } catch (e) {}
   }, []);
@@ -64,7 +64,7 @@ const Broadcast: React.FC = () => {
       if (txHex) {
         const result = await walletObj.broadcastTx(txHex);
         if (result) {
-          const newTx = bitcoin.Transaction.fromHex(txHex);
+          const newTx = interchained.Transaction.fromHex(txHex);
           const txid = newTx.getId();
           setTx(txid);
 

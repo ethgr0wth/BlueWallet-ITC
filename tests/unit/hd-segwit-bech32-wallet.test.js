@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import { HDSegwitBech32Wallet } from '../../class';
 import { uint8ArrayToHex } from '../../blue_modules/uint8array-extras';
@@ -284,7 +284,7 @@ describe('Bech32 Segwit HD (BIP84)', () => {
     assert.strictEqual(outputs.length, 3); // destination, op_return, change
     assert.ok(!outputs[1].address); // should not be there as it should be OP_RETURN
 
-    const decodedTx = bitcoin.Transaction.fromHex(tx.toHex());
+    const decodedTx = interchained.Transaction.fromHex(tx.toHex());
     // console.log(decodedTx.outs);
 
     assert.strictEqual(decodedTx.outs[0].value, 546n); // first output - destination

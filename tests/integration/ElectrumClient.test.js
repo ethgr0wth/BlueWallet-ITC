@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import ElectrumClient from 'electrum-client';
 import { sha256 as _sha256 } from '@noble/hashes/sha256';
 
@@ -36,7 +36,7 @@ describe('ElectrumClient', () => {
       }
 
       let addr4elect = 'bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej';
-      let script = bitcoin.address.toOutputScript(addr4elect);
+      let script = interchained.address.toOutputScript(addr4elect);
       let hash = bitcoinjs_crypto_sha256(script);
       let reversedHash = Buffer.from(hash.reverse());
       const start = +new Date();
@@ -46,7 +46,7 @@ describe('ElectrumClient', () => {
       assert.ok(balance.confirmed > 0);
 
       addr4elect = '3GCvDBAktgQQtsbN6x5DYiQCMmgZ9Yk8BK';
-      script = bitcoin.address.toOutputScript(addr4elect);
+      script = interchained.address.toOutputScript(addr4elect);
       hash = bitcoinjs_crypto_sha256(script);
       reversedHash = Buffer.from(hash.reverse());
       balance = await mainClient.blockchainScripthash_getBalance(reversedHash.toString('hex'));

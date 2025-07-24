@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import { StackActions, useIsFocused, useRoute } from '@react-navigation/native';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Linking, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
@@ -112,7 +112,7 @@ const PsbtWithHardwareWallet = () => {
     }
 
     if (deepLinkPSBT) {
-      const newPsbt = bitcoin.Psbt.fromBase64(deepLinkPSBT);
+      const newPsbt = interchained.Psbt.fromBase64(deepLinkPSBT);
       try {
         const Tx = wallet.combinePsbt(routeParamsPSBT.current, newPsbt);
         setTxHex(Tx.toHex());
@@ -141,7 +141,7 @@ const PsbtWithHardwareWallet = () => {
       const result = await wallet.broadcastTx(txHex);
       if (result) {
         setIsLoading(false);
-        const txDecoded = bitcoin.Transaction.fromHex(txHex);
+        const txDecoded = interchained.Transaction.fromHex(txHex);
         const txid = txDecoded.getId();
         majorTomToGroundControl([], [], [txid]);
         if (memo) {

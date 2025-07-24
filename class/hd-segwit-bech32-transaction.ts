@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import assert from 'assert';
 
 import * as BlueElectrum from '../blue_modules/BlueElectrum';
@@ -17,7 +17,7 @@ export class HDSegwitBech32Transaction {
   private _txhex: string | null;
   private _txid: string | null;
   private _wallet: HDSegwitBech32Wallet | undefined;
-  private _txDecoded: bitcoin.Transaction | undefined;
+  private _txDecoded: interchained.Transaction | undefined;
   private _remoteTx: any;
 
   /**
@@ -39,7 +39,7 @@ export class HDSegwitBech32Transaction {
       }
     }
 
-    if (this._txhex) this._txDecoded = bitcoin.Transaction.fromHex(this._txhex);
+    if (this._txhex) this._txDecoded = interchained.Transaction.fromHex(this._txhex);
     this._remoteTx = null;
   }
 
@@ -54,7 +54,7 @@ export class HDSegwitBech32Transaction {
     const hexes = await BlueElectrum.multiGetTransactionByTxid([this._txid], false, 10);
     this._txhex = hexes[this._txid];
     if (!this._txhex) throw new Error("Transaction can't be found in mempool");
-    this._txDecoded = bitcoin.Transaction.fromHex(this._txhex);
+    this._txDecoded = interchained.Transaction.fromHex(this._txhex);
   }
 
   /**
@@ -81,7 +81,7 @@ export class HDSegwitBech32Transaction {
    * @returns {Promise<boolean>}
    */
   async isSequenceReplaceable() {
-    return (await this.getMaxUsedSequence()) < bitcoin.Transaction.DEFAULT_SEQUENCE;
+    return (await this.getMaxUsedSequence()) < interchained.Transaction.DEFAULT_SEQUENCE;
   }
 
   /**
@@ -366,7 +366,7 @@ export class HDSegwitBech32Transaction {
     const targetFeeRate = 2 * newFeerate - feeRate;
 
     let add = 0;
-    let tx: bitcoin.Transaction | undefined, inputs: CoinSelectReturnInput[], outputs: CoinSelectOutput[], fee: number;
+    let tx: interchained.Transaction | undefined, inputs: CoinSelectReturnInput[], outputs: CoinSelectOutput[], fee: number;
     while (add <= 128) {
       const createdTx = this._wallet.createTransaction(
         unconfirmedUtxos,

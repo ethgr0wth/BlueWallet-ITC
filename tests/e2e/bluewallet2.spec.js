@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import {
   extractTextFromElementById,
@@ -88,16 +88,16 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
 
     let txhex = await extractTextFromElementById('TxhexInput');
 
-    let transaction = bitcoin.Transaction.fromHex(txhex);
+    let transaction = interchained.Transaction.fromHex(txhex);
     assert.ok(transaction.ins.length === 1 || transaction.ins.length === 2); // depending on current fees gona use either 1 or 2 inputs
     assert.strictEqual(transaction.outs.length, 2);
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[0].script), 'bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl'); // to address
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[0].script), 'bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl'); // to address
     assert.strictEqual(transaction.outs[0].value, 10000n);
 
     // checking fee rate:
     const totalIns = 69909; // we hardcode it since we know it in advance
     const totalOuts = transaction.outs.map(el => Number(el.value)).reduce((a, b) => a + b, 0);
-    const tx = bitcoin.Transaction.fromHex(txhex);
+    const tx = interchained.Transaction.fromHex(txhex);
     assert.strictEqual(Math.round((totalIns - totalOuts) / tx.virtualSize()), feeRate);
     assert.strictEqual(transactionFee.split(' ')[1] * 100000000, totalIns - totalOuts);
 
@@ -124,8 +124,8 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await waitForId('PayjoinSwitch');
     await element(by.id('TransactionDetailsButton')).tap();
     txhex = await extractTextFromElementById('TxhexInput');
-    transaction = bitcoin.Transaction.fromHex(txhex);
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
+    transaction = interchained.Transaction.fromHex(txhex);
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
     assert.strictEqual(transaction.outs[0].value, 15000n);
 
     // now, testing scanQR with just address after amount set to 1.1 USD. Denomination should not change after qrcode scan
@@ -148,8 +148,8 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     // dont verify payjoin since we scanned different address that didnt have `&pj=xxxxxx`
     await element(by.id('TransactionDetailsButton')).tap();
     txhex = await extractTextFromElementById('TxhexInput');
-    transaction = bitcoin.Transaction.fromHex(txhex);
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
+    transaction = interchained.Transaction.fromHex(txhex);
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
     assert.notEqual(transaction.outs[0].value, 110000000n); // check that it is 1.1 USD, not 1 ITC
     assert.ok(Number(transaction.outs[0].value) < 10000); // 1.1 USD ~ 0,00001964 sats in march 2021
 
@@ -175,7 +175,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await waitForId('TransactionValue');
     await element(by.id('TransactionDetailsButton')).tap();
     txhex = await extractTextFromElementById('TxhexInput');
-    transaction = bitcoin.Transaction.fromHex(txhex);
+    transaction = interchained.Transaction.fromHex(txhex);
     assert.strictEqual(transaction.outs.length, 2);
     assert.strictEqual(transaction.outs[0].value, 50000n);
 
@@ -265,11 +265,11 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
 
     await element(by.id('TransactionDetailsButton')).tap();
     const txhex = await extractTextFromElementById('TxhexInput');
-    const transaction = bitcoin.Transaction.fromHex(txhex);
+    const transaction = interchained.Transaction.fromHex(txhex);
     assert.strictEqual(transaction.outs.length, 3);
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
     assert.strictEqual(transaction.outs[0].value, 10000n);
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[1].script), 'bc1qh6tf004ty7z7un2v5ntu4mkf630545gvhs45u7');
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[1].script), 'bc1qh6tf004ty7z7un2v5ntu4mkf630545gvhs45u7');
     assert.strictEqual(transaction.outs[1].value, 30000n, `got txhex ${txhex}`);
 
     process.env.TRAVIS && require('fs').writeFileSync(lockFile, '1');
@@ -314,7 +314,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await waitForId('TransactionDetailsButton');
     await element(by.id('TransactionDetailsButton')).tap();
     let txhex = await extractTextFromElementById('TxhexInput');
-    let transaction = bitcoin.Transaction.fromHex(txhex);
+    let transaction = interchained.Transaction.fromHex(txhex);
     assert.strictEqual(transaction.outs.length, 1, 'should be single output, no change');
     assert.ok(Number(transaction.outs[0].value) > 100000);
 
@@ -335,11 +335,11 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await waitForId('TransactionDetailsButton');
     await element(by.id('TransactionDetailsButton')).tap();
     txhex = await extractTextFromElementById('TxhexInput');
-    transaction = bitcoin.Transaction.fromHex(txhex);
+    transaction = interchained.Transaction.fromHex(txhex);
     assert.strictEqual(transaction.outs.length, 2, 'should be single output, no change');
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[0].script), 'bc1qnapskphjnwzw2w3dk4anpxntunc77v6qrua0f7');
     assert.ok(transaction.outs[0].value > 50000n);
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[1].script), 'bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl');
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[1].script), 'bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl');
     assert.strictEqual(transaction.outs[1].value, 10000n);
 
     process.env.TRAVIS && require('fs').writeFileSync(lockFile, '1');
@@ -381,10 +381,10 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
 
     const txhex = await extractTextFromElementById('TxhexInput');
     console.warn(txhex);
-    const transaction = bitcoin.Transaction.fromHex(txhex);
+    const transaction = interchained.Transaction.fromHex(txhex);
     assert.strictEqual(transaction.ins.length, 1);
     assert.strictEqual(transaction.outs.length, 1);
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[0].script), 'bc1qffcl35r05wyf06meu3dalfevawx559n0ufrxcw'); // to address
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[0].script), 'bc1qffcl35r05wyf06meu3dalfevawx559n0ufrxcw'); // to address
     assert.strictEqual(transaction.outs[0].value, 1000n);
 
     process.env.TRAVIS && require('fs').writeFileSync(lockFile, '1');
@@ -505,7 +505,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await element(by.id('TransactionDetailsButton')).tap();
 
     const txhex1 = await extractTextFromElementById('TxhexInput');
-    const tx1 = bitcoin.Transaction.fromHex(txhex1);
+    const tx1 = interchained.Transaction.fromHex(txhex1);
     assert.strictEqual(tx1.outs.length, 3);
     assert.strictEqual(uint8ArrayToHex(tx1.outs[0].script), '76a91419129d53e6319baf19dba059bead166df90ab8f588ac');
     assert.strictEqual(tx1.outs[0].value, 10000n);
@@ -664,7 +664,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await element(by.id('TransactionDetailsButton')).tap();
 
     const txhex1 = await extractTextFromElementById('TxhexInput');
-    const tx1 = bitcoin.Transaction.fromHex(txhex1);
+    const tx1 = interchained.Transaction.fromHex(txhex1);
     assert.strictEqual(tx1.outs.length, 1);
     assert.strictEqual(uint8ArrayToHex(tx1.outs[0].script), '00147ea385f352be696ab0f6e94a0ee0e3c6d4b14a53');
     assert.strictEqual(tx1.outs[0].value, 69797n);
@@ -694,7 +694,7 @@ describe('BlueWallet UI Tests - import BIP84 wallet', () => {
     await element(by.id('TransactionDetailsButton')).tap();
 
     const txhex2 = await extractTextFromElementById('TxhexInput');
-    const tx2 = bitcoin.Transaction.fromHex(txhex2);
+    const tx2 = interchained.Transaction.fromHex(txhex2);
 
     assert.strictEqual(tx2.outs.length, 1);
     assert.strictEqual(uint8ArrayToHex(tx2.outs[0].script), '00147ea385f352be696ab0f6e94a0ee0e3c6d4b14a53');

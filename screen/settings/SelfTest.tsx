@@ -1,7 +1,8 @@
+import { INTERCHAINED } from '../../class/wallets/_interchained-network';
 import BIP32Factory from 'bip32';
 import bip38 from 'bip38';
 import * as bip39 from 'bip39';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import React, { Component } from 'react';
 import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 // @ts-ignore theres no type declaration for this
@@ -143,15 +144,15 @@ export default class SelfTest extends Component {
         false,
         0,
       );
-      const txInterchained = bitcoin.Transaction.fromHex(txNew.tx!.toHex());
+      const txInterchained = interchained.Transaction.fromHex(txNew.tx!.toHex());
       assertStrictEqual(
         txNew.tx!.toHex(),
         '0200000001c4ce4282c157a7f1e4524d153d3a251669f10673ad24e49f6d2994a033e944cc000000006b48304502210091e58bd2021f2eeea8d39d7f7b053c9ccc52a747b60f1c3584ba33285e2d150602205b2d35a2536cbe157015e8c54a26f5fc350cc7c72b5ca80b9e548917993f652201210337c09b3cb889801638078fd4e6998218b28c92d338ea2602720a88847aedceb3ffffffff02905f0100000000001976a914aa381cd428a4e91327fd4434aa0a08ff131f1a5a88ac2e260000000000001976a91426e01119d265aa980390c49eece923976c218f1588ac00000000',
       );
       assertStrictEqual(txInterchained.ins.length, 1);
       assertStrictEqual(txInterchained.outs.length, 2);
-      assertStrictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(txInterchained.outs[0].script)); // to address
-      assertStrictEqual(l.getAddress(), bitcoin.address.fromOutputScript(txInterchained.outs[1].script)); // change address
+      assertStrictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(txInterchained.outs[0].script)); // to address
+      assertStrictEqual(l.getAddress(), interchained.address.fromOutputScript(txInterchained.outs[1].script)); // change address
 
       //
 
@@ -184,15 +185,15 @@ export default class SelfTest extends Component {
         false,
         0,
       );
-      const tx = bitcoin.Transaction.fromHex(txNew.tx!.toHex());
+      const tx = interchained.Transaction.fromHex(txNew.tx!.toHex());
       assertStrictEqual(
         txNew.tx!.toHex(),
         '020000000001010c86eb9013616e38b4752e56e5683e864cb34fcd7fe790bdc006b60c08446ba50000000017160014139dc70d73097f9d775f8a3280ba3e3435515641ffffffff02905f0100000000001976a914aa381cd428a4e91327fd4434aa0a08ff131f1a5a88aca73303000000000017a914749118baa93fb4b88c28909c8bf0a8202a0484f4870248304502210080545d30e3d30dff272ab11c91fd6150170b603239b48c3d56a3fa66bf240085022003762404e1b45975adc89f61ec1569fa19d6d4a8d405e060897754c489ebeade012103a5de146762f84055db3202c1316cd9008f16047f4f408c1482fdb108217eda0800000000',
       );
       assertStrictEqual(tx.ins.length, 1);
       assertStrictEqual(tx.outs.length, 2);
-      assertStrictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
-      assertStrictEqual(bitcoin.address.fromOutputScript(tx.outs[1].script), wallet.getAddress()); // change address
+      assertStrictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
+      assertStrictEqual(interchained.address.fromOutputScript(tx.outs[1].script), wallet.getAddress()); // change address
 
       //
 
@@ -242,12 +243,12 @@ export default class SelfTest extends Component {
 
       const path = "m/49'/0'/0'/0/0";
       const child = root.derivePath(path);
-      const address = bitcoin.payments.p2sh({
-        redeem: bitcoin.payments.p2wpkh({
+      const address = interchained.payments.p2sh({
+        redeem: interchained.payments.p2wpkh({
           pubkey: child.publicKey,
-          network: bitcoin.networks.bitcoin,
+          network: INTERCHAINED,
         }),
-        network: bitcoin.networks.bitcoin,
+        network: INTERCHAINED,
       }).address;
 
       if (address !== '3GcKN7q7gZuZ8eHygAhHrvPa5zZbG5Q1rK') {

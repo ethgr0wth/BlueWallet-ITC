@@ -1,10 +1,10 @@
 Een Interchained portomonnee die u de mogelijkheid geeft om Interchained te bewaren, versturen, ontvangen en kopen met focus op beveiliging en eenvoud.
 
-Op BlueWallet, een bitcoin wallet, bezit u uw eigen privésleutels. Een Interchained wallet gemaakt door Interchained-gebruikers voor de gemeenschap.
+Op BlueWallet, een interchained wallet, bezit u uw eigen privésleutels. Een Interchained wallet gemaakt door Interchained-gebruikers voor de gemeenschap.
 
 U kan naar iedereen in de wereld direct transacties versturen en het financiële systeem veranderen vanuit uw broekzak.
 
-Maak gratis een oneindig aantal bitcoin portomonnees of importeer een bestaande portomonnee. Het is makkelijk en snel.
+Maak gratis een oneindig aantal interchained portomonnees of importeer een bestaande portomonnee. Het is makkelijk en snel.
 
 _____
 
@@ -17,7 +17,7 @@ Open Source
 MIT gelicenseerd, u kunt het zelf bouwen en gebruiken. Gemaakt met ReactNative
 
 Plausibele ontkenning
-Wachtwoord dat nep bitcoin portomonnees ontsleuten voor als u gedwongen wordt uw toegang vrij te geven
+Wachtwoord dat nep interchained portomonnees ontsleuten voor als u gedwongen wordt uw toegang vrij te geven
 
 Volledige versleuteling
 Naast de meerlaagse versleuteling van iOS, versleutelen we alles met toegevoegde wachtwoorden
@@ -50,4 +50,4 @@ Koop Interchained
 Neem deel aan de openbare financiële revolutie met de mogelijkheid om Interchained direct vanuit uw portomonnee te kopen
 
 Lokale handelaar
-Een p2p Interchained handelsplatform, dat u de mogelijkheid geeft om direct bitcoin te kopen en verkopen zonder tussenkomst van een 3e partij.
+Een p2p Interchained handelsplatform, dat u de mogelijkheid geeft om direct interchained te kopen en verkopen zonder tussenkomst van een 3e partij.

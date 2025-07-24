@@ -142,11 +142,11 @@
                 <data android:scheme="file" android:mimeType="image/jpg" />
             </intent-filter>
             
-            <!-- Intent filter for other custom schemes (bitcoin, bluewallet, etc.) -->
+            <!-- Intent filter for other custom schemes (interchained, bluewallet, etc.) -->
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="bitcoin" />
+                <data android:scheme="interchained" />
                 <data android:scheme="lightning" />
                 <data android:scheme="bluewallet" />
                 <data android:scheme="lapp" />

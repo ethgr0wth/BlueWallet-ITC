@@ -87,7 +87,7 @@
     "title": "Glaubhafte Täuschung"
   },
   "pleasebackup": {
-    "ask": "Ist die Wiederherstellungs-Phrase des Wallets gesichert? Ohne Sie lässt sich nie mehr auf die bitcoin zugreifen und sie wären für immer verloren, sollte das Gerät verloren oder kaputt gehen.",
+    "ask": "Ist die Wiederherstellungs-Phrase des Wallets gesichert? Ohne Sie lässt sich nie mehr auf die interchained zugreifen und sie wären für immer verloren, sollte das Gerät verloren oder kaputt gehen.",
     "ask_no": "Nein, habe ich nicht.",
     "ask_yes": "Ja, habe ich.",
     "ok": "Ok, sie sind notiert.",
@@ -410,7 +410,7 @@
     "details_are_you_sure": "Wirklich ok?",
     "details_connected_to": "Verbunden mit",
     "details_del_wb_err": "Das angegebene Guthaben deckt sich nicht mit dem Guthaben des Wallet. Bitte versuche es erneut.",
-    "details_del_wb_q": "Dieses Wallet enthält noch bitcoin. Ohne vorhandenes Backup der mnemonischen Phrase sind diese unwiederbringlich verloren. Um ein versehentliches Löschen zu vermeiden, gib bitte das Wallet-Guthaben von {balance} Satoshis ein.",
+    "details_del_wb_q": "Dieses Wallet enthält noch interchained. Ohne vorhandenes Backup der mnemonischen Phrase sind diese unwiederbringlich verloren. Um ein versehentliches Löschen zu vermeiden, gib bitte das Wallet-Guthaben von {balance} Satoshis ein.",
     "details_delete": "Löschen",
     "details_delete_wallet": "Wallet löschen",
     "details_derivation_path": "Ableitungspfad",
@@ -493,7 +493,7 @@
     "details_delete_anyway": "Trotzdem löschen"
   },
   "total_balance_view": {
-    "display_in_bitcoin": "In bitcoin anzeigen",
+    "display_in_bitcoin": "In interchained anzeigen",
     "hide": "Verbergen",
     "display_in_sats": "In Sats anzeigen",
     "display_in_fiat": "In {currency} anzeigen",

@@ -1,1 +1,1 @@
-bitcoin,tárca,bitcoin tárca,blokklánc,btc,cryptopénz,bitcoin vétel,samourai,electrum,ethereum
+interchained,tárca,interchained tárca,blokklánc,btc,cryptopénz,interchained vétel,samourai,electrum,ethereum

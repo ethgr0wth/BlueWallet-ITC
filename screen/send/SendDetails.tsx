@@ -5,7 +5,7 @@ import { Icon } from '@rneui/themed';
 import assert from 'assert';
 import BigNumber from 'bignumber.js';
 import { TOptions } from 'bip21';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -709,7 +709,7 @@ const SendDetails = () => {
 
         // we construct PSBT object and pass to next screen
         // so user can do smth with it:
-        const psbt = bitcoin.Psbt.fromBase64(ret.data);
+        const psbt = interchained.Psbt.fromBase64(ret.data);
 
         navigation.navigate('PsbtWithHardwareWallet', {
           memo: transactionMemo,
@@ -748,7 +748,7 @@ const SendDetails = () => {
         // we assume that transaction is already signed, so all we have to do is get txhex and pass it to next screen
         // so user can broadcast:
         const file = await RNFS.readFile(res.uri, 'ascii');
-        const psbt = bitcoin.Psbt.fromBase64(file);
+        const psbt = interchained.Psbt.fromBase64(file);
         const txhex = psbt.extractTransaction().toHex();
         navigation.navigate('PsbtWithHardwareWallet', { memo: transactionMemo, walletID: wallet.getID(), txhex });
         setIsLoading(false);
@@ -760,7 +760,7 @@ const SendDetails = () => {
         // looks like transaction is UNsigned, so we construct PSBT object and pass to next screen
         // so user can do smth with it:
         const file = await RNFS.readFile(res.uri, 'ascii');
-        const psbt = bitcoin.Psbt.fromBase64(file);
+        const psbt = interchained.Psbt.fromBase64(file);
         navigation.navigate('PsbtWithHardwareWallet', { memo: transactionMemo, walletID: wallet.getID(), psbt });
         setIsLoading(false);
 
@@ -812,7 +812,7 @@ const SendDetails = () => {
       try {
         const base64 = base64arg || (await fs.openSignedTransaction());
         if (!base64) return;
-        const psbt = bitcoin.Psbt.fromBase64(base64); // if it doesnt throw - all good, its valid
+        const psbt = interchained.Psbt.fromBase64(base64); // if it doesnt throw - all good, its valid
 
         if ((wallet as MultisigHDWallet)?.howManySignaturesCanWeMake() > 0 && (await askCosignThisTransaction())) {
           setIsLoading(true);
@@ -863,7 +863,7 @@ const SendDetails = () => {
       let tx;
       let psbt;
       try {
-        psbt = bitcoin.Psbt.fromBase64(psbtBase64);
+        psbt = interchained.Psbt.fromBase64(psbtBase64);
         tx = (wallet as MultisigHDWallet).cosignPsbt(psbt).tx;
       } catch (e: any) {
         presentAlert({ title: loc.errors.error, message: e.message });

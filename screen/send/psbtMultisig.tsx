@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import BigNumber from 'bignumber.js';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import {
   FlatList,
   StyleSheet,
@@ -51,7 +51,7 @@ const PsbtMultisig = () => {
 
   const [psbt, setPsbt] = useState(() => {
     try {
-      const initial = bitcoin.Psbt.fromBase64(psbtBase64);
+      const initial = interchained.Psbt.fromBase64(psbtBase64);
       return initial;
     } catch (error) {
       console.error('Error loading initial PSBT:', error);

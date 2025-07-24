@@ -55,7 +55,7 @@ select_test_type() {
 }
 select_test_type
 
-# For Notification mode, use only three bare bitcoin addresses
+# For Notification mode, use only three bare interchained addresses
 if [[ "$TEST_TYPE" == "Notification" ]]; then
   deepLinks=(
     "12eQ9m4sgAwTSQoNXkRABKhCXCsjm2jdVG"

@@ -128,7 +128,7 @@ export const tryToObtainPermissions = async () => {
   }
 };
 /**
- * Submits onchain bitcoin addresses and ln invoice preimage hashes to GroundControl server, so later we could
+ * Submits onchain interchained addresses and ln invoice preimage hashes to GroundControl server, so later we could
  * be notified if they were paid
  *
  * @param addresses {string[]}

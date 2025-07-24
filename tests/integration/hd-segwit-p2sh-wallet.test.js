@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';
 import { HDSegwitP2SHWallet } from '../../class';
@@ -72,7 +72,7 @@ it('HD (BIP49) can create TX', async () => {
     1,
     hd._getInternalAddressByIndex(hd.next_free_change_address_index),
   );
-  let tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+  let tx = interchained.Transaction.fromHex(txNew.tx.toHex());
   assert.strictEqual(
     txNew.tx.toHex(),
     '0200000000010187c9acd9d5714845343b18abaa26cb83299be2487c22da9c0e270f241b4d9cfe0000000017160014a239b6a0cbc7aadc2e77643de36306a6167fad150000008002f40100000000000017a914a3a65daca3064280ae072b9d6773c027b30abace87f36200000000000017a9140acff2c37ed45110baece4bb9d4dcc0c6309dbbd8702483045022100fdddfc8f2f85181b0eb95d9f2ebd506b611318b85419889f9b7e4648cb9912e002206c963079673dfcfeea53120592d995dfab5f0e12f4c0054cace0cda90c481d2001210202ac3bd159e54dc31e65842ad5f9a10b4eb024e83864a319b27de65ee08b2a3900000000',
@@ -81,8 +81,8 @@ it('HD (BIP49) can create TX', async () => {
   assert.strictEqual(tx.outs.length, 2);
   assert.strictEqual(tx.outs[0].value, 500n);
   assert.strictEqual(tx.outs[1].value, 25331n);
-  let toAddress = bitcoin.address.fromOutputScript(tx.outs[0].script);
-  const changeAddress = bitcoin.address.fromOutputScript(tx.outs[1].script);
+  let toAddress = interchained.address.fromOutputScript(tx.outs[0].script);
+  const changeAddress = interchained.address.fromOutputScript(tx.outs[1].script);
   assert.strictEqual('3GcKN7q7gZuZ8eHygAhHrvPa5zZbG5Q1rK', toAddress);
   assert.strictEqual(hd._getInternalAddressByIndex(hd.next_free_change_address_index), changeAddress);
 
@@ -97,10 +97,10 @@ it('HD (BIP49) can create TX', async () => {
   const satPerVbyte = txNew.fee / tx.virtualSize();
 
   assert.strictEqual(Math.round(satPerVbyte), 6); // so_close.jpg
-  tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+  tx = interchained.Transaction.fromHex(txNew.tx.toHex());
   assert.strictEqual(tx.ins.length, 1);
   assert.strictEqual(tx.outs.length, 1);
-  toAddress = bitcoin.address.fromOutputScript(tx.outs[0].script);
+  toAddress = interchained.address.fromOutputScript(tx.outs[0].script);
   assert.strictEqual('3GcKN7q7gZuZ8eHygAhHrvPa5zZbG5Q1rK', toAddress);
 
   // testing sendMAX
@@ -144,7 +144,7 @@ it('HD (BIP49) can create TX', async () => {
     1,
     hd._getInternalAddressByIndex(hd.next_free_change_address_index),
   );
-  tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+  tx = interchained.Transaction.fromHex(txNew.tx.toHex());
   assert.strictEqual(tx.outs.length, 1);
   assert.ok(tx.outs[0].value > 77000);
 
@@ -155,7 +155,7 @@ it('HD (BIP49) can create TX', async () => {
     1,
     hd._getInternalAddressByIndex(hd.next_free_change_address_index),
   );
-  tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+  tx = interchained.Transaction.fromHex(txNew.tx.toHex());
   assert.strictEqual(tx.outs.length, 2);
   assert.ok(Number(tx.outs[0].value) > 50000);
   assert.strictEqual(tx.outs[1].value, 25000n);

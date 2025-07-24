@@ -1,4 +1,5 @@
-import * as bitcoin from 'bitcoinjs-lib';
+import { INTERCHAINED } from './_interchained-network';
+import * as interchained from 'bitcoinjs-lib';
 import { CoinSelectTarget } from 'coinselect';
 import { ECPairFactory } from 'ecpair';
 
@@ -15,8 +16,8 @@ const ECPair = ECPairFactory(ecc);
  * @returns {String}
  */
 function pubkeyToP2shSegwitAddress(pubkey: Buffer): string | false {
-  const { address } = bitcoin.payments.p2sh({
-    redeem: bitcoin.payments.p2wpkh({ pubkey }),
+  const { address } = interchained.payments.p2sh({
+    redeem: interchained.payments.p2wpkh({ pubkey }),
   });
   return address ?? false;
 }
@@ -49,9 +50,9 @@ export class SegwitP2SHWallet extends LegacyWallet {
     try {
       const scriptPubKey2 = Buffer.from(scriptPubKey, 'hex');
       return (
-        bitcoin.payments.p2sh({
+        interchained.payments.p2sh({
           output: scriptPubKey2,
-          network: bitcoin.networks.bitcoin,
+          network: INTERCHAINED,
         }).address ?? false
       );
     } catch (_) {
@@ -101,7 +102,7 @@ export class SegwitP2SHWallet extends LegacyWallet {
     if (targets.length === 0) throw new Error('No destination provided');
     const { inputs, outputs, fee } = this.coinselect(utxos, targets, feeRate);
     sequence = sequence || 0xffffffff; // disable RBF by default
-    const psbt = new bitcoin.Psbt();
+    const psbt = new interchained.Psbt();
     let c = 0;
     const values: Record<number, number> = {};
     const keyPair = ECPair.fromWIF(this.secret);
@@ -111,8 +112,8 @@ export class SegwitP2SHWallet extends LegacyWallet {
       c++;
 
       const pubkey = keyPair.publicKey;
-      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey });
-      const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh });
+      const p2wpkh = interchained.payments.p2wpkh({ pubkey });
+      const p2sh = interchained.payments.p2sh({ redeem: p2wpkh });
       if (!p2sh.output) {
         throw new Error('Internal error: no p2sh.output during createTransaction()');
       }

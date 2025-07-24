@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import { LegacyWallet } from '../../class';
 
@@ -53,7 +53,7 @@ describe('Legacy wallet', () => {
     // ^^ only non-segwit inputs need full transaction txhex
 
     let txNew = l.createTransaction(utxos, [{ value: 90000, address: '1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB' }], 1, l.getAddress());
-    let tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    let tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     const satPerVbyte = txNew.fee / tx.virtualSize();
     assert.strictEqual(satPerVbyte, 1);
     assert.strictEqual(
@@ -62,15 +62,15 @@ describe('Legacy wallet', () => {
     );
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 2);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
-    assert.strictEqual(l.getAddress(), bitcoin.address.fromOutputScript(tx.outs[1].script)); // change address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual(l.getAddress(), interchained.address.fromOutputScript(tx.outs[1].script)); // change address
 
     // sendMax
     txNew = l.createTransaction(utxos, [{ address: '1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB' }], 1, l.getAddress());
-    tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 1);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
 
     // batch send + send max
     txNew = l.createTransaction(
@@ -79,11 +79,11 @@ describe('Legacy wallet', () => {
       1,
       l.getAddress(),
     );
-    tx = bitcoin.Transaction.fromHex(txNew.tx.toHex());
+    tx = interchained.Transaction.fromHex(txNew.tx.toHex());
     assert.strictEqual(tx.ins.length, 1);
     assert.strictEqual(tx.outs.length, 2);
-    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', bitcoin.address.fromOutputScript(tx.outs[0].script)); // to address
-    assert.strictEqual('bc1q3rl0mkyk0zrtxfmqn9wpcd3gnaz00yv9yp0hxe', bitcoin.address.fromOutputScript(tx.outs[1].script)); // to address
+    assert.strictEqual('1GX36PGBUrF8XahZEGQqHqnJGW2vCZteoB', interchained.address.fromOutputScript(tx.outs[0].script)); // to address
+    assert.strictEqual('bc1q3rl0mkyk0zrtxfmqn9wpcd3gnaz00yv9yp0hxe', interchained.address.fromOutputScript(tx.outs[1].script)); // to address
   });
 
   it('can create transaction with better UTXO selection', async () => {

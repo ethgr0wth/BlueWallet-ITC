@@ -25,7 +25,7 @@ interface WalletButtonProps {
 
 const buttonDetails: Record<string, ButtonDetails> = {
   Interchained: {
-    image: require('../img/addWallet/bitcoin.png'),
+    image: require('../img/addWallet/interchained.png'),
     title: loc.wallets.add_bitcoin,
     explain: loc.wallets.add_bitcoin_explain,
     borderColorActive: 'newBlue',

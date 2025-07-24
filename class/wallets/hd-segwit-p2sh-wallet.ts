@@ -1,5 +1,5 @@
 import BIP32Factory, { BIP32Interface } from 'bip32';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import { Psbt } from 'bitcoinjs-lib';
 import b58 from 'bs58check';
 import { CoinSelectReturnInput } from 'coinselect';
@@ -12,7 +12,7 @@ const bip32 = BIP32Factory(ecc);
 /**
  * HD Wallet (BIP39).
  * In particular, BIP49 (P2SH Segwit)
- * @see https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki
+ * @see https://github.com/interchained/bips/blob/master/bip-0049.mediawiki
  */
 export class HDSegwitP2SHWallet extends AbstractHDElectrumWallet {
   static readonly type = 'HDsegwitP2SH';
@@ -87,8 +87,8 @@ export class HDSegwitP2SHWallet extends AbstractHDElectrumWallet {
     if (!pubkey || !path) {
       throw new Error('Internal error: pubkey or path are invalid');
     }
-    const p2wpkh = bitcoin.payments.p2wpkh({ pubkey });
-    const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh });
+    const p2wpkh = interchained.payments.p2wpkh({ pubkey });
+    const p2sh = interchained.payments.p2sh({ redeem: p2wpkh });
     if (!p2sh.output) {
       throw new Error('Internal error: no p2sh.output during _addPsbtInput()');
     }

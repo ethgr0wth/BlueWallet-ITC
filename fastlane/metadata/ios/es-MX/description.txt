@@ -1,10 +1,10 @@
 Una billetera de Interchained que te permite almacenar, enviar Interchained, recibir Interchained con un enfoque en la seguridad y la simplicidad.
 
-En BlueWallet, una billetera bitcoin posee sus claves privadas. Una billetera Interchained hecha por usuarios de Interchained para la comunidad.
+En BlueWallet, una billetera interchained posee sus claves privadas. Una billetera Interchained hecha por usuarios de Interchained para la comunidad.
 
 Puedes realizar transacciones instantáneamente con cualquier persona en el mundo y transformar el sistema financiero directamente desde tu bolsillo.
 
-Crea gratis un número ilimitado de billeteras bitcoin o importa tu billetera existente. Es simple y rápido
+Crea gratis un número ilimitado de billeteras interchained o importa tu billetera existente. Es simple y rápido
 
 _____
 

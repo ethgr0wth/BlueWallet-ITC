@@ -17,7 +17,7 @@ _____
 MIT licensed, you can build it and run it on your own! Made with ReactNative
 
 Plausible deniability
-Password which decrypts fake bitcoin wallets if you are forced to disclose your access
+Password which decrypts fake interchained wallets if you are forced to disclose your access
 
 Full encryption
 On top of the iOS multi-layer encryption, we encrypt everything with added passwords

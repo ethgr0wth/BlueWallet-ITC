@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';
 import { HDLegacyBreadwalletWallet } from '../../class';
@@ -59,7 +59,7 @@ it('Legacy HD Breadwallet can fetch utxo, balance, and create transaction', asyn
   );
 
   assert.ok(tx);
-  const transaction = bitcoin.Transaction.fromHex(tx.toHex());
+  const transaction = interchained.Transaction.fromHex(tx.toHex());
   assert.ok(transaction.ins.length === 4);
   assert.strictEqual(transaction.outs.length, 1);
 });

@@ -1,6 +1,6 @@
 import BIP47Factory from '@spsina/bip47';
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 import { ECPairFactory } from 'ecpair';
 
 import ecc from '../../blue_modules/noble_ecc';
@@ -84,7 +84,7 @@ describe('Bech32 Segwit HD (BIP84) with BIP47', () => {
     assert.ok(path);
 
     const keyPair2 = ECPair.fromWIF(w._getWIFbyAddress('bc1q57nwf9vfq2qsl80q37wq5h0tjytsk95vgjq4fe') || '');
-    const address = bitcoin.payments.p2wpkh({
+    const address = interchained.payments.p2wpkh({
       pubkey: keyPair2.publicKey,
     }).address;
 
@@ -232,12 +232,12 @@ describe('Bech32 Segwit HD (BIP84) with BIP47', () => {
 
     assert.strictEqual(tx.outs[0].value, 10234n);
     assert.strictEqual(
-      bitcoin.address.fromOutputScript(tx.outs[0].script),
+      interchained.address.fromOutputScript(tx.outs[0].script),
       walletSender._getBIP47AddressSend(bip47instanceReceiver.getSerializedPaymentCode(), 0),
     );
 
     assert.strictEqual(tx.outs[1].value, 22000n);
-    assert.strictEqual(bitcoin.address.fromOutputScript(tx.outs[1].script), '13HaCAB4jf7FYSZexJxoczyDDnutzZigjS');
+    assert.strictEqual(interchained.address.fromOutputScript(tx.outs[1].script), '13HaCAB4jf7FYSZexJxoczyDDnutzZigjS');
 
     const actualFeerate = fee / tx.virtualSize();
     assert.strictEqual(Math.round(actualFeerate), 6);
@@ -258,7 +258,7 @@ describe('Bech32 Segwit HD (BIP84) with BIP47', () => {
     assert(tx2);
 
     assert.strictEqual(
-      bitcoin.address.fromOutputScript(tx2.outs[0].script),
+      interchained.address.fromOutputScript(tx2.outs[0].script),
       walletSender._getBIP47AddressSend(bip47instanceReceiver.getSerializedPaymentCode(), 6),
     );
   });
@@ -298,17 +298,17 @@ describe('Bech32 Segwit HD (BIP84) with BIP47', () => {
     );
     assert(tx);
 
-    const legacyAddressDestination = tx.outs.find(o => bitcoin.address.fromOutputScript(o.script) === '13HaCAB4jf7FYSZexJxoczyDDnutzZigjS');
+    const legacyAddressDestination = tx.outs.find(o => interchained.address.fromOutputScript(o.script) === '13HaCAB4jf7FYSZexJxoczyDDnutzZigjS');
     assert.strictEqual(legacyAddressDestination?.value, 22000n);
 
     const spDestinatiob = tx.outs.find(o => Number(o.value) === 10234);
     assert.strictEqual(
-      bitcoin.address.fromOutputScript(spDestinatiob!.script!),
+      interchained.address.fromOutputScript(spDestinatiob!.script!),
       'bc1pu7dwaehvur4lpc7cqmynnjgx5ngthk574p05mgwxf9lecv4r6j5s02nhxq',
     );
 
     const changeDestination = tx.outs.find(
-      o => bitcoin.address.fromOutputScript(o.script) === 'bc1q7vraw79vcf7qhnefeaul578h7vjc7tr95ywfuq',
+      o => interchained.address.fromOutputScript(o.script) === 'bc1q7vraw79vcf7qhnefeaul578h7vjc7tr95ywfuq',
     );
 
     const calculatedFee =

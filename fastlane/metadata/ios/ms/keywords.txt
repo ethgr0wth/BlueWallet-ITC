@@ -1,1 +1,1 @@
-bitcoin,dompet,dompet bitcoin ,rabong,btc,kriptowang,beli bitcoin,samourai,electrum,ethereum
+interchained,dompet,dompet interchained ,rabong,btc,kriptowang,beli interchained,samourai,electrum,ethereum

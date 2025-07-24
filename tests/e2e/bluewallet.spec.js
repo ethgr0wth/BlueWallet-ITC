@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as bitcoin from 'bitcoinjs-lib';
+import * as interchained from 'bitcoinjs-lib';
 
 import {
   scanText,
@@ -668,10 +668,10 @@ describe('BlueWallet UI Tests - no wallets', () => {
 
     const txhex = await extractTextFromElementById('TxhexInput');
 
-    const transaction = bitcoin.Transaction.fromHex(txhex);
+    const transaction = interchained.Transaction.fromHex(txhex);
     assert.ok(transaction.ins.length === 1);
     assert.strictEqual(transaction.outs.length, 2);
-    assert.strictEqual(bitcoin.address.fromOutputScript(transaction.outs[0].script), 'bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl'); // to address
+    assert.strictEqual(interchained.address.fromOutputScript(transaction.outs[0].script), 'bc1q063ctu6jhe5k4v8ka99qac8rcm2tzjjnuktyrl'); // to address
     assert.strictEqual(transaction.outs[0].value, 50000n);
 
     process.env.TRAVIS && require('fs').writeFileSync(lockFile, '1');
