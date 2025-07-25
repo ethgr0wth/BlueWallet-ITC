@@ -83,14 +83,10 @@ export const ELECTRUM_SSL_PORT = 'electrum_ssl_port';
 export const ELECTRUM_SERVER_HISTORY = 'electrum_server_history';
 const ELECTRUM_CONNECTION_DISABLED = 'electrum_disabled';
 const storageKey = 'ELECTRUM_PEERS';
-const defaultPeer = { host: 'electrum1.bluewallet.io', ssl: 443 };
+const defaultPeer = { host: '173.249.33.184', ssl: 50002 };
 export const hardcodedPeers: Peer[] = [
-  { host: 'mainnet.foundationdevices.com', ssl: 50002 },
-  // { host: 'interchained.lukechilds.co', ssl: 50002 },
-  // { host: 'electrum.jochen-hoenicke.de', ssl: '50006' },
-  { host: 'electrum1.bluewallet.io', ssl: 443 },
-  { host: 'electrum.acinq.co', ssl: 50002 },
-  { host: 'electrum.bitaroo.net', ssl: 50002 },
+  { host: '173.249.33.184', ssl: 50002 },
+  // { host: 'seed.interchained.org', ssl: 50002 },
 ];
 
 export const suggestedServers: Peer[] = hardcodedPeers.map(peer => ({
