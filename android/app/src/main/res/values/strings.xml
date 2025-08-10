@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">BlueWallet</string>
+    <string name="app_name">Elara</string>
     <string name="loading">Loading...</string>
     <string name="last_updated">Last Updated</string>
     <string name="from">From</string>
     
     <!-- Market Widget -->
-    <string name="market_widget_name">Bitcoin Market</string>
+    <string name="market_widget_name">Interchained Market</string>
     <string name="market_widget_description">View the latest Interchained market data including price, satoshi rate, and next block fee.</string>
     <string name="market_title">Market</string>
     <string name="market_next_block">Next Block</string>
