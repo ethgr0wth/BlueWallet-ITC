@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import DefaultPreference from 'react-native-default-preference';
 import RNFS from 'react-native-fs';
 import Realm from 'realm';

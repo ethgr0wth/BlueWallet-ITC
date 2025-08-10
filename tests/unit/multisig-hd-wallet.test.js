@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 
 import Base43 from '../../blue_modules/base43';
 import { BlueURDecoder, decodeUR, encodeUR } from '../../blue_modules/ur';

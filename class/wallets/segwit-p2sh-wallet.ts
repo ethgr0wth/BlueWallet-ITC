@@ -1,5 +1,5 @@
 import { INTERCHAINED } from './_interchained-network';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import { CoinSelectTarget } from 'coinselect';
 import { ECPairFactory } from 'ecpair';
 

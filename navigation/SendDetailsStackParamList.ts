@@ -1,4 +1,4 @@
-import { Psbt } from 'bitcoinjs-lib';
+import { Psbt } from 'interchainedjs-lib';
 import { CreateTransactionTarget, CreateTransactionUtxo, TWallet } from '../class/wallets/types';
 import { InterchainedUnit, Chain } from '../models/bitcoinUnits';
 import { ScanQRCodeParamList } from './DetailViewStackParamList';

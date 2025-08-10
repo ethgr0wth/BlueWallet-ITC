@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import ElectrumClient from 'electrum-client';
 import { sha256 as _sha256 } from '@noble/hashes/sha256';
 

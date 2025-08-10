@@ -1,5 +1,5 @@
 import BIP32Factory from 'bip32';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import b58 from 'bs58check';
 import * as mn from 'electrum-mnemonic';
 

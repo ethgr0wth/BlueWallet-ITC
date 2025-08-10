@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { Psbt } from 'bitcoinjs-lib';
+import { Psbt } from 'interchainedjs-lib';
 
 import { BlueURDecoder, clearUseURv1, decodeUR, encodeUR, extractSingleWorkload, setUseURv1 } from '../../blue_modules/ur';
 import { WatchOnlyWallet } from '../../class';

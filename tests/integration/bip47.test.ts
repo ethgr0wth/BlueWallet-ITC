@@ -1,7 +1,7 @@
 // import assert from 'assert';
 import BIP47Factory from '@spsina/bip47';
 import assert from 'assert';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import { ECPairFactory } from 'ecpair';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';

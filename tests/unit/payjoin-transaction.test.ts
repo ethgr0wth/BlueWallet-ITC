@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import { PayjoinClient } from 'payjoin-client';
 
 import { HDSegwitBech32Wallet } from '../../class';

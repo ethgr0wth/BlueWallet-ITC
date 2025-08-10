@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import { ActivityIndicator, Keyboard, Linking, StyleSheet, TextInput, View } from 'react-native';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';

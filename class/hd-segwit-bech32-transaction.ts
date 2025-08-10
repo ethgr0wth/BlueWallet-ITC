@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import assert from 'assert';
 
 import * as BlueElectrum from '../blue_modules/BlueElectrum';

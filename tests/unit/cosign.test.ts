@@ -1,10 +1,10 @@
 /* global it, describe */
 import assert from 'assert';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 
 import { HDLegacyP2PKHWallet, HDSegwitBech32Wallet, HDSegwitP2SHWallet, WatchOnlyWallet } from '../../class';
 import { CreateTransactionUtxo } from '../../class/wallets/types.ts';
-import { Transaction } from 'bitcoinjs-lib';
+import { Transaction } from 'interchainedjs-lib';
 
 describe('AbstractHDElectrumWallet.cosign', () => {
   it('different descendants of AbstractHDElectrumWallet can cosign one transaction', async () => {

@@ -3,11 +3,11 @@
  * license: Apache License
  *
  * @see https://github.com/bitcoinjs/tiny-secp256k1/issues/84#issuecomment-1185682315
- * @see https://github.com/bitcoinjs/bitcoinjs-lib/issues/1781
+ * @see https://github.com/bitcoinjs/interchainedjs-lib/issues/1781
  */
 import * as necc from '@noble/secp256k1';
 import { TinySecp256k1Interface as TinySecp256k1InterfaceBIP32 } from 'bip32/types/bip32';
-import { XOnlyPointAddTweakResult } from 'bitcoinjs-lib/src/types';
+import { XOnlyPointAddTweakResult } from 'interchainedjs-lib/src/types';
 import { hmac } from '@noble/hashes/hmac';
 import { sha256 } from '@noble/hashes/sha2';
 import { TinySecp256k1Interface } from 'ecpair';

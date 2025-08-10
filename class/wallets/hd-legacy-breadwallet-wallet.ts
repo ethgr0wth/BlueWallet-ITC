@@ -1,6 +1,6 @@
 import BIP32Factory, { BIP32Interface } from 'bip32';
-import * as bitcoinjs from 'bitcoinjs-lib';
-import { Psbt } from 'bitcoinjs-lib';
+import * as bitcoinjs from 'interchainedjs-lib';
+import { Psbt } from 'interchainedjs-lib';
 import { CoinSelectReturnInput } from 'coinselect';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';

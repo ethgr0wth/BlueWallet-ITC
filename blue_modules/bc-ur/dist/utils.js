@@ -2,7 +2,7 @@
 import { sha256 as _sha256 } from '@noble/hashes/sha256';
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.compose3 = exports.sha256Hash = void 0;
-var bitcoinjs_lib_1 = require("bitcoinjs-lib");
+var bitcoinjs_lib_1 = require("interchainedjs-lib");
 const {uint8ArrayToHex} = require("../../uint8array-extras");
 exports.sha256Hash = function (data) {
     return bitcoinjs_crypto_sha256(data);

@@ -1,7 +1,7 @@
 import BIP32Factory, { BIP32Interface } from 'bip32';
 import * as bip39 from 'bip39';
-import * as interchained from 'bitcoinjs-lib';
-import { Psbt, Transaction } from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
+import { Psbt, Transaction } from 'interchainedjs-lib';
 import b58 from 'bs58check';
 import { CoinSelectOutput, CoinSelectReturnInput, CoinSelectTarget } from 'coinselect';
 import { sha256 } from '@noble/hashes/sha256';
@@ -1181,7 +1181,7 @@ export class MultisigHDWallet extends AbstractHDElectrumWallet {
         } catch (_) {} // protects agains duplicate cosignings
 
         if (!psbt.inputHasHDKey(cc, hdRoot)) {
-          // failed signing as HD. probably bitcoinjs-lib could not match provided hdRoot's
+          // failed signing as HD. probably interchainedjs-lib could not match provided hdRoot's
           // fingerprint (or path?) to the ones in psbt, which is the case of stupid Electrum desktop which can
           // put bullshit paths and fingerprints in created psbt.
           // lets try to find correct priv key and sign manually.
