@@ -1,4 +1,4 @@
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 
 /**
  * Combines two PSBTs and returns the combined PSBT.

@@ -1,6 +1,6 @@
 import BIP32Factory, { BIP32Interface } from 'bip32';
-import * as interchained from 'bitcoinjs-lib';
-import { Psbt } from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
+import { Psbt } from 'interchainedjs-lib';
 import b58 from 'bs58check';
 import { CoinSelectReturnInput } from 'coinselect';
 

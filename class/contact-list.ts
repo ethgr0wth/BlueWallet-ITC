@@ -3,7 +3,7 @@ import BIP47Factory from '@spsina/bip47';
 import { SilentPayment } from 'silent-payments';
 
 import ecc from '../blue_modules/noble_ecc';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 
 export class ContactList {
   isBip47PaymentCodeValid(pc: string) {

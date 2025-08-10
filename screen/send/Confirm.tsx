@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, Switch, View
 import { Text } from '@rneui/themed';
 import { PayjoinClient } from 'payjoin-client';
 import BigNumber from 'bignumber.js';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import { BlueText, BlueCard } from '../../BlueComponents';
 import { InterchainedUnit } from '../../models/bitcoinUnits';
 import loc, { formatBalance, formatBalanceWithoutSuffix } from '../../loc';

@@ -1,6 +1,6 @@
 import { INTERCHAINED } from './_interchained-network';
 import BigNumber from 'bignumber.js';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import bitcoinMessage from 'bitcoinjs-message';
 import coinSelect, { CoinSelectOutput, CoinSelectReturnInput, CoinSelectTarget } from 'coinselect';
 import coinSelectSplit from 'coinselect/split';
@@ -509,7 +509,7 @@ export class LegacyWallet extends AbstractWallet {
    *
    * p2tr addresses have extra logic, rejecting all versions >1
    * @see https://github.com/BlueWallet/BlueWallet/issues/3394
-   * @see https://github.com/bitcoinjs/bitcoinjs-lib/issues/1750
+   * @see https://github.com/bitcoinjs/interchainedjs-lib/issues/1750
    * @see https://github.com/interchained/bips/blob/edffe529056f6dfd33d8f716fb871467c3c09263/bip-0350.mediawiki#Addresses_for_segregated_witness_outputs
    *
    * @param address

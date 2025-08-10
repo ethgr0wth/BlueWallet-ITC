@@ -1,4 +1,4 @@
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import { CoinSelectOutput, CoinSelectReturnInput, CoinSelectUtxo } from 'coinselect';
 
 import { InterchainedUnit } from '../../models/bitcoinUnits';

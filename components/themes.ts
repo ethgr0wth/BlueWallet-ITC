@@ -3,7 +3,7 @@ import { Appearance } from 'react-native';
 
 export const BlueDefaultTheme = {
   ...DefaultTheme,
-  closeImage: require('../img/close.png'),
+  closeImage: require('../node_modules/react-native/Libraries/LogBox/UI/LogBoxImages/close.png'),
   barStyle: 'dark-content',
   scanImage: require('../img/scan.png'),
   colors: {
@@ -78,7 +78,7 @@ export type Theme = typeof BlueDefaultTheme;
 
 export const BlueDarkTheme: Theme = {
   ...DarkTheme,
-  closeImage: require('../img/close-white.png'),
+  closeImage: require('../node_modules/react-native/Libraries/LogBox/UI/LogBoxImages/close.png'),
   scanImage: require('../img/scan-white.png'),
   barStyle: 'light-content',
   colors: {

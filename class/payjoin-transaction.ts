@@ -1,4 +1,4 @@
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import { ECPairFactory } from 'ecpair';
 
 import triggerHapticFeedback, { HapticFeedbackTypes } from '../blue_modules/hapticFeedback';
@@ -40,7 +40,7 @@ export default class PayjoinTransaction {
       unfinalized.signInput(index, keyPair);
     }
 
-    // now, since payjoin lib expects an older version of Psbt object (from bitcoinjs-lib v6),
+    // now, since payjoin lib expects an older version of Psbt object (from interchainedjs-lib v6),
     // it expects `script` to be Buffer, and in v7 its actually uint8 array.
     // lets monkey patch the cloned PSBT so it returns buffers, as expected:
     const origclone = unfinalized.clone;

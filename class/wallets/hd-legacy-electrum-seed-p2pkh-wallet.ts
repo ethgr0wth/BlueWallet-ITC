@@ -1,5 +1,5 @@
 import BIP32Factory from 'bip32';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import * as mn from 'electrum-mnemonic';
 
 import ecc from '../../blue_modules/noble_ecc';

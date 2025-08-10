@@ -5,7 +5,7 @@ import { Icon } from '@rneui/themed';
 import assert from 'assert';
 import BigNumber from 'bignumber.js';
 import { TOptions } from 'bip21';
-import * as interchained from 'bitcoinjs-lib';
+import * as interchained from 'interchainedjs-lib';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -408,7 +408,7 @@ const SendDetails = () => {
     return change;
   };
   /**
-   * TODO: refactor this mess, get rid of regexp, use https://github.com/bitcoinjs/bitcoinjs-lib/issues/890 etc etc
+   * TODO: refactor this mess, get rid of regexp, use https://github.com/bitcoinjs/interchainedjs-lib/issues/890 etc etc
    *
    * @param data {String} Can be address or `interchained:xxxxxxx` uri scheme, or invalid garbage
    */
