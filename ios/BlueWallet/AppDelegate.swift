@@ -337,7 +337,7 @@ class AppDelegate: RCTAppDelegate, UNUserNotificationCenterDelegate {
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        let blockExplorer = userDefaultsGroup?.string(forKey: "blockExplorer") ?? "https://www.mempool.space"
+        let blockExplorer = userDefaultsGroup?.string(forKey: "blockExplorer") ?? "https://explorer.interchained.org"
 
         if let data = userInfo["data"] as? [String: Any] {
             if response.actionIdentifier == "VIEW_ADDRESS_TRANSACTIONS", let address = data["address"] as? String {
