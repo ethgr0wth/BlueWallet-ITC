@@ -57,19 +57,19 @@ const About: React.FC = () => {
   };
 
   const handleOnTwitterPress = () => {
-    Linking.openURL('https://twitter.com/bluewalletio');
+    Linking.openURL('https://x.com/elarawallet');
   };
 
   const handleOnDiscordPress = () => {
-    Linking.openURL('https://discord.gg/btWq2Aby2z');
+    Linking.openURL('https://discord.gg/cdsYPnjS4a');
   };
 
   const handleOnTelegramPress = () => {
-    Linking.openURL('https://t.me/bluewallethat');
+    Linking.openURL('https://t.me/elarawallet');
   };
 
   const handleOnGithubPress = () => {
-    Linking.openURL('https://github.com/BlueWallet/BlueWallet');
+    Linking.openURL('https://github.com/ElaraWallet/ElaraWallet');
   };
 
   const handleOnRatePress = () => {
