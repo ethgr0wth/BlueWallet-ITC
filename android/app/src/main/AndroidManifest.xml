@@ -120,7 +120,8 @@
             android:launchMode="singleTask"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
             android:windowSoftInputMode="adjustResize"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/LaunchScreen">
 
             <!-- Main launcher intent filter -->
             <intent-filter>
