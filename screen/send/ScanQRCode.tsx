@@ -1,7 +1,6 @@
-import { RouteProp, StackActions, useIsFocused, useRoute } from '@react-navigation/native';
+import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import * as interchained from 'interchainedjs-lib';
-import { sha256 } from '@noble/hashes/sha256';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import Base43 from '../../blue_modules/base43';
 import * as fs from '../../blue_modules/fs';
@@ -64,8 +63,12 @@ const ScanQRCode = () => {
   const previousRoute = navigationState.routes[navigationState.routes.length - 2];
   const defaultLaunchedBy = previousRoute ? previousRoute.name : undefined;
 
+  // NOTE: upstream uses `onBarScanned`; keep this contract
   const { launchedBy = defaultLaunchedBy, showFileImportButton, onBarScanned } = route.params || {};
-  const scannedCache: Record<string, number> = {};
+
+  // Persist across renders (prevents duplicate firing without fragile hashing)
+  const scannedCacheRef = useRef<Record<string, number>>({});
+
   const { colors } = useTheme();
   const isFocused = useIsFocused();
   const [backdoorPressed, setBackdoorPressed] = useState(0);
@@ -75,6 +78,7 @@ const ScanQRCode = () => {
   const [backdoorVisible, setBackdoorVisible] = useState(false);
   const [animatedQRCodeData, setAnimatedQRCodeData] = useState<Record<string, string>>({});
   const [cameraStatusGranted, setCameraStatusGranted] = useState<boolean | undefined>(undefined);
+
   const stylesHook = StyleSheet.create({
     openSettingsContainer: {
       backgroundColor: colors.brandingColor,
@@ -92,26 +96,15 @@ const ScanQRCode = () => {
     isCameraAuthorizationStatusGranted().then(setCameraStatusGranted);
   }, []);
 
-  const HashIt = function (s: string): string {
-    return Buffer.from(sha256(s)).toString('hex');
-  };
-
-  const _onReadUniformResourceV2 = (part: string) => {
+  // -------- URv2 handling (segmented animated QR) --------
+  const onReadUniformResourceV2 = (part: string) => {
     if (!decoder) decoder = new BlueURDecoder();
     try {
       decoder.receivePart(part);
       if (decoder.isComplete()) {
         const data = decoder.toString();
-        decoder = undefined; // nullify for future use (?)
-        if (launchedBy) {
-          const merge = true;
-          const popToAction = StackActions.popTo(launchedBy, { onBarScanned: data }, { merge });
-          if (onBarScanned) {
-            onBarScanned(data);
-          }
-
-          navigation.dispatch(popToAction);
-        }
+        decoder = undefined; // reset for future scans
+        safelyReturnDataToCaller(data);
       } else {
         setUrTotal(100);
         setUrHave(Math.floor(decoder.estimatedPercentComplete() * 100));
@@ -126,41 +119,30 @@ const ScanQRCode = () => {
   };
 
   /**
-   *
-   * @deprecated remove when we get rid of URv1 support
+   * URv1 (deprecated) — keep for compatibility
    */
-  const _onReadUniformResource = (ur: string) => {
+  const onReadUniformResource = (ur: string) => {
     try {
       const [index, total] = extractSingleWorkload(ur);
-      animatedQRCodeData[index + 'of' + total] = ur;
       setUrTotal(total);
-      setUrHave(Object.values(animatedQRCodeData).length);
-      if (Object.values(animatedQRCodeData).length === total) {
-        const payload = decodeUR(Object.values(animatedQRCodeData));
-        // lets look inside that data
-        let data: false | string = false;
-        if (Buffer.from(String(payload), 'hex').toString().startsWith('psbt')) {
-          // its a psbt, and whoever requested it expects it encoded in base64
-          data = Buffer.from(String(payload), 'hex').toString('base64');
-        } else {
-          // its something else. probably plain text is expected
-          data = Buffer.from(String(payload), 'hex').toString();
-        }
-        if (launchedBy) {
-          const merge = true;
-          const popToAction = StackActions.popTo(launchedBy, { onBarScanned: data }, { merge });
-          if (onBarScanned) {
-            onBarScanned(data);
+      setAnimatedQRCodeData(prev => {
+        const updated = { ...prev, [`${index}of${total}`]: ur };
+        setUrHave(Object.values(updated).length);
+        if (Object.values(updated).length === total) {
+          const payload = decodeUR(Object.values(updated));
+          let data: string;
+          const hexStr = Buffer.from(String(payload), 'hex').toString();
+          if (hexStr.startsWith('psbt')) {
+            data = Buffer.from(String(payload), 'hex').toString('base64'); // PSBT expected in base64
+          } else {
+            data = hexStr; // plain text
           }
-
-          navigation.dispatch(popToAction);
+          safelyReturnDataToCaller(data);
         }
-      } else {
-        setAnimatedQRCodeData(animatedQRCodeData);
-      }
+        return updated;
+      });
     } catch (error) {
       setIsLoading(true);
-
       presentAlert({
         title: loc.errors.error,
         message: loc._.invalid_animated_qr_code_fragment,
@@ -168,112 +150,127 @@ const ScanQRCode = () => {
     }
   };
 
-  const onBarCodeRead = (ret: { data: string }) => {
-    const h = HashIt(ret.data);
-    if (scannedCache[h]) {
-      // this QR was already scanned by this ScanQRCode, lets prevent firing duplicate callbacks
-      return;
-    }
-    scannedCache[h] = +new Date();
-
-    if (ret.data.toUpperCase().startsWith('UR:CRYPTO-ACCOUNT')) {
-      return _onReadUniformResourceV2(ret.data);
-    }
-
-    if (ret.data.toUpperCase().startsWith('UR:CRYPTO-PSBT')) {
-      return _onReadUniformResourceV2(ret.data);
-    }
-
-    if (ret.data.toUpperCase().startsWith('UR:CRYPTO-OUTPUT')) {
-      return _onReadUniformResourceV2(ret.data);
-    }
-
-    if (ret.data.toUpperCase().startsWith('UR:BYTES')) {
-      const splitted = ret.data.split('/');
-      if (splitted.length === 3 && splitted[1].includes('-')) {
-        return _onReadUniformResourceV2(ret.data);
-      }
-    }
-
-    if (ret.data.toUpperCase().startsWith('UR')) {
-      return _onReadUniformResource(ret.data);
-    }
-
-    // is it base43? stupid electrum desktop
+  // -------- Single entry point after we decide what the data is --------
+  const safelyReturnDataToCaller = (data: string) => {
     try {
-      const hex = Base43.decode(ret.data);
-      interchained.Psbt.fromHex(hex); // if it doesnt throw - all good
-      const data = Buffer.from(hex, 'hex').toString('base64');
-
-      if (launchedBy) {
-        const merge = true;
-        const popToAction = StackActions.popTo(launchedBy, { onBarScanned: data }, { merge });
-        if (onBarScanned) {
-          onBarScanned(data);
-        }
-        navigation.dispatch(popToAction);
-      }
-      return;
-    } catch (_) {
-      if (!isLoading && launchedBy) {
-        setIsLoading(true);
+      if (typeof onBarScanned === 'function') {
         try {
-          const merge = true;
-
-          const popToAction = StackActions.popTo(launchedBy, { onBarScanned: ret.data }, { merge });
-          if (onBarScanned) {
-            onBarScanned(ret.data);
-          }
-
-          navigation.dispatch(popToAction);
-        } catch (e) {
-          console.log(e);
+          onBarScanned(data);
+        } catch {
+          // ignore callback exceptions so UI never crashes
         }
       }
+      if (launchedBy) {
+        // RN v6-safe: navigate back to the route by name and merge params
+        navigation.navigate({
+          name: launchedBy,
+          params: { onBarScanned: data },
+          // @ts-ignore merge is supported by native stack
+          merge: true,
+        } as any);
+      } else {
+        navigation.goBack();
+      }
+    } catch (e) {
+      presentAlert({ title: loc.errors.error, message: String(e ?? 'QR navigation error') });
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
+  // -------- Raw QR handler --------
+  const onBarCodeRead = (ret: { data: string }) => {
+    try {
+      const raw = (ret?.data ?? '').trim();
+      if (!raw) return;
+
+      // duplicate suppression (per screen lifecycle)
+      if (scannedCacheRef.current[raw]) return;
+      scannedCacheRef.current[raw] = Date.now();
+
+      // UR (animated) variants:
+      const upper = raw.toUpperCase();
+      if (upper.startsWith('UR:CRYPTO-ACCOUNT')) return onReadUniformResourceV2(raw);
+      if (upper.startsWith('UR:CRYPTO-PSBT')) return onReadUniformResourceV2(raw);
+      if (upper.startsWith('UR:CRYPTO-OUTPUT')) return onReadUniformResourceV2(raw);
+      if (upper.startsWith('UR:BYTES')) {
+        const splitted = raw.split('/');
+        if (splitted.length === 3 && splitted[1].includes('-')) return onReadUniformResourceV2(raw);
+      }
+      if (upper.startsWith('UR')) return onReadUniformResource(raw);
+
+      // Electrum Base43 → PSBT (best-effort probe)
+      try {
+        const hex = Base43.decode(raw); // may throw if not base43
+        interchained.Psbt.fromHex(hex); // verify PSBT (throws if invalid)
+        const base64 = Buffer.from(hex, 'hex').toString('base64');
+        return safelyReturnDataToCaller(base64);
+      } catch {
+        // Not a Base43 PSBT; fall through
+      }
+
+      // Fallback: send raw string (BIP21, plain address, etc.)
+      setIsLoading(true);
+      return safelyReturnDataToCaller(raw);
+    } catch (e) {
+      setIsLoading(false);
+      presentAlert({ title: loc.errors.error, message: String(e ?? 'QR error') });
+    }
+  };
+
+  // -------- File & image pickers (reuse same handler) --------
   const showFilePicker = async () => {
     setIsLoading(true);
-    const { data } = await fs.showFilePickerAndReadFile();
-    if (data) onBarCodeRead({ data });
-    setIsLoading(false);
+    try {
+      const { data } = await fs.showFilePickerAndReadFile();
+      if (data) onBarCodeRead({ data });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onShowImagePickerButtonPress = () => {
-    if (!isLoading) {
-      setIsLoading(true);
-      fs.showImagePickerAndReadImage()
-        .then(data => {
-          if (data) onBarCodeRead({ data });
-        })
-        .finally(() => setIsLoading(false));
-    }
+    if (isLoading) return;
+    setIsLoading(true);
+    fs.showImagePickerAndReadImage()
+      .then(data => {
+        if (data) onBarCodeRead({ data });
+      })
+      .finally(() => setIsLoading(false));
   };
 
-  const dismiss = () => {
-    navigation.goBack();
-  };
+  const dismiss = () => navigation.goBack();
 
+  // Normalize event payload shapes across scanner libs (VisionCamera/MLKit/ZXing)
   const handleReadCode = (event: any) => {
-    onBarCodeRead({ data: event?.nativeEvent?.codeStringValue });
+    const raw =
+      event?.nativeEvent?.codeStringValue ??
+      event?.nativeEvent?.displayValue ??
+      event?.nativeEvent?.data ??
+      event?.data ??
+      '';
+    if (typeof raw !== 'string' || !raw.trim()) return;
+    onBarCodeRead({ data: raw.trim() });
   };
 
   const handleBackdoorOkPress = () => {
     setBackdoorVisible(false);
+    const txt = backdoorText.trim();
     setBackdoorText('');
-    if (backdoorText) onBarCodeRead({ data: backdoorText });
+    if (txt) onBarCodeRead({ data: txt });
   };
 
-  // this is an invisible backdoor button on bottom left screen corner
-  // tapping it 10 times fires prompt dialog asking for a string thats gona be passed to onBarCodeRead.
-  // this allows to mock and test QR scanning in e2e tests
+  // invisible backdoor button for e2e testing
   const handleInvisibleBackdoorPress = async () => {
-    setBackdoorPressed(backdoorPressed + 1);
-    if (backdoorPressed < 5) return;
-    setBackdoorPressed(0);
-    setBackdoorVisible(true);
+    setBackdoorPressed(prev => {
+      const next = prev + 1;
+      if (next >= 6) {
+        // show manual input after 6 taps
+        setBackdoorVisible(true);
+        return 0;
+      }
+      return next;
+    });
   };
 
   const render = isLoading ? (
