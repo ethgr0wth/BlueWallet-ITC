@@ -3,16 +3,16 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#00B3B3"      <!-- Cyan color from the logo -->
-                android:endColor="#006F6F"        <!-- Blue color from the logo -->
-                android:angle="45" />             <!-- Gradient angle -->
+                android:startColor="#00B3B3"
+                android:endColor="#006F6F"
+                android:angle="45" />
         </shape>
     </item>
 
     <!-- Your Logo -->
     <item>
         <bitmap
-            android:src="@mipmap/ic_launcher"   <!-- Replace with your logo resource -->
+            android:src="@mipmap/ic_launcher"
             android:gravity="center" />
     </item>
 </layer-list>
