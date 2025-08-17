@@ -1,5 +1,4 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Gradient Background (Cyan to Blue) -->
     <item>
         <shape android:shape="rectangle">
             <gradient
@@ -9,7 +8,6 @@
         </shape>
     </item>
 
-    <!-- Your Logo -->
     <item>
         <bitmap
             android:src="@mipmap/ic_launcher"
