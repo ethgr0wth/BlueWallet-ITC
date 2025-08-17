@@ -31,4 +31,9 @@
     <style name="WidgetTextSecondary">
         <item name="android:textColor">@color/text_secondary</item>
     </style>
+    
+    <style name="LaunchScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/launch_screen</item> <!-- Your custom splash screen layout -->
+        <item name="android:windowAnimationStyle">@null</item> <!-- Disable default animation -->
+    </style>
 </resources>
