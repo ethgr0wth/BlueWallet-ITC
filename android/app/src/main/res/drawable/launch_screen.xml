@@ -2,15 +2,15 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#00B3B3"
-                android:endColor="#006F6F"
-                android:angle="45" />
+                android:startColor="#00B3B3"   
+                android:endColor="#006F6F"     
+                android:angle="45" />          
         </shape>
     </item>
 
     <item>
         <bitmap
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/ic_launcher"  
             android:gravity="center" />
     </item>
 </layer-list>
