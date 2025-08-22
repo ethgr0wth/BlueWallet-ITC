@@ -13,3 +13,8 @@
 -keep class com.facebook.jni.** { *; }
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
+-keep class com.wix.** { *; }
+-keep class com.google.mlkit.** { *; }
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.wix.**
+-dontwarn com.google.mlkit.**
