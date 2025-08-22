@@ -320,16 +320,28 @@ class DeeplinkSchemaMatch {
   }
 
   static isInterchainedAddress(address: string): boolean {
-    address = address.replace('://', ':').replace('interchained:', '').replace('INTERCHAINED:', '').replace('interchained=', '').split('?')[0];
-    let isValidInterchainedAddress = false;
+    if (!address) return false;
+  
+    // Edge case: QR comes as "bitcoin:itc1..."
+    if (/^bitcoin:itc/i.test(address)) {
+      address = address.replace(/^bitcoin:/i, '');
+    }
+  
+    address = address
+      .replace('://', ':')
+      .replace('interchained:', '')
+      .replace('INTERCHAINED:', '')
+      .replace('interchained=', '')
+      .split('?')[0];
+  
     try {
       interchained.address.toOutputScript(address);
-      isValidInterchainedAddress = true;
-    } catch (err) {
-      isValidInterchainedAddress = false;
+      return true;
+    } catch {
+      return false;
     }
-    return isValidInterchainedAddress;
   }
+
 
   static isLightningInvoice(invoice: string): boolean {
     let isValidLightningInvoice = false;
