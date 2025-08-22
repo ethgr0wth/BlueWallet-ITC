@@ -2,7 +2,6 @@ import bolt11 from 'bolt11';
 import { InterchainedUnit, Chain } from '../../models/bitcoinUnits';
 import { LegacyWallet } from './legacy-wallet';
 import { fetch } from '../../util/fetch';
-import { LegacyWallet } from './legacy-wallet';
 import { DecodedInvoice, LightningTransaction, Transaction } from './types';
 
 export class LightningCustodianWallet extends LegacyWallet {
