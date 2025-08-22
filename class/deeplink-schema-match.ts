@@ -23,6 +23,8 @@ class DeeplinkSchemaMatch {
     if (typeof schemaString !== 'string' || schemaString.length <= 0) return false;
     const lowercaseString = schemaString.trim().toLowerCase();
     return (
+      lowercaseString.startsWith('bitcoin:') ||
+      lowercaseString.startsWith('itc:') ||
       lowercaseString.startsWith('interchained:') ||
       lowercaseString.startsWith('lightning:') ||
       lowercaseString.startsWith('blue:') ||
@@ -403,17 +405,25 @@ class DeeplinkSchemaMatch {
     if (!uri) {
       throw new Error('No URI provided');
     }
-    let replacedUri = uri;
-    for (const replaceMe of ['INTERCHAINED://', 'interchained://', 'INTERCHAINED:']) {
-      replacedUri = replacedUri.replace(replaceMe, 'interchained:');
+  
+    // normalize all variants of your scheme
+    let u = uri
+      .replace(/INTERCHAINED:\/\//g, 'interchained:')
+      .replace(/interchained:\/\//g, 'interchained:')
+      .replace(/INTERCHAINED:/g, 'interchained:');
+  
+    // Edge case: some QRs show "bitcoin:itc1…" → rewrite to interchained:
+    if (/^bitcoin:itc1/i.test(u)) {
+      u = u.replace(/^bitcoin:/i, 'interchained:');
     }
-
-    return bip21.decode(replacedUri);
+  
+    // Decode, telling bip21 to expect interchained URIs
+    return bip21.decode(u, 'interchained');
   }
 
   static bip21encode(address: string, options?: TOptions): string {
     // uppercase address if bech32 to satisfy BIP_0173
-    const isBech32 = address.startsWith('bc1');
+    const isBech32 = address.startsWith('itc1');
     if (isBech32) {
       address = address.toUpperCase();
     }
@@ -426,7 +436,7 @@ class DeeplinkSchemaMatch {
         delete options[key];
       }
     }
-    return bip21.encode(address, options);
+    return bip21.encode(address, options, 'interchained');
   }
 
   static decodeInterchainedUri(uri: string) {
