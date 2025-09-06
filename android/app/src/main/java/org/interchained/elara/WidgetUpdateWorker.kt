@@ -1,3 +1,4 @@
+import android.widget.RemoteViews
 package org.interchained.elara
 
 import android.app.PendingIntent

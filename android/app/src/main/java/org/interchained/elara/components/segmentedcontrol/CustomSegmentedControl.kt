@@ -1,3 +1,4 @@
+import com.facebook.react.bridge.ReactContext
 package org.interchained.elara.components.segmentedcontrol
 
 import android.content.Context

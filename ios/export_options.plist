@@ -18,16 +18,16 @@
       <string>export</string>
       <key>provisioningProfiles</key>
       <dict>
-          <key>io.bluewallet.bluewallet</key>
-          <string>match AppStore io.bluewallet.bluewallet</string>
-          <key>io.bluewallet.bluewallet.watch</key>
-          <string>match AppStore io.bluewallet.bluewallet.watch</string>
-          <key>io.bluewallet.bluewallet.watch.extension</key>
-          <string>match AppStore io.bluewallet.bluewallet.watch.extension</string>
-          <key>io.bluewallet.bluewallet.Stickers</key>
-          <string>match AppStore io.bluewallet.bluewallet.Stickers</string>
-          <key>io.bluewallet.bluewallet.MarketWidget</key>
-          <string>match AppStore io.bluewallet.bluewallet.MarketWidget</string>
+          <key>org.interchained.elara</key>
+          <string>match AppStore org.interchained.elara</string>
+          <key>org.interchained.elara.watch</key>
+          <string>match AppStore org.interchained.elara.watch</string>
+          <key>org.interchained.elara.watch.extension</key>
+          <string>match AppStore org.interchained.elara.watch.extension</string>
+          <key>org.interchained.elara.Stickers</key>
+          <string>match AppStore org.interchained.elara.Stickers</string>
+          <key>org.interchained.elara.MarketWidget</key>
+          <string>match AppStore org.interchained.elara.MarketWidget</string>
       </dict>
   </dict>
 </plist>

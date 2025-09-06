@@ -9,9 +9,9 @@
 import Foundation
 
 enum HandoffIdentifier: String {
-  case ReceiveOnchain = "io.bluewallet.bluewallet.receiveonchain"
-  case Xpub = "io.bluewallet.bluewallet.xpub"
-  case ViewInBlockExplorer = "io.bluewallet.bluewallet.blockexplorer"
+  case ReceiveOnchain = "org.interchained.elara.receiveonchain"
+  case Xpub = "org.interchained.elara.xpub"
+  case ViewInBlockExplorer = "org.interchained.elara.blockexplorer"
 }
 
 enum HandOffUserInfoKey: String {
