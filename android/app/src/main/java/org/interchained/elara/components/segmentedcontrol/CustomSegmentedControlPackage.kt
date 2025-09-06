@@ -1,5 +1,3 @@
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.ReactPackage
 package org.interchained.elara.components.segmentedcontrol
 
 import org.interchained.elara.ReactPackage
