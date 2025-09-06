@@ -1,5 +1,3 @@
-import com.facebook.react.uimanager.annotations.ReactProp
-import com.facebook.react.bridge.ReadableArray
 package org.interchained.elara.components.segmentedcontrol
 
 import org.interchained.elara.ReadableArray
