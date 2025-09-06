@@ -105,11 +105,13 @@ android {
 
     buildTypes {
 	    release {
-	      signingConfig signingConfigs.release
-	      minifyEnabled true
-	      shrinkResources true
-	      proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-	    }
+		    signingConfig signingConfigs.release
+		    minifyEnabled true
+		    shrinkResources true
+		    proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
+		                  "proguard-rules.pro",
+		                  "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
+		  }
     }
 	
 	signingConfigs {
