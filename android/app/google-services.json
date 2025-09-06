@@ -1,35 +1,129 @@
 {
   "project_info": {
-    "project_number": "993804676679",
-    "firebase_url": "https://bluewallet-d7cd5.firebaseio.com",
-    "project_id": "bluewallet-d7cd5",
-    "storage_bucket": "bluewallet-d7cd5.appspot.com"
+    "project_number": "684145709723",
+    "project_id": "interchained-c13dc",
+    "storage_bucket": "interchained-c13dc.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:993804676679:android:3e611cf30d58bac8b5cb62",
+        "mobilesdk_app_id": "1:684145709723:android:a75330c46a3f95808d6c3e",
         "android_client_info": {
-          "package_name": "org.interchained.elara"
+          "package_name": "chain.gigs.interchained"
         }
       },
       "oauth_client": [
         {
-          "client_id": "993804676679-cntmqmnbkrm9c89lcr1cq6rhaq8tfi0u.apps.googleusercontent.com",
+          "client_id": "684145709723-i08psdjbsn10uu56pcq5qcq3v6rbj7pm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "chain.gigs.interchained",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "684145709723-jht2r5cki3urjndb4i7rult0u2niblco.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCzJxNtavou1G10ZLIjzC-b2mX6TrVF3Ew"
+          "current_key": "AIzaSyDsjumjbmC5MBTDSQxDV0lFxBhsv7aqCoE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "993804676679-cntmqmnbkrm9c89lcr1cq6rhaq8tfi0u.apps.googleusercontent.com",
+              "client_id": "684145709723-jht2r5cki3urjndb4i7rult0u2niblco.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "684145709723-ep52g51gg6rtgdaa4gtu92sqenqugkb9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "chain.gigs.interchained"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684145709723:android:deeff165d06ddb2c8d6c3e",
+        "android_client_info": {
+          "package_name": "com.interchained.interswap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684145709723-e71l2e9bcihos8e41jucf0pqfskfp5jf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.interchained.interswap",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "684145709723-jht2r5cki3urjndb4i7rult0u2niblco.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsjumjbmC5MBTDSQxDV0lFxBhsv7aqCoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684145709723-jht2r5cki3urjndb4i7rult0u2niblco.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "684145709723-ep52g51gg6rtgdaa4gtu92sqenqugkb9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "chain.gigs.interchained"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684145709723:android:458cbbdc073971278d6c3e",
+        "android_client_info": {
+          "package_name": "org.interchained.elara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684145709723-jht2r5cki3urjndb4i7rult0u2niblco.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsjumjbmC5MBTDSQxDV0lFxBhsv7aqCoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684145709723-jht2r5cki3urjndb4i7rult0u2niblco.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "684145709723-ep52g51gg6rtgdaa4gtu92sqenqugkb9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "chain.gigs.interchained"
+              }
             }
           ]
         }
