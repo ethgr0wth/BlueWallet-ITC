@@ -112,6 +112,23 @@ android {
             proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
         }
     }
+	
+	signingConfigs {
+	    release {
+	      storeFile file(ELARA_UPLOAD_STORE_FILE)
+	      storePassword ELARA_UPLOAD_STORE_PASSWORD
+	      keyAlias ELARA_UPLOAD_KEY_ALIAS
+	      keyPassword ELARA_UPLOAD_KEY_PASSWORD
+	    }
+  	}
+  	buildTypes {
+	    release {
+	      signingConfig signingConfigs.release
+	      minifyEnabled true
+	      shrinkResources true
+	      proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+	    }
+  	}
 
 }
 
@@ -143,23 +160,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
 }
 
-android {
-  signingConfigs {
-    release {
-      storeFile file(ELARA_UPLOAD_STORE_FILE)
-      storePassword ELARA_UPLOAD_STORE_PASSWORD
-      keyAlias ELARA_UPLOAD_KEY_ALIAS
-      keyPassword ELARA_UPLOAD_KEY_PASSWORD
-    }
-  }
-  buildTypes {
-    release {
-      signingConfig signingConfigs.release
-      minifyEnabled true
-      shrinkResources true
-      proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-    }
-  }
-}
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 apply plugin: "com.bugsnag.android.gradle"
