@@ -143,26 +143,25 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
 }
-// android/build.gradle  (project-level)
-buildscript {
-  ext {
-    buildToolsVersion = "35.0.0"
-    minSdkVersion     = 23
-    compileSdkVersion = 35
-    targetSdkVersion  = 35
-    ndkVersion        = "26.3.11579264"
-    kotlinVersion     = "1.9.24"
+
+android {
+  signingConfigs {
+    release {
+      storeFile file(ELARA_UPLOAD_STORE_FILE)
+      storePassword ELARA_UPLOAD_STORE_PASSWORD
+      keyAlias ELARA_UPLOAD_KEY_ALIAS
+      keyPassword ELARA_UPLOAD_KEY_PASSWORD
+    }
   }
-  repositories { google(); mavenCentral() }
-  dependencies {
-    classpath("com.android.tools.build:gradle:8.6.1")
-    // keep these ONLY if you enabled the plugins in app/build.gradle:
-    // classpath("com.google.gms:google-services:4.4.2")
-    // classpath("com.bugsnag:bugsnag-android-gradle-plugin:8.1.0")
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+      minifyEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+    }
   }
 }
-
-allprojects { repositories { google(); mavenCentral() } }
 
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 apply plugin: "com.bugsnag.android.gradle"
