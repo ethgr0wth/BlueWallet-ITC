@@ -13,3 +13,15 @@
 -keep class com.facebook.jni.** { *; }
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
+
+-keep class com.facebook.react.** { *; }
+-keep class com.facebook.hermes.** { *; }
+-keep class com.swmansion.** { *; }               # RNGH/Reanimated/etc.
+-keep class com.google.firebase.** { *; }         # if using Firebase
+-keep class com.google.android.gms.** { *; }
+-keep class com.dieam.reactnativepushnotification.** { *; }  # your push lib
+-dontwarn com.facebook.react.**
+-dontwarn com.facebook.hermes.**
+-dontwarn com.google.firebase.**
+-dontwarn com.google.android.gms.**
+-keepattributes *Annotation*
