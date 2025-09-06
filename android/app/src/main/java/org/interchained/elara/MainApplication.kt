@@ -8,10 +8,10 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.bugsnag.android.Bugsnag
 import com.facebook.react.PackageList
-import org.interchained.elara.ReactApplication
-import org.interchained.elara.ReactHost
-import org.interchained.elara.ReactNativeHost
-import org.interchained.elara.ReactPackage
+import com.facebook.react.ReactApplication
+import com.facebook.react.ReactHost
+import com.facebook.react.ReactNativeHost
+import com.facebook.react.ReactPackage
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
