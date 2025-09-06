@@ -103,15 +103,6 @@ android {
         }
     }
 
-    buildTypes {
-	    release {
-		    signingConfig signingConfigs.release
-		    minifyEnabled true
-		    shrinkResources true
-		    proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-		  }
-    }
-	
 	signingConfigs {
 	    release {
 	      storeFile file(ELARA_UPLOAD_STORE_FILE)
@@ -120,6 +111,15 @@ android {
 	      keyPassword ELARA_UPLOAD_KEY_PASSWORD
 	    }
   	}
+	
+    buildTypes {
+	    release {
+		    signingConfig signingConfigs.release
+		    minifyEnabled true
+		    shrinkResources true
+		    proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+		  }
+    }
 
 }
 
