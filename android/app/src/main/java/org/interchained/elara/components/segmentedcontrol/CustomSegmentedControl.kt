@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReactContext
+import org.interchained.elara.ReactContext
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.events.Event
 import com.facebook.react.uimanager.UIManagerHelper

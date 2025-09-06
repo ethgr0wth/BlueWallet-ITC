@@ -3,8 +3,8 @@ package org.interchained.elara
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
-import com.facebook.react.ReactActivity
-import com.facebook.react.ReactActivityDelegate
+import org.interchained.elara.ReactActivity
+import org.interchained.elara.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled

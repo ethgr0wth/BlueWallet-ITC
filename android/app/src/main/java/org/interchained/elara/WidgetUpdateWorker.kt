@@ -8,7 +8,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import android.view.View
-import android.widget.RemoteViews
+import org.interchained.elara.RemoteViews
 import androidx.work.*
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat

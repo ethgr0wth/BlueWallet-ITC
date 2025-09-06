@@ -7,7 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.RemoteViews
+import org.interchained.elara.RemoteViews
 import android.widget.Toast
 import androidx.work.WorkManager
 
