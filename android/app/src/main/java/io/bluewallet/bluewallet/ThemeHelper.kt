@@ -1,11 +1,11 @@
-package io.bluewallet.bluewallet
+package org.interchained.elara
 
 import android.content.Context
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 
 object ThemeHelper {
-    private const val SHARED_PREF_NAME = "group.io.bluewallet.bluewallet"
+    private const val SHARED_PREF_NAME = "group.org.interchained.elara"
     private const val KEY_FORCE_DARK_MODE = "force_dark_mode"
 
     /**

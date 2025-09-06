@@ -84,6 +84,7 @@ android {
 
     namespace "org.interchained.elara"
     defaultConfig {
+    buildFeatures { buildConfig = true }
         applicationId "org.interchained.elara"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -163,5 +164,5 @@ android {
   }
 }
 
-// apply plugin: 'com.google.gms.google-services'  // Google Services plugin
+apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 apply plugin: "com.bugsnag.android.gradle"

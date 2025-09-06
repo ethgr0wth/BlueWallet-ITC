@@ -10,4 +10,4 @@
     android:widgetCategory="home_screen"
     android:label="@string/market_widget_name"
     android:description="@string/market_widget_description"
-    android:configure="io.bluewallet.bluewallet.MarketWidgetConfigureActivity" />
+    android:configure="org.interchained.elara.MarketWidgetConfigureActivity" />

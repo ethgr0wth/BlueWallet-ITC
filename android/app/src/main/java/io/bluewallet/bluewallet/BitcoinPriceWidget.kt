@@ -1,4 +1,4 @@
-package io.bluewallet.bluewallet
+package org.interchained.elara
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -15,7 +15,7 @@ class InterchainedPriceWidget : AppWidgetProvider() {
 
     companion object {
         private const val TAG = "InterchainedPriceWidget"
-        private const val SHARED_PREF_NAME = "group.io.bluewallet.bluewallet"
+        private const val SHARED_PREF_NAME = "group.org.interchained.elara"
         
         /**
          * Update network status and apply proper theme

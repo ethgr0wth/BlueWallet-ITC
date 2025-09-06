@@ -1,4 +1,4 @@
-package io.bluewallet.bluewallet
+package org.interchained.elara
 
 import android.util.Log
 import java.text.NumberFormat

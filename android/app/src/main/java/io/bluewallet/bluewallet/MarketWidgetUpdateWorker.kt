@@ -1,4 +1,4 @@
-package io.bluewallet.bluewallet
+package org.interchained.elara
 
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
@@ -17,7 +17,7 @@ class MarketWidgetUpdateWorker(context: Context, workerParams: WorkerParameters)
         const val WORK_NAME = "market_widget_update_work"
         const val NETWORK_RETRY_WORK_NAME = "market_network_retry_work"
         private const val KEY_WIDGET_IDS = "widget_ids"
-        private const val SHARED_PREF_NAME = "group.io.bluewallet.bluewallet"
+        private const val SHARED_PREF_NAME = "group.org.interchained.elara"
         private const val DEFAULT_CURRENCY = "USD"
         private const val KEY_LAST_UPDATE_TIME = "market_widget_last_update_time"
         private const val MIN_UPDATE_INTERVAL_MS = 15L * 60 * 1000 // 15 minutes
