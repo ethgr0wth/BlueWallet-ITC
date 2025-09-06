@@ -1,10 +1,10 @@
 package org.interchained.elara.components.segmentedcontrol
 
-import org.interchained.elara.ReadableArray
+import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.ThemedReactContext
-import org.interchained.elara.ReactProp
+import com.facebook.react.uimanager.annotations.ReactProp
 
 class CustomSegmentedControlManager : SimpleViewManager<CustomSegmentedControl>() {
 

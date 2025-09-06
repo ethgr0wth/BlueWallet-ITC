@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import org.interchained.elara.RemoteViews
+import android.widget.RemoteViews
 import androidx.work.WorkManager
 import kotlinx.coroutines.delay
 import org.json.JSONObject
