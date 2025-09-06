@@ -108,9 +108,7 @@ android {
 		    signingConfig signingConfigs.release
 		    minifyEnabled true
 		    shrinkResources true
-		    proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"),
-		                  "proguard-rules.pro",
-		                  "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
+		    proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
 		  }
     }
 	
