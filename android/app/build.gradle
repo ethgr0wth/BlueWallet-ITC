@@ -86,8 +86,8 @@ android {
         applicationId "org.interchained.elara"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "7.2.5-genesis"
+        versionCode 8
+        versionName "8.0.1-oracle"
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
