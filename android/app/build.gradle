@@ -121,6 +121,10 @@ android {
 
 }
 
+configurations.all {
+    exclude group: "com.facebook.conceal", module: "conceal"
+}
+
 task copyFiatUnits(type: Copy) {
     from '../../models/fiatUnits.json'
     into 'src/main/assets'
