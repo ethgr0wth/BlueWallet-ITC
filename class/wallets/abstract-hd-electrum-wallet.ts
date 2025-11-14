@@ -16,7 +16,6 @@ import ecc from '../../blue_modules/noble_ecc';
 import { randomBytes } from '../rng';
 import { AbstractHDWallet } from './abstract-hd-wallet';
 import { CreateTransactionResult, CreateTransactionTarget, CreateTransactionUtxo, Transaction, Utxo } from './types';
-import { SilentPayment, UTXOType as SPUTXOType, UTXO as SPUTXO } from 'silent-payments';
 import { isValidBech32Address } from '../../utils/isValidBech32Address';
 
 const ECPair = ECPairFactory(ecc);
@@ -1178,31 +1177,6 @@ export class AbstractHDElectrumWallet extends AbstractHDWallet {
     if (targets.length === 0) throw new Error('No destination provided');
 
     let { inputs, outputs, fee } = this.coinselect(utxos, targets, feeRate);
-
-    const hasSilentPaymentOutput: boolean = !!outputs.find(o => o.address?.startsWith('sp1'));
-    if (hasSilentPaymentOutput) {
-      if (!this.allowSilentPaymentSend()) {
-        throw new Error('This wallet can not send to SilentPayment address');
-      }
-
-      // for a single wallet all utxos gona be the same type, so we define it only once:
-      let utxoType: SPUTXOType = 'non-eligible';
-      switch (this.segwitType) {
-        case 'p2sh(p2wpkh)':
-          utxoType = 'p2sh-p2wpkh';
-          break;
-        case 'p2wpkh':
-          utxoType = 'p2wpkh';
-          break;
-        default:
-          // @ts-ignore override
-          if (this.type === 'HDlegacyP2PKH') utxoType = 'p2pkh';
-      }
-
-      const spUtxos: SPUTXO[] = inputs.map(u => ({ ...u, utxoType, wif: u.wif! }));
-      const sp = new SilentPayment();
-      outputs = sp.createTransaction(spUtxos, outputs) as CoinSelectOutput[];
-    }
 
     sequence = sequence || AbstractHDElectrumWallet.defaultRBFSequence;
     let psbt = new interchained.Psbt();
