@@ -1,7 +1,5 @@
 import BIP47Factory from '@spsina/bip47';
 
-import { SilentPayment } from 'silent-payments';
-
 import ecc from '../blue_modules/noble_ecc';
 import * as interchained from 'interchainedjs-lib';
 
@@ -15,8 +13,9 @@ export class ContactList {
     }
   }
 
+  // ITC doesn't support silent-payments 
   isBip352PaymentCodeValid(pc: string) {
-    return SilentPayment.isPaymentCodeValid(pc);
+    return false;
   }
 
   isPaymentCodeValid(pc: string): boolean {
