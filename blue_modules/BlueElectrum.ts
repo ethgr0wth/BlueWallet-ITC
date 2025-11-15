@@ -1,10 +1,9 @@
 import BigNumber from 'bignumber.js';
 import * as interchained from 'interchainedjs-lib';
 import DefaultPreference from 'react-native-default-preference';
-import RNFS from 'react-native-fs';
-import Realm from 'realm';
 import { sha256 as _sha256 } from '@noble/hashes/sha256';
 
+import { load, save } from '../elara_modules/AppStorage';
 import { LegacyWallet, SegwitBech32Wallet, SegwitP2SHWallet, TaprootWallet } from '../class';
 import presentAlert from '../components/Alert';
 import loc from '../loc';
@@ -82,6 +81,7 @@ export const ELECTRUM_TCP_PORT = 'electrum_tcp_port';
 export const ELECTRUM_SSL_PORT = 'electrum_ssl_port';
 export const ELECTRUM_SERVER_HISTORY = 'electrum_server_history';
 const ELECTRUM_CONNECTION_DISABLED = 'electrum_disabled';
+const ELECTRUM_TRANSACTION_CACHE_KEY = 'electrum_transaction_cache';
 const storageKey = 'ELECTRUM_PEERS';
 const defaultPeer = { host: '173.249.33.184', ssl: 50002 };
 export const hardcodedPeers: Peer[] = [
@@ -102,41 +102,37 @@ let connectionAttempt: number = 0;
 let currentPeerIndex = Math.floor(Math.random() * hardcodedPeers.length);
 let latestBlock: { height: number; time: number } | { height: undefined; time: undefined } = { height: undefined, time: undefined };
 const txhashHeightCache: Record<string, number> = {};
-let _realm: Realm | undefined;
+let transactionCache: Record<string, unknown> | undefined;
 
 function bitcoinjs_crypto_sha256(buffer: Uint8Array): Buffer {
   return Buffer.from(_sha256(buffer));
 }
 
-async function _getRealm() {
-  if (_realm) return _realm;
+function getTransactionCache(): Record<string, unknown> {
+  if (!transactionCache) {
+    const cache = load(ELECTRUM_TRANSACTION_CACHE_KEY, {});
+    if (cache && typeof cache === 'object') {
+      transactionCache = cache as Record<string, unknown>;
+    } else {
+      transactionCache = {};
+    }
+  }
+  return transactionCache;
+}
 
-  const cacheFolderPath = RNFS.CachesDirectoryPath; // Path to cache folder
-  const password = uint8ArrayToHex(bitcoinjs_crypto_sha256(Buffer.from('fyegjitkyf[eqjnc.lf')));
-  const buf = Buffer.from(password + password, 'hex');
-  const encryptionKey = Int8Array.from(buf);
-  const path = `${cacheFolderPath}/electrumcache.realm`; // Use cache folder path
+function cloneCachedValue<T>(value: T): T {
+  if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' || value === null || value === undefined) {
+    return value;
+  }
+  try {
+    return JSON.parse(JSON.stringify(value));
+  } catch (_) {
+    return value;
+  }
+}
 
-  const schema = [
-    {
-      name: 'Cache',
-      primaryKey: 'cache_key',
-      properties: {
-        cache_key: { type: 'string', indexed: true },
-        cache_value: 'string', // stringified json
-      },
-    },
-  ];
-
-  // @ts-ignore schema doesn't match Realm's schema type
-  _realm = await Realm.open({
-    schema,
-    path,
-    encryptionKey,
-    excludeFromIcloudBackup: true,
-  });
-
-  return _realm;
+function rememberTransactionCache(cache: Record<string, unknown>): void {
+  save(ELECTRUM_TRANSACTION_CACHE_KEY, cache);
 }
 
 export const getPreferredServer = async (): Promise<ElectrumServerItem | undefined> => {
@@ -262,14 +258,9 @@ export async function connectMain(): Promise<void> {
     mainClient.onError = function (e: { message: string }) {
       console.log('electrum mainClient.onError():', e.message);
       if (mainConnected) {
-        // most likely got a timeout from electrum ping. lets reconnect
-        // but only if we were previously connected (mainConnected), otherwise theres other
-        // code which does connection retries
         mainClient?.close();
         mainClient = undefined;
         mainConnected = false;
-        // dropping `mainConnected` flag ensures there wont be reconnection race condition if several
-        // errors triggered
         console.log('reconnecting after socket error');
         setTimeout(connectMain, usingPeer.host.endsWith('.onion') ? 4000 : 500);
       }
@@ -283,7 +274,6 @@ export async function connectMain(): Promise<void> {
       if (ver[0].startsWith('ElectrumPersonalServer') || ver[0].startsWith('electrs') || ver[0].startsWith('Fulcrum')) {
         disableBatching = true;
 
-        // exeptions for versions:
         const [electrumImplementation, electrumVersion] = ver[0].split(' ');
         switch (electrumImplementation) {
           case 'electrs':
@@ -292,8 +282,6 @@ export async function connectMain(): Promise<void> {
             }
             break;
           case 'electrs-esplora':
-            // its a different one, and it does NOT support batching
-            // nop
             break;
           case 'Fulcrum':
             if (semVerToInt(electrumVersion) >= semVerToInt('1.9.0')) {
@@ -309,7 +297,6 @@ export async function connectMain(): Promise<void> {
           time: Math.floor(+new Date() / 1000),
         };
       }
-      // AsyncStorage.setItem(storageKey, JSON.stringify(peers));  TODO: refactor
     }
   } catch (e) {
     mainConnected = false;
@@ -327,7 +314,7 @@ export async function connectMain(): Promise<void> {
       presentNetworkErrorAlert(usingPeer);
     } else {
       console.log('reconnection attempt #', connectionAttempt);
-      await new Promise(resolve => setTimeout(resolve, 500)); // sleep
+      await new Promise(resolve => setTimeout(resolve, 500));
       return connectMain();
     }
   }
@@ -352,7 +339,7 @@ export async function presentResetToDefaultsAlert(): Promise<boolean> {
             await DefaultPreference.clear(ELECTRUM_SSL_PORT);
             await DefaultPreference.clear(ELECTRUM_TCP_PORT);
           } catch (e) {
-            console.log(e); // Must be running on Android
+            console.log(e);
           }
           resolve(true);
         },
@@ -371,7 +358,7 @@ export async function presentResetToDefaultsAlert(): Promise<boolean> {
             await DefaultPreference.clear(ELECTRUM_SSL_PORT);
             await DefaultPreference.clear(ELECTRUM_TCP_PORT);
           } catch (e) {
-            console.log(e); // Must be running on Android
+            console.log(e);
           }
           resolve(true);
         },
@@ -448,17 +435,10 @@ const presentNetworkErrorAlert = async (usingPeer?: Peer) => {
   });
 };
 
-/**
- * Returns random electrum server out of list of servers
- * previous electrum server told us. Nearly half of them is
- * usually offline.
- * Not used for now.
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getRandomDynamicPeer(): Promise<Peer> {
   try {
     let peers = JSON.parse((await DefaultPreference.get(storageKey)) as string);
-    peers = peers.sort(() => Math.random() - 0.5); // shuffle
+    peers = peers.sort(() => Math.random() - 0.5);
     for (const peer of peers) {
       const ret: Peer = { host: peer[0], ssl: peer[1] };
       ret.host = peer[1];
@@ -477,9 +457,9 @@ async function getRandomDynamicPeer(): Promise<Peer> {
       if (ret.host && ret.tcp) return ret;
     }
 
-    return defaultPeer; // failed to find random client, using default
+    return defaultPeer;
   } catch (_) {
-    return defaultPeer; // smth went wrong, using default
+    return defaultPeer;
   }
 }
 
@@ -519,7 +499,7 @@ export const getTransactionsByAddress = async function (address: string): Promis
   const reversedHash = Buffer.from(hash).reverse();
   const history = await mainClient.blockchainScripthash_getHistory(reversedHash.toString('hex'));
   for (const h of history || []) {
-    if (h.tx_hash) txhashHeightCache[h.tx_hash] = h.height; // cache tx height
+    if (h.tx_hash) txhashHeightCache[h.tx_hash] = h.height;
   }
 
   return history;
@@ -543,7 +523,6 @@ export const ping = async function () {
   return false;
 };
 
-// exported only to be used in unit tests
 export function txhexToElectrumTransaction(txhex: string): ElectrumTransactionWithHex {
   const tx = interchained.Transaction.fromHex(txhex);
 
@@ -565,10 +544,8 @@ export function txhexToElectrumTransaction(txhex: string): ElectrumTransactionWi
   };
 
   if (txhashHeightCache[ret.txid]) {
-    // got blockheight where this tx was confirmed
     ret.confirmations = estimateCurrentBlockheight() - txhashHeightCache[ret.txid];
     if (ret.confirmations < 0) {
-      // ugly fix for when estimator lags behind
       ret.confirmations = 1;
     }
     ret.time = calculateBlockTime(txhashHeightCache[ret.txid]);
@@ -600,10 +577,10 @@ export function txhexToElectrumTransaction(txhex: string): ElectrumTransactionWi
       type = 'witness_v0_keyhash';
     } else if (SegwitP2SHWallet.scriptPubKeyToAddress(uint8ArrayToHex(out.script))) {
       address = SegwitP2SHWallet.scriptPubKeyToAddress(uint8ArrayToHex(out.script));
-      type = '???'; // TODO
+      type = '???';
     } else if (LegacyWallet.scriptPubKeyToAddress(uint8ArrayToHex(out.script))) {
       address = LegacyWallet.scriptPubKeyToAddress(uint8ArrayToHex(out.script));
-      type = '???'; // TODO
+      type = '???';
     } else {
       address = TaprootWallet.scriptPubKeyToAddress(uint8ArrayToHex(out.script));
       type = 'witness_v1_taproot';
@@ -619,7 +596,7 @@ export function txhexToElectrumTransaction(txhex: string): ElectrumTransactionWi
       scriptPubKey: {
         asm: '',
         hex: uint8ArrayToHex(out.script),
-        reqSigs: 1, // todo
+        reqSigs: 1,
         type,
         addresses: [address],
       },
@@ -638,39 +615,30 @@ export const getTransactionsFullByAddress = async (address: string): Promise<Ele
       full = await mainClient.blockchainTransaction_get(tx.tx_hash, true);
     } catch (error: any) {
       if (String(error?.message ?? error).startsWith('verbose transactions are currently unsupported')) {
-        // apparently, stupid esplora instead of returning txhex when it cant return verbose tx started
-        // throwing a proper exception. lets fetch txhex manually and decode on our end
         const txhex = await mainClient.blockchainTransaction_get(tx.tx_hash, false);
         full = txhexToElectrumTransaction(txhex);
       } else {
-        // nope, its something else
         throw new Error(String(error?.message ?? error));
       }
     }
     full.address = address;
     for (const input of full.vin) {
-      // now we need to fetch previous TX where this VIN became an output, so we can see its amount
       let prevTxForVin;
       try {
         prevTxForVin = await mainClient.blockchainTransaction_get(input.txid, true);
       } catch (error: any) {
         if (String(error?.message ?? error).startsWith('verbose transactions are currently unsupported')) {
-          // apparently, stupid esplora instead of returning txhex when it cant return verbose tx started
-          // throwing a proper exception. lets fetch txhex manually and decode on our end
           const txhex = await mainClient.blockchainTransaction_get(input.txid, false);
           prevTxForVin = txhexToElectrumTransaction(txhex);
         } else {
-          // nope, its something else
           throw new Error(String(error?.message ?? error));
         }
       }
       if (prevTxForVin && prevTxForVin.vout && prevTxForVin.vout[input.vout]) {
         input.value = prevTxForVin.vout[input.vout].value;
-        // also, we extract destination address from prev output:
         if (prevTxForVin.vout[input.vout].scriptPubKey && prevTxForVin.vout[input.vout].scriptPubKey.addresses) {
           input.addresses = prevTxForVin.vout[input.vout].scriptPubKey.addresses;
         }
-        // in interchained core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
         if (prevTxForVin.vout[input.vout]?.scriptPubKey?.address) {
           input.addresses = [prevTxForVin.vout[input.vout].scriptPubKey.address];
         }
@@ -679,21 +647,19 @@ export const getTransactionsFullByAddress = async (address: string): Promise<Ele
 
     for (const output of full.vout) {
       if (output?.scriptPubKey && output.scriptPubKey.addresses) output.addresses = output.scriptPubKey.addresses;
-      // in interchained core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
       if (output?.scriptPubKey?.address) output.addresses = [output.scriptPubKey.address];
     }
     full.inputs = full.vin;
     full.outputs = full.vout;
     delete full.vin;
     delete full.vout;
-    delete full.hex; // compact
-    delete full.hash; // compact
+    delete full.hex;
+    delete full.hash;
     ret.push(full);
   }
 
   return ret;
 };
-
 type MultiGetBalanceResponse = {
   balance: number;
   unconfirmed_balance: number;
@@ -767,9 +733,6 @@ export const multiGetUtxoByAddress = async function (addresses: string[], batchs
     let results = [];
 
     if (disableBatching) {
-      // ElectrumPersonalServer doesnt support `blockchain.scripthash.listunspent`
-      // electrs OTOH supports it, but we dont know it we are currently connected to it or to EPS
-      // so it is pretty safe to do nothing, as caller can derive UTXO from stored transactions
     } else {
       results = await mainClient.blockchainScripthash_listunspentBatch(scripthashes);
     }
@@ -835,7 +798,7 @@ export const multiGetHistoryByAddress = async function (
       if (history.error) console.warn('multiGetHistoryByAddress():', history.error);
       ret[scripthash2addr[history.param]] = history.result || [];
       for (const result of history.result || []) {
-        if (result.tx_hash) txhashHeightCache[result.tx_hash] = result.height; // cache tx height
+        if (result.tx_hash) txhashHeightCache[result.tx_hash] = result.height;
       }
 
       for (const hist of ret[scripthash2addr[history.param]]) {
@@ -847,33 +810,27 @@ export const multiGetHistoryByAddress = async function (
   return ret;
 };
 
-// if verbose === true ? Record<string, ElectrumTransaction> : Record<string, string>
 type MultiGetTransactionByTxidResult<T extends boolean> = T extends true ? Record<string, ElectrumTransaction> : Record<string, string>;
 
-// TODO: this function returns different results based on the value of `verboseParam`, consider splitting it into two
 export async function multiGetTransactionByTxid<T extends boolean>(
   txids: string[],
   verbose: T,
   batchsize: number = 45,
 ): Promise<MultiGetTransactionByTxidResult<T>> {
-  txids = txids.filter(txid => !!txid); // failsafe: removing 'undefined' or other falsy stuff from txids array
-  // this value is fine-tuned so althrough wallets in test suite will occasionally
-  // throw 'response too large (over 1,000,000 bytes', test suite will pass
+  txids = txids.filter(txid => !!txid);
   if (!mainClient) throw new Error('Electrum client is not connected');
   const ret: MultiGetTransactionByTxidResult<T> = {};
-  txids = [...new Set(txids)]; // deduplicate just for any case
+  txids = [...new Set(txids)];
 
-  // lets try cache first:
-  const realm = await _getRealm();
+  const cache = getTransactionCache();
   const cacheKeySuffix = verbose ? '_verbose' : '_non_verbose';
   const keysCacheMiss = [];
   for (const txid of txids) {
-    const jsonString = realm.objectForPrimaryKey('Cache', txid + cacheKeySuffix); // search for a realm object with a primary key
-    if (jsonString && jsonString.cache_value) {
-      try {
-        ret[txid] = JSON.parse(jsonString.cache_value as string);
-      } catch (error) {
-        console.log(error, 'cache failed to parse', jsonString.cache_value);
+    const cacheKey = txid + cacheKeySuffix;
+    if (Object.prototype.hasOwnProperty.call(cache, cacheKey)) {
+      const cachedValue = cache[cacheKey];
+      if (cachedValue !== undefined) {
+        ret[txid] = cloneCachedValue(cachedValue) as MultiGetTransactionByTxidResult<T>[typeof txid];
       }
     }
 
@@ -885,7 +842,6 @@ export async function multiGetTransactionByTxid<T extends boolean>(
   }
 
   txids = keysCacheMiss;
-  // end cache
 
   const chunks = splitIntoChunks(txids, batchsize);
   for (const chunk of chunks) {
@@ -893,8 +849,6 @@ export async function multiGetTransactionByTxid<T extends boolean>(
 
     if (disableBatching) {
       try {
-        // in case of ElectrumPersonalServer it might not track some transactions (like source transactions for our transactions)
-        // so we wrap it in try-catch. note, when `Promise.all` fails we will get _zero_ results, but we have a fallback for that
         const promises = [];
         const index2txid: Record<number, string> = {};
         for (let promiseIndex = 0; promiseIndex < chunk.length; promiseIndex++) {
@@ -907,8 +861,6 @@ export async function multiGetTransactionByTxid<T extends boolean>(
         for (let resultIndex = 0; resultIndex < transactionResults.length; resultIndex++) {
           let tx = transactionResults[resultIndex];
           if (typeof tx === 'string' && verbose) {
-            // apparently electrum server (EPS?) didnt recognize VERBOSE parameter, and  sent us plain txhex instead of decoded tx.
-            // lets decode it manually on our end then:
             tx = txhexToElectrumTransaction(tx);
           }
           const txid = index2txid[resultIndex];
@@ -916,7 +868,6 @@ export async function multiGetTransactionByTxid<T extends boolean>(
         }
       } catch (error: any) {
         if (String(error?.message ?? error).startsWith('verbose transactions are currently unsupported')) {
-          // electrs-esplora. cant use verbose, so fetching txs one by one and decoding locally
           for (const txid of chunk) {
             try {
               let tx = await mainClient.blockchainTransaction_get(txid, false);
@@ -927,14 +878,10 @@ export async function multiGetTransactionByTxid<T extends boolean>(
             }
           }
         } else {
-          // fallback. pretty sure we are connected to EPS.  we try getting transactions one-by-one. this way we wont
-          // fail and only non-tracked by EPS transactions will be omitted
           for (const txid of chunk) {
             try {
               let tx = await mainClient.blockchainTransaction_get(txid, verbose);
               if (typeof tx === 'string' && verbose) {
-                // apparently electrum server (EPS?) didnt recognize VERBOSE parameter, and  sent us plain txhex instead of decoded tx.
-                // lets decode it manually on our end then:
                 tx = txhexToElectrumTransaction(tx);
               }
               results.push({ result: tx, param: txid });
@@ -950,60 +897,40 @@ export async function multiGetTransactionByTxid<T extends boolean>(
 
     for (const txdata of results) {
       if (txdata.error && txdata.error.code === -32600) {
-        // response too large
-        // lets do single call, that should go through okay:
         txdata.result = await mainClient.blockchainTransaction_get(txdata.param, false);
-        // since we used VERBOSE=false, server sent us plain txhex which we must decode on our end:
         txdata.result = txhexToElectrumTransaction(txdata.result);
       }
       ret[txdata.param] = txdata.result;
-      // @ts-ignore: hex property
-      if (ret[txdata.param]) delete ret[txdata.param].hex; // compact
+      if (ret[txdata.param]) delete (ret[txdata.param] as any).hex;
     }
   }
 
-  // in interchained core 22.0.0+ they removed `.addresses` and replaced it with plain `.address`:
   for (const txid of Object.keys(ret)) {
     const tx = ret[txid];
     if (typeof tx === 'string') continue;
     for (const vout of tx?.vout ?? []) {
-      // @ts-ignore: address is not in type definition
       if (vout?.scriptPubKey?.address) vout.scriptPubKey.addresses = [vout.scriptPubKey.address];
     }
   }
 
-  // saving cache:
-  try {
-    realm.write(() => {
-      for (const txid of Object.keys(ret)) {
-        const tx = ret[txid];
-        // dont cache immature txs, but only for 'verbose', since its fully decoded tx jsons. non-verbose are just plain
-        // strings txhex
-        if (verbose && typeof tx !== 'string' && (!tx?.confirmations || tx.confirmations < 7)) {
-          continue;
-        }
+  let cacheDirty = false;
+  for (const txid of Object.keys(ret)) {
+    const cacheKey = txid + cacheKeySuffix;
+    const value = ret[txid];
+    if (verbose && typeof value !== 'string' && (!value?.confirmations || value.confirmations < 7)) {
+      continue;
+    }
+    cache[cacheKey] = cloneCachedValue(value);
+    cacheDirty = true;
+  }
 
-        realm.create(
-          'Cache',
-          {
-            cache_key: txid + cacheKeySuffix,
-            cache_value: JSON.stringify(ret[txid]),
-          },
-          Realm.UpdateMode.Modified,
-        );
-      }
-    });
-  } catch (writeError) {
-    console.error('Failed to write transaction cache:', writeError);
+  if (cacheDirty) {
+    rememberTransactionCache(cache);
   }
 
   return ret;
 }
 
-/**
- * Simple waiter till `mainConnected` becomes true (which means
- * it Electrum was connected in other function), or timeout 30 sec.
- */
 export const waitTillConnected = async function (): Promise<boolean> {
   let waitTillConnectedInterval: NodeJS.Timeout | undefined;
   let retriesCounter = 0;
@@ -1019,8 +946,6 @@ export const waitTillConnected = async function (): Promise<boolean> {
       }
 
       if (wasConnectedAtLeastOnce && retriesCounter++ >= 150) {
-        // `wasConnectedAtLeastOnce` needed otherwise theres gona be a race condition with the code that connects
-        // electrum during app startup
         clearInterval(waitTillConnectedInterval);
         presentNetworkErrorAlert();
         reject(new Error('Waiting for Electrum connection timeout'));
@@ -1029,8 +954,6 @@ export const waitTillConnected = async function (): Promise<boolean> {
   });
 };
 
-// Returns the value at a given percentile in a sorted numeric array.
-// "Linear interpolation between closest ranks" method
 function percentile(arr: number[], p: number) {
   if (arr.length === 0) return 0;
   if (typeof p !== 'number') throw new TypeError('p must be a number');
@@ -1046,12 +969,7 @@ function percentile(arr: number[], p: number) {
   return arr[lower] * (1 - weight) + arr[upper] * weight;
 }
 
-/**
- * The histogram is an array of [fee, vsize] pairs, where vsizen is the cumulative virtual size of mempool transactions
- * with a fee rate in the interval [feen-1, feen], and feen-1 > feen.
- */
 export const calcEstimateFeeFromFeeHistorgam = function (numberOfBlocks: number, feeHistorgram: number[][]) {
-  // first, transforming histogram:
   let totalVsize = 0;
   const histogramToUse = [];
   for (const h of feeHistorgram) {
@@ -1059,7 +977,7 @@ export const calcEstimateFeeFromFeeHistorgam = function (numberOfBlocks: number,
     let timeToStop = false;
 
     if (totalVsize + vsize >= 1000000 * numberOfBlocks) {
-      vsize = 1000000 * numberOfBlocks - totalVsize; // only the difference between current summarized sige to tip of the block
+      vsize = 1000000 * numberOfBlocks - totalVsize;
       timeToStop = true;
     }
 
@@ -1068,12 +986,9 @@ export const calcEstimateFeeFromFeeHistorgam = function (numberOfBlocks: number,
     if (timeToStop) break;
   }
 
-  // now we have histogram of precisely size for numberOfBlocks.
-  // lets spread it into flat array so its easier to calculate percentile:
   let histogramFlat: number[] = [];
   for (const hh of histogramToUse) {
     histogramFlat = histogramFlat.concat(Array(Math.round(hh.vsize / 25000)).fill(hh.fee));
-    // division is needed so resulting flat array is not too huge
   }
 
   histogramFlat = histogramFlat.sort(function (a, b) {
@@ -1095,33 +1010,18 @@ export const estimateFees = async function (): Promise<{ fast: number; medium: n
     clearTimeout(timeoutId);
   }
 
-  // fetching what electrum (which uses interchained core) thinks about fees:
   const _fast = await estimateFee(1);
   const _medium = await estimateFee(18);
   const _slow = await estimateFee(144);
 
-  /**
-   * sanity check, see
-   * @see https://github.com/cculianu/Fulcrum/issues/197
-   * (fallback to interchained core estimates)
-   */
   if (!histogram || histogram?.[0]?.[0] > 1000) return { fast: _fast, medium: _medium, slow: _slow };
 
-  // calculating fast fees from mempool:
   const fast = Math.max(2, calcEstimateFeeFromFeeHistorgam(1, histogram));
-  // recalculating medium and slow fees using bitcoincore estimations only like relative weights:
-  // (minimum 1 sat, just for any case)
   const medium = Math.max(1, Math.round((fast * _medium) / _fast));
   const slow = Math.max(1, Math.round((fast * _slow) / _fast));
   return { fast, medium, slow };
 };
 
-/**
- * Returns the estimated transaction fee to be confirmed within a certain number of blocks
- *
- * @param numberOfBlocks {number} The number of blocks to target for confirmation
- * @returns {Promise<number>} Satoshis per byte
- */
 export const estimateFee = async function (numberOfBlocks: number): Promise<number> {
   if (!mainClient) throw new Error('Electrum client is not connected');
   numberOfBlocks = numberOfBlocks || 1;
@@ -1157,7 +1057,7 @@ export const estimateCurrentBlockheight = function (): number {
     return latestBlock.height + extraBlocks;
   }
 
-  const baseTs = 1587570465609; // uS
+  const baseTs = 1587570465609;
   const baseHeight = 627179;
   return Math.floor(baseHeight + (+new Date() - baseTs) / 1000 / 60 / 9.93);
 };
@@ -1167,18 +1067,15 @@ export const calculateBlockTime = function (height: number): number {
     return Math.floor(latestBlock.time + (height - latestBlock.height) * 9.93 * 60);
   }
 
-  const baseTs = 1585837504; // sec
+  const baseTs = 1585837504;
   const baseHeight = 624083;
   return Math.floor(baseTs + (height - baseHeight) * 9.93 * 60);
 };
 
-/**
- * @returns {Promise<boolean>} Whether provided host:port is a valid electrum server
- */
 export const testConnection = async function (host: string, tcpPort?: number, sslPort?: number): Promise<boolean> {
   const client = new ElectrumClient(net, tls, sslPort || tcpPort, host, sslPort ? 'tls' : 'tcp');
 
-  client.onError = () => {}; // mute
+  client.onError = () => {};
   let timeoutId: NodeJS.Timeout | undefined;
   try {
     const rez = await Promise.race([
